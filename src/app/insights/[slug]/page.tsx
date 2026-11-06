@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 const articles: Record<
@@ -48,14 +49,23 @@ export default async function InsightArticlePage({ params }: Props) {
   };
 
   return (
-    <div className="bg-sand-50 pt-28">
+    <div className="min-h-screen bg-[#080E14] pt-28 text-[#F4EFE6]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <article className="mx-auto max-w-3xl px-4 pb-20 sm:px-6 lg:px-8">
-        <h1 className="font-display text-5xl text-forest-900 text-balance">{article.title}</h1>
-        <div className="mt-8 space-y-5 text-lg leading-relaxed text-stone-500">
+        <Link
+          href="/insights"
+          className="text-sm text-[#C5A059] underline-offset-4 hover:underline"
+        >
+          ← All insights
+        </Link>
+        <h1 className="mt-4 font-display text-4xl font-light text-white text-balance sm:text-5xl">
+          {article.title}
+        </h1>
+        <div className="divider-gold mt-8 max-w-xs" />
+        <div className="mt-8 space-y-5 text-lg leading-relaxed text-[#F4EFE6]/75">
           {article.body.map((p) => (
             <p key={p.slice(0, 24)}>{p}</p>
           ))}

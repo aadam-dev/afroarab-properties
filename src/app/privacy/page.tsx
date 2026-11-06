@@ -12,14 +12,14 @@ export default function PrivacyPage() {
         working draft for the rebuild and must be finalised with Afro Arab’s legal counsel before
         production cutover.
       </p>
-      <h2 className="font-display text-2xl text-forest-900">Data we collect</h2>
+      <h2>Data we collect</h2>
       <p>Name, phone, email, message content, project/plot interest, source URL, and consent time.</p>
-      <h2 className="font-display text-2xl text-forest-900">Purpose</h2>
+      <h2>Purpose</h2>
       <p>
         Responding to enquiries, scheduling viewings, sharing payment-plan information, and improving
         our services. We do not sell personal data.
       </p>
-      <h2 className="font-display text-2xl text-forest-900">Your rights</h2>
+      <h2>Your rights</h2>
       <p>
         You may request access, correction, or deletion where lawful, and lodge complaints with the
         Data Protection Commission of Ghana. Contact details for the data controller will be published

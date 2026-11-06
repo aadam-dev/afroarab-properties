@@ -138,7 +138,7 @@ export function PlotDetailDrawer({ plot, estateName, onClose }: PlotDetailDrawer
             <h3 className="text-xs font-semibold uppercase tracking-wider text-[#C5A059]">
               60-Month Interest-Free Pathway
             </h3>
-            <span className="rounded bg-[#00E676]/20 px-2 py-0.5 text-[0.65rem] font-bold text-[#00E676]">
+            <span className="rounded bg-[#3D9B6E]/20 px-2 py-0.5 text-[0.65rem] font-bold text-[#3D9B6E]">
               0% INTEREST
             </span>
           </div>
@@ -160,7 +160,7 @@ export function PlotDetailDrawer({ plot, estateName, onClose }: PlotDetailDrawer
               <div className="text-[0.7rem] uppercase tracking-wider text-[#F4EFE6]/60">
                 Monthly (60 Mos)
               </div>
-              <div className="mt-1 font-display text-lg text-[#00E676]">
+              <div className="mt-1 font-display text-lg text-[#3D9B6E]">
                 {currency === "USD"
                   ? `$${monthlyInstallment.toLocaleString("en-US")}`
                   : `GH¢${monthlyInstallment.toLocaleString("en-GH")}`}
@@ -214,7 +214,7 @@ export function PlotDetailDrawer({ plot, estateName, onClose }: PlotDetailDrawer
             </div>
             <div className="flex justify-between py-2.5">
               <dt className="text-[#F4EFE6]/60">Title Classification</dt>
-              <dd className="font-medium text-[#00E676]">Lands Commission Registered</dd>
+              <dd className="font-medium text-[#3D9B6E]">Lands Commission Registered</dd>
             </div>
           </dl>
         </div>
@@ -222,9 +222,9 @@ export function PlotDetailDrawer({ plot, estateName, onClose }: PlotDetailDrawer
         {/* Reservation / Inquire Form */}
         {plot.status === "available" ? (
           reservedSuccess ? (
-            <div className="rounded-xl border border-[#00E676]/40 bg-[#00E676]/10 p-5 text-center">
+            <div className="rounded-xl border border-[#3D9B6E]/40 bg-[#3D9B6E]/10 p-5 text-center">
               <svg
-                className="mx-auto h-8 w-8 text-[#00E676]"
+                className="mx-auto h-8 w-8 text-[#3D9B6E]"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"

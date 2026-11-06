@@ -45,27 +45,27 @@ export function Header() {
           : "border-white/5 bg-[#080E14]/65 backdrop-blur-md",
       )}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3.5 sm:px-6 lg:gap-4 lg:px-8">
         {/* Afro-Arab Brand Typography Logo */}
-        <Link href="/" className="group flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#C5A059]/40 bg-[#101822] font-display text-lg font-bold text-[#C5A059] shadow-[0_0_15px_rgba(197,160,89,0.3)] transition-transform duration-300 group-hover:scale-105">
+        <Link href="/" className="group flex min-w-0 shrink items-center gap-2">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#C5A059]/40 bg-[#101822] font-display text-lg font-bold text-[#C5A059] shadow-[0_0_15px_rgba(197,160,89,0.3)] transition-transform duration-300 group-hover:scale-105">
             AA
           </span>
-          <span className="font-display text-xl font-light tracking-tight text-[#F4EFE6] sm:text-2xl">
+          <span className="truncate font-display text-lg font-light tracking-tight text-[#F4EFE6] sm:text-xl lg:text-2xl">
             Afro-Arab <span className="font-normal italic text-[#C5A059]">Properties</span>
           </span>
         </Link>
 
         {/* Primary Desktop Navigation Bar */}
         <nav
-          className="hidden items-center gap-1 rounded-full border border-white/10 bg-[#101822]/80 px-2 py-1 backdrop-blur-xl md:flex"
+          className="hidden items-center gap-0.5 rounded-full border border-white/10 bg-[#101822]/80 px-1.5 py-1 backdrop-blur-xl xl:flex"
           aria-label="Primary"
         >
           {nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-full px-4 py-1.5 text-xs font-semibold tracking-wide text-[#F4EFE6]/80 transition-all hover:bg-white/10 hover:text-white"
+              className="rounded-full px-2.5 py-1.5 text-[0.7rem] font-semibold tracking-wide text-[#F4EFE6]/80 transition-all hover:bg-white/10 hover:text-white xl:px-3 xl:text-xs"
             >
               {item.label}
             </Link>
@@ -73,10 +73,10 @@ export function Header() {
         </nav>
 
         {/* High-Contrast Gold Action Button & Mobile Menu Toggle */}
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <Link
             href="/contact"
-            className="btn-gold hidden h-10 items-center rounded-lg px-5 text-xs font-bold sm:inline-flex"
+            className="btn-gold hidden h-10 items-center rounded-lg px-4 text-xs font-bold lg:inline-flex"
           >
             Inquire Now
           </Link>
@@ -84,7 +84,7 @@ export function Header() {
           {/* Mobile Menu Button */}
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 bg-[#101822] text-[#F4EFE6] backdrop-blur-md md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 bg-[#101822] text-[#F4EFE6] backdrop-blur-md xl:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
             onClick={() => setOpen((v) => !v)}
@@ -123,7 +123,7 @@ export function Header() {
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? undefined : { opacity: 0, y: -8 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="border-t border-white/10 bg-[#080E14]/95 px-5 py-5 shadow-2xl backdrop-blur-2xl md:hidden"
+            className="border-t border-white/10 bg-[#080E14]/95 px-5 py-5 shadow-2xl backdrop-blur-2xl xl:hidden"
           >
             <nav className="flex flex-col gap-2" aria-label="Mobile Navigation">
               {nav.map((item) => (

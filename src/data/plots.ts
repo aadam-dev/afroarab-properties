@@ -158,9 +158,9 @@ export const statusLabel: Record<PlotStatus, string> = {
 };
 
 export const statusColor: Record<PlotStatus, string> = {
-  available: "#00E676",
-  held: "#F59E0B",
-  reserved: "#FFB300",
-  sold: "#374151",
-  unreleased: "#4B5563",
+  available: "#3D9B6E",
+  held: "#C9A227",
+  reserved: "#D4A017",
+  sold: "#2A3340",
+  unreleased: "#3F4A57",
 };

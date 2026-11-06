@@ -81,9 +81,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-[#101822]/90 p-6 backdrop-blur-xl sm:p-8">
-            <EnquiryForm intent="viewing" />
-          </div>
+          <EnquiryForm intent="viewing" />
         </div>
       </section>
     </>

@@ -43,7 +43,7 @@ export function FloorPlanWalker({ projectName = "Lamin's Court Townhouse" }: { p
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-[#C5A059]/30 bg-[#101822] px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#C5A059]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00E676]" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[#3D9B6E]" />
               Spatial Floor Plan Engine
             </div>
             <h2 className="mt-3 font-display text-3xl font-light text-[#F4EFE6] sm:text-4xl lg:text-5xl">
@@ -144,8 +144,8 @@ export function FloorPlanWalker({ projectName = "Lamin's Court Townhouse" }: { p
                     </text>
 
                     {/* Sliding Glass Doors to Garden */}
-                    <line x1="40" y1="120" x2="40" y2="300" stroke="#00E676" strokeWidth="4" />
-                    <text x="20" y="210" fill="#00E676" fontSize="10" transform="rotate(-90 20 210)" textAnchor="middle">
+                    <line x1="40" y1="120" x2="40" y2="300" stroke="#3D9B6E" strokeWidth="4" />
+                    <text x="20" y="210" fill="#3D9B6E" fontSize="10" transform="rotate(-90 20 210)" textAnchor="middle">
                       VERANDA SLIDER
                     </text>
                   </g>

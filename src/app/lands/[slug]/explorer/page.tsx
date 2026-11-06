@@ -23,7 +23,7 @@ export default async function ExplorerPage({ params }: Props) {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-[100svh] items-center justify-center bg-forest-950 text-sand-100">
+        <div className="flex min-h-[100svh] items-center justify-center bg-[#080E14] text-[#DFC283]">
           Loading plot explorer…
         </div>
       }

@@ -149,7 +149,7 @@ export function EnquiryForm({
           role="status"
           className={cn(
             "mt-3 text-sm text-center font-medium",
-            status === "ok" ? "text-[#00E676]" : "text-brand-red",
+            status === "ok" ? "text-[#3D9B6E]" : "text-brand-red",
           )}
         >
           {message}

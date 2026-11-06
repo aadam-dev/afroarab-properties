@@ -53,21 +53,21 @@ export function CinematicHero() {
       </div>
 
       {/* Main Content Hero Container */}
-      <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-between px-4 pb-12 pt-28 sm:px-6 lg:px-8">
-        {/* Top Badges */}
-        <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-between px-4 pb-10 pt-24 sm:px-6 sm:pb-12 sm:pt-28 lg:px-8">
+        {/* Top Badges — clear of fixed header */}
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-3 sm:mt-4 sm:gap-4">
           <motion.div
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2.5 rounded-full border border-[#C5A059]/30 bg-[#101822]/80 px-4 py-1.5 backdrop-blur-xl"
+            className="inline-flex max-w-full items-center gap-2.5 rounded-full border border-[#C5A059]/30 bg-[#101822]/80 px-3 py-1.5 backdrop-blur-xl sm:px-4"
           >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#00E676] opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#00E676]" />
+            <span className="relative flex h-2 w-2 shrink-0">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#3D9B6E] opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#3D9B6E]" />
             </span>
-            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#C5A059]">
-              Executive Digital Platform · Ghana & Diaspora
+            <span className="truncate text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#C5A059] sm:text-xs sm:tracking-[0.2em]">
+              Executive Platform · Ghana & Diaspora
             </span>
           </motion.div>
 
@@ -75,14 +75,14 @@ export function CinematicHero() {
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="hidden text-xs uppercase tracking-[0.18em] text-[#F4EFE6]/60 md:block"
+            className="hidden text-xs uppercase tracking-[0.18em] text-[#F4EFE6]/60 lg:block"
           >
             Accra · Prampram · Obeyeyie · Santoe
           </motion.div>
         </div>
 
         {/* Central Headline & Staggered Reveal */}
-        <div className="my-auto max-w-4xl pt-8 pb-8">
+        <div className="my-auto max-w-4xl py-6 sm:py-8">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -121,7 +121,7 @@ export function CinematicHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-8 flex flex-wrap items-center gap-4 sm:mt-10"
+            className="mt-6 flex flex-wrap items-center gap-3 sm:mt-8 sm:gap-4"
           >
             <a href="#plot-explorer" className="btn-gold">
               Explore Live Masterplans

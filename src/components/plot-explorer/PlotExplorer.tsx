@@ -73,7 +73,7 @@ export function PlotExplorer({
 
   const { estatePlots, filteredPlots, selectedPlot, counts } = usePlotFilter();
 
-  // Bounding box for SVG canvas
+  // Bounding box for SVG canvas — extra top pad keeps boulevard label inside viewBox
   const bounds = useMemo(() => {
     if (estatePlots.length === 0) {
       return { minX: 0, maxX: 100, minY: 0, maxY: 100 };
@@ -82,10 +82,10 @@ export function PlotExplorer({
     const xs = pts.map((p) => p[0]);
     const ys = pts.map((p) => p[1]);
     return {
-      minX: Math.min(...xs) - 8,
-      maxX: Math.max(...xs) + 8,
-      minY: Math.min(...ys) - 8,
-      maxY: Math.max(...ys) + 8,
+      minX: Math.min(...xs) - 10,
+      maxX: Math.max(...xs) + 10,
+      minY: Math.min(...ys) - 14,
+      maxY: Math.max(...ys) + 10,
     };
   }, [estatePlots]);
 
@@ -98,7 +98,7 @@ export function PlotExplorer({
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-[#C5A059]/30 bg-[#101822] px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#C5A059]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00E676]" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[#3D9B6E]" />
               Interactive Vector Engine
             </div>
             <h2 className="mt-3 font-display text-3xl font-light text-[#F4EFE6] sm:text-4xl lg:text-5xl">
@@ -207,11 +207,10 @@ export function PlotExplorer({
           </div>
 
           {/* Secondary Controls: Size, Budget, Search */}
-          <div className="mt-4 grid grid-cols-1 gap-4 border-t border-white/5 pt-4 sm:grid-cols-2 lg:grid-cols-4">
-            {/* Search by plot number */}
-            <div>
+          <div className="mt-4 grid grid-cols-1 gap-4 border-t border-white/5 pt-4 md:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)_minmax(0,1fr)_auto]">
+            <div className="min-w-0">
               <label htmlFor="plot-query" className="block text-[0.7rem] uppercase tracking-wider text-[#F4EFE6]/60">
-                Search Plot Code:
+                Search Plot Code
               </label>
               <input
                 id="plot-query"
@@ -223,12 +222,11 @@ export function PlotExplorer({
               />
             </div>
 
-            {/* Size filter */}
-            <div>
+            <div className="min-w-0">
               <span className="block text-[0.7rem] uppercase tracking-wider text-[#F4EFE6]/60">
-                Dimensions:
+                Dimensions
               </span>
-              <div className="mt-1 flex gap-1">
+              <div className="mt-1 flex flex-wrap gap-1">
                 {SIZE_OPTIONS.map((sz) => {
                   const isCurrent = sz === "All" ? sizeFilter === null : sizeFilter === sz;
                   return (
@@ -237,9 +235,9 @@ export function PlotExplorer({
                       type="button"
                       onClick={() => setSizeFilter(sz === "All" ? null : sz)}
                       className={cn(
-                        "rounded px-2.5 py-1 text-[0.7rem] font-semibold transition",
+                        "rounded px-2.5 py-1.5 text-[0.7rem] font-semibold transition",
                         isCurrent
-                          ? "bg-[#C5A059]/25 text-[#DFC283] border border-[#C5A059]"
+                          ? "border border-[#C5A059] bg-[#C5A059]/25 text-[#DFC283]"
                           : "bg-white/5 text-[#F4EFE6]/70 hover:bg-white/10",
                       )}
                     >
@@ -250,10 +248,9 @@ export function PlotExplorer({
               </div>
             </div>
 
-            {/* Budget slider */}
-            <div>
+            <div className="min-w-0">
               <div className="flex justify-between text-[0.7rem] uppercase tracking-wider text-[#F4EFE6]/60">
-                <span>Max Budget:</span>
+                <span>Max Budget</span>
                 <span className="font-mono-data text-[#DFC283]">
                   GH¢{budgetMax.toLocaleString("en-GH")}
                 </span>
@@ -269,14 +266,13 @@ export function PlotExplorer({
               />
             </div>
 
-            {/* Quick Reset */}
-            <div className="flex items-end justify-end">
+            <div className="flex items-end md:justify-start xl:justify-end">
               <button
                 type="button"
                 onClick={resetFilters}
-                className="text-xs text-[#C5A059] underline underline-offset-4 hover:text-white transition"
+                className="h-9 shrink-0 rounded-lg border border-white/10 px-3 text-xs font-semibold text-[#C5A059] transition hover:border-[#C5A059]/50 hover:bg-white/5 hover:text-white"
               >
-                Reset All Filters
+                Reset Filters
               </button>
             </div>
           </div>
@@ -333,7 +329,7 @@ export function PlotExplorer({
           </div>
 
           {/* Canvas Rendering */}
-          <div className="min-h-[520px] w-full overflow-auto p-4 flex items-center justify-center">
+          <div className="flex min-h-[520px] w-full items-center justify-center overflow-hidden p-6 sm:p-8">
             {viewMode === "plan" ? (
               <div
                 style={{
@@ -341,11 +337,11 @@ export function PlotExplorer({
                   transformOrigin: "center center",
                   transition: "transform 0.25s ease-out",
                 }}
-                className="w-full max-w-[1200px]"
+                className="w-full max-w-[1100px]"
               >
                 <svg
                   viewBox={viewBox}
-                  className="h-auto w-full select-none"
+                  className="h-auto w-full select-none overflow-visible"
                   role="img"
                   aria-label={`${estateNames[activeEstate] ?? "Afro-Arab"} estate site plan`}
                 >
@@ -374,17 +370,17 @@ export function PlotExplorer({
                     fill="url(#grid-pattern)"
                   />
 
-                  {/* Access Roads Labeling */}
+                  {/* Access Roads Labeling — kept short so it stays inside the viewBox */}
                   <text
                     x={(bounds.minX + bounds.maxX) / 2}
-                    y={bounds.minY + 4}
+                    y={bounds.minY + 6}
                     textAnchor="middle"
-                    fill="rgba(197, 160, 89, 0.4)"
-                    fontSize="3"
-                    fontFamily="Plus Jakarta Sans, sans-serif"
-                    letterSpacing="1"
+                    fill="rgba(197, 160, 89, 0.55)"
+                    fontSize="2.4"
+                    fontFamily="var(--font-manrope), system-ui, sans-serif"
+                    letterSpacing="0.8"
                   >
-                    MAIN BOULEVARD &bull; 12M DUAL CARRIAGEWAY
+                    MAIN BOULEVARD · 12M
                   </text>
 
                   {/* Render Plots */}
@@ -433,7 +429,7 @@ export function PlotExplorer({
                           fill={isSelected ? "#080E14" : "#FFFFFF"}
                           fontSize="2.4"
                           fontWeight={isSelected ? "bold" : "600"}
-                          fontFamily="IBM Plex Mono, monospace"
+                          fontFamily="var(--font-plex), ui-monospace, monospace"
                           pointerEvents="none"
                           opacity={isFiltered ? 1 : 0.3}
                         >
@@ -446,7 +442,7 @@ export function PlotExplorer({
                           dominantBaseline="middle"
                           fill={isSelected ? "#080E14" : "rgba(255,255,255,0.7)"}
                           fontSize="1.6"
-                          fontFamily="Plus Jakarta Sans, sans-serif"
+                          fontFamily="var(--font-manrope), system-ui, sans-serif"
                           pointerEvents="none"
                           opacity={isFiltered ? 1 : 0.25}
                         >
@@ -476,15 +472,15 @@ export function PlotExplorer({
             <div className="flex flex-wrap items-center gap-6 text-xs text-[#F4EFE6]/70">
               <span className="font-semibold text-white">Status Key:</span>
               <span className="inline-flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-[#00E676]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#3D9B6E]" />
                 Available ({counts.available})
               </span>
               <span className="inline-flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-[#FFB300]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#D4A017]" />
                 Reserved ({counts.reserved})
               </span>
               <span className="inline-flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-[#374151]" />
+                <span className="h-2.5 w-2.5 rounded-full bg-[#2A3340] ring-1 ring-white/20" />
                 Sold Out ({counts.sold})
               </span>
             </div>

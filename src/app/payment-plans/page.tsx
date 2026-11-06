@@ -16,7 +16,7 @@ export default function PaymentPlansPage() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl">
           <span className="inline-flex items-center gap-2 rounded-full border border-[#C5A059]/30 bg-[#101822] px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#C5A059]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#00E676]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#3D9B6E]" />
             Direct Developer Financing
           </span>
           <h1 className="mt-4 font-display text-4xl font-light text-white sm:text-5xl lg:text-6xl text-balance">
@@ -92,17 +92,7 @@ export default function PaymentPlansPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-[#101822]/90 p-6 backdrop-blur-xl sm:p-8">
-          <h3 className="font-display text-2xl text-white">
-            Request Formal Amortization Deed
-          </h3>
-          <p className="mt-2 text-xs text-[#F4EFE6]/70">
-            Submit your contact information to receive our official escrow banking coordinates and schedule paperwork.
-          </p>
-          <div className="mt-6">
-            <EnquiryForm intent="payment" />
-          </div>
-        </div>
+        <EnquiryForm intent="payment" />
       </div>
     </div>
   );

@@ -23,18 +23,26 @@ const posts = [
 
 export default function InsightsPage() {
   return (
-    <div className="bg-sand-50 pt-28">
+    <div className="min-h-screen bg-[#080E14] pt-28 text-[#F4EFE6]">
       <div className="mx-auto max-w-3xl px-4 pb-20 sm:px-6 lg:px-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-red">Insights</p>
-        <h1 className="mt-3 font-display text-5xl text-forest-900">Guides for serious buyers</h1>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#C5A059]">Insights</p>
+        <h1 className="mt-3 font-display text-4xl font-light text-white sm:text-5xl">
+          Guides for serious buyers
+        </h1>
+        <div className="divider-gold mt-8 max-w-xs" />
         <ul className="mt-10 space-y-6">
           {posts.map((post) => (
-            <li key={post.slug} className="border-b border-sand-200 pb-6">
+            <li key={post.slug} className="border-b border-white/10 pb-6">
               <article>
-                <h2 className="font-display text-3xl text-forest-900">
-                  <Link href={`/insights/${post.slug}`}>{post.title}</Link>
+                <h2 className="font-display text-2xl font-light text-white sm:text-3xl">
+                  <Link
+                    href={`/insights/${post.slug}`}
+                    className="transition hover:text-[#DFC283]"
+                  >
+                    {post.title}
+                  </Link>
                 </h2>
-                <p className="mt-2 text-stone-500">{post.excerpt}</p>
+                <p className="mt-2 text-[#F4EFE6]/70">{post.excerpt}</p>
               </article>
             </li>
           ))}

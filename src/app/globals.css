@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@theme {
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 96rem;
+}
+
 :root {
   --aa-slate-950: #080e14;
   --aa-slate-900: #101822;
@@ -20,11 +28,11 @@
   --aa-gold-400: #dfc283;
   --aa-gold-500: #c5a059;
   --aa-gold-600: #9e7b36;
-  --aa-available: #00e676;
-  --aa-held: #f59e0b;
-  --aa-reserved: #ffb300;
-  --aa-sold: #374151;
-  --aa-unreleased: #4b5563;
+  --aa-available: #3d9b6e;
+  --aa-held: #c9a227;
+  --aa-reserved: #d4a017;
+  --aa-sold: #2a3340;
+  --aa-unreleased: #3f4a57;
   --background: var(--aa-slate-950);
   --foreground: var(--aa-champagne);
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
@@ -35,6 +43,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-slate-950: var(--aa-slate-950);
+  --color-slate-900: var(--aa-slate-900);
+  --color-slate-800: var(--aa-slate-800);
   --color-forest-950: var(--aa-forest-950);
   --color-forest-900: var(--aa-forest-900);
   --color-forest-800: var(--aa-forest-800);
@@ -43,12 +54,18 @@
   --color-sand-50: var(--aa-sand-50);
   --color-sand-100: var(--aa-sand-100);
   --color-sand-200: var(--aa-sand-200);
+  --color-champagne: var(--aa-champagne);
   --color-stone-500: var(--aa-stone-500);
   --color-ink: var(--aa-ink);
   --color-brand-red: var(--aa-red-600);
   --color-brand-red-dark: var(--aa-red-700);
   --color-gold: var(--aa-gold-500);
   --color-gold-light: var(--aa-gold-400);
+  --color-available: var(--aa-available);
+  --color-held: var(--aa-held);
+  --color-reserved: var(--aa-reserved);
+  --color-sold: var(--aa-sold);
+  --color-unreleased: var(--aa-unreleased);
   --font-sans: var(--font-manrope);
   --font-display: var(--font-fraunces);
   --font-mono: var(--font-plex);
@@ -297,8 +314,9 @@ select:focus-visible,
 .page-band {
   position: relative;
   overflow: hidden;
-  background: var(--aa-forest-950);
+  background: var(--aa-slate-950);
   color: white;
+  min-height: 16rem;
 }
 
 .page-band::before {
