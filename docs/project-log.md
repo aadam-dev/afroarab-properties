@@ -2,6 +2,14 @@
 
 Append-only. Newest entries at the top.
 
+## 2026-11-06 — Public GitHub + Vercel share link
+
+- Pulled public Afro Arab logo, favicon, and project photography into `public/`
+- Wired real contact details (Cotton Avenue, phones, email)
+- Public repo: https://github.com/aadam-dev/afroarab-properties
+- Production preview: https://afroarab-properties.vercel.app
+- No Supabase secrets or `.env.local` committed
+
 ## 2026-11-06 — Luxury visual polish + finish QA
 
 - Elevated Ghanaian modernism: full-bleed hero photography, gold/forest materials, page bands, provenance strip

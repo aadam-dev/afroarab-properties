@@ -2,6 +2,11 @@
 
 Modern rebuild of [afroarabproperties.com](https://afroarabproperties.com): motion-led marketing site, live plot explorer, floor-plan walkthrough pipeline, and Supabase-ready inventory/admin.
 
+## Live preview
+
+- **Site:** [https://afroarab-properties.vercel.app](https://afroarab-properties.vercel.app)
+- **Repo:** [https://github.com/aadam-dev/afroarab-properties](https://github.com/aadam-dev/afroarab-properties)
+
 ## Quick start
 
 ```bash
@@ -11,6 +16,16 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
+
+## What’s included from the current site
+
+- Full audit of afroarabproperties.com (trust, SEO, a11y, data conflicts)
+- Project names, locations, and marketing claims mapped into `src/data/projects.ts` with verification notes
+- Public contact block (Kokomlemle address, email, phones)
+- Public WordPress media downloaded into `public/images/projects/` and `public/brand/`
+- See `docs/research/asset-sources.md`
+
+Sensitive credentials are **not** in the repo. Only `.env.example` is committed.
 
 ## Key routes
 
@@ -29,8 +44,7 @@ See [`docs/README.md`](docs/README.md) for audit, brand, architecture, product s
 
 ## Skill
 
-Project skill: [`.cursor/skills/real-estate-experience/`](.cursor/skills/real-estate-experience/)  
-Mirrored personal skill: `~/.cursor/skills/real-estate-experience/`
+Project skill: [`.cursor/skills/real-estate-experience/`](.cursor/skills/real-estate-experience/)
 
 ## Supabase
 
@@ -47,4 +61,5 @@ npm run dev
 npm run build
 npm run lint
 npm test
+npm run test:e2e
 ```
