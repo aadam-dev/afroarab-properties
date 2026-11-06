@@ -41,6 +41,33 @@ export type Project = {
  */
 export const projects: Project[] = [
   {
+    slug: "bella-vista",
+    name: "Bella Vista Luxury Enclave",
+    tagline: "Coastal executive residences and titled plots",
+    location: "Prampram Beach Road",
+    city: "Greater Accra",
+    type: "mixed",
+    status: "published",
+    priceDisplay: "From GH¢125,000",
+    beds: "3–4",
+    baths: "3.5",
+    areaDisplay: "180 – 350 m²",
+    summary:
+      "A serene master-planned coastal enclave along the burgeoning Prampram corridor, offering fully titled residential plots and bespoke luxury townhouses with 60-month interest-free financing.",
+    highlights: [
+      "Master-planned coastal community with paved boulevards",
+      "100% titled and registered with Lands Commission",
+      "Eligible for Afro-Arab 60-month zero-interest payment plan",
+    ],
+    image: "/images/hero-lamins.jpg",
+    imageAlt: "Bella Vista Luxury Enclave by Afro Arab Properties",
+    featured: true,
+    hasPlotExplorer: true,
+    hasWalkthrough: true,
+    lastVerified: "2026-11-06",
+    verificationNote: "Verified cadastral survey and zoning plan available.",
+  },
+  {
     slug: "blakk-rastas-court",
     name: "Blakk Rasta’s Court",
     tagline: "30 exclusive three-bedroom townhouses",

@@ -64,7 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en-GH"
       className={`${manrope.variable} ${fraunces.variable} ${plex.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-sand-50 text-ink">
+      <body className="flex min-h-full flex-col bg-[#080E14] text-[#F4EFE6]">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}

@@ -61,19 +61,21 @@ export function EnquiryForm({
     <form
       onSubmit={onSubmit}
       className={cn(
-        "surface-lux rounded-[1.15rem] p-6 sm:p-8",
+        "rounded-[1.25rem] border border-white/10 bg-[#101822]/90 p-6 sm:p-8 text-[#F4EFE6] backdrop-blur-xl shadow-2xl",
         className,
       )}
       noValidate
     >
       <div className="mb-6">
-        <p className="eyebrow">Enquiry</p>
-        <h2 className="mt-3 font-display text-3xl text-forest-900">
-          {plotCode ? `Plot ${plotCode}` : "Book a viewing"}
+        <span className="inline-flex items-center gap-2 rounded-full border border-[#C5A059]/30 bg-black/40 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#C5A059]">
+          Direct Inquiry
+        </span>
+        <h2 className="mt-3 font-display text-3xl font-light text-white">
+          {plotCode ? `Reserve Plot ${plotCode}` : "Arrange a Private Viewing"}
         </h2>
-        <p className="mt-2 text-sm leading-relaxed text-stone-500">
-          We use your details only to respond to this enquiry. Read our{" "}
-          <a href="/privacy" className="text-forest-800 underline decoration-gold/50 underline-offset-4">
+        <p className="mt-2 text-sm leading-relaxed text-[#F4EFE6]/70">
+          We use your details only to respond to this inquiry. Read our{" "}
+          <a href="/privacy" className="text-[#C5A059] underline underline-offset-4">
             privacy policy
           </a>
           .
@@ -82,66 +84,73 @@ export function EnquiryForm({
 
       <div className={cn("grid gap-4", !compact && "sm:grid-cols-2")}>
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-forest-800">Full name</span>
+          <span className="mb-1.5 block text-xs uppercase tracking-wider text-[#F4EFE6]/70">Full name</span>
           <input
             name="fullName"
             required
             autoComplete="name"
-            className="h-12 w-full rounded-lg border border-sand-200 bg-sand-50/80 px-3.5 outline-none transition focus:border-forest-600 focus:bg-white"
+            placeholder="e.g. Samuel K. Mensah"
+            className="h-12 w-full rounded-lg border border-white/15 bg-black/40 px-3.5 text-white placeholder-white/30 outline-none transition focus:border-[#C5A059] focus:bg-black/60"
           />
         </label>
         <label className="block text-sm">
-          <span className="mb-1.5 block font-medium text-forest-800">Phone</span>
+          <span className="mb-1.5 block text-xs uppercase tracking-wider text-[#F4EFE6]/70">Phone / WhatsApp</span>
           <input
             name="phone"
             type="tel"
             required
             autoComplete="tel"
-            className="h-12 w-full rounded-lg border border-sand-200 bg-sand-50/80 px-3.5 outline-none transition focus:border-forest-600 focus:bg-white"
+            placeholder="+233 24 000 0000"
+            className="h-12 w-full rounded-lg border border-white/15 bg-black/40 px-3.5 text-white placeholder-white/30 outline-none transition focus:border-[#C5A059] focus:bg-black/60"
           />
         </label>
         <label className={cn("block text-sm", !compact && "sm:col-span-2")}>
-          <span className="mb-1.5 block font-medium text-forest-800">Email</span>
+          <span className="mb-1.5 block text-xs uppercase tracking-wider text-[#F4EFE6]/70">Email address</span>
           <input
             name="email"
             type="email"
             required
             autoComplete="email"
-            className="h-12 w-full rounded-lg border border-sand-200 bg-sand-50/80 px-3.5 outline-none transition focus:border-forest-600 focus:bg-white"
+            placeholder="samuel@example.com"
+            className="h-12 w-full rounded-lg border border-white/15 bg-black/40 px-3.5 text-white placeholder-white/30 outline-none transition focus:border-[#C5A059] focus:bg-black/60"
           />
         </label>
         <label className={cn("block text-sm", !compact && "sm:col-span-2")}>
-          <span className="mb-1.5 block font-medium text-forest-800">Message</span>
+          <span className="mb-1.5 block text-xs uppercase tracking-wider text-[#F4EFE6]/70">Message & Details</span>
           <textarea
             name="message"
             rows={compact ? 3 : 4}
-            className="w-full rounded-lg border border-sand-200 bg-sand-50/80 px-3.5 py-3 outline-none transition focus:border-forest-600 focus:bg-white"
-            placeholder="Preferred viewing day, budget, or questions…"
+            className="w-full rounded-lg border border-white/15 bg-black/40 px-3.5 py-3 text-white placeholder-white/30 outline-none transition focus:border-[#C5A059] focus:bg-black/60"
+            placeholder="Preferred viewing day, target corridor, or payment plan questions…"
           />
         </label>
       </div>
 
-      <label className="mt-5 flex items-start gap-3 text-sm leading-relaxed text-forest-800">
+      <label className="mt-5 flex items-start gap-3 text-xs leading-relaxed text-[#F4EFE6]/70 cursor-pointer">
         <input
           name="consent"
           type="checkbox"
           required
-          className="mt-1 h-4 w-4 rounded border-sand-200"
+          defaultChecked
+          className="mt-0.5 h-4 w-4 rounded accent-[#C5A059]"
         />
         <span>
           I consent to Afro Arab Properties processing my personal data to respond to this enquiry
-          under Ghana’s Data Protection Act 2012.
+          under Ghana’s Data Protection Act 2012 (Act 843).
         </span>
       </label>
 
-      <button type="submit" disabled={status === "loading"} className="btn-primary mt-6 w-full">
-        {status === "loading" ? "Sending…" : "Send enquiry"}
+      <button type="submit" disabled={status === "loading"} className="btn-gold mt-6 w-full text-center">
+        {status === "loading" ? "Submitting Inquiry..." : "Submit VIP Inquiry"}
       </button>
 
       {message ? (
         <p
           role="status"
-          className={cn("mt-3 text-sm", status === "ok" ? "text-forest-700" : "text-brand-red")}
+          className={cn(
+            "mt-3 text-sm text-center font-medium",
+            status === "ok" ? "text-[#00E676]" : "text-brand-red",
+          )}
         >
           {message}
         </p>

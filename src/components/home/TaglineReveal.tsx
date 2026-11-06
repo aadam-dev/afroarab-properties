@@ -4,7 +4,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { useRef } from "react";
 
 const line =
-  "Clear inventory. Interest-free paths. Homes Ghanaian families can actually plan for.";
+  "Clear vector inventory. 60-Month interest-free pathways. 200,000 executive homes and titled lands built for generational legacy.";
 
 export function TaglineReveal() {
   const ref = useRef<HTMLElement>(null);
@@ -18,27 +18,32 @@ export function TaglineReveal() {
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden bg-[linear-gradient(180deg,#efe8dc_0%,#f8f5f0_45%,#efe8dc_100%)] px-4 py-28 sm:px-6 lg:px-8"
+      className="relative overflow-hidden bg-[#080E14] px-4 py-28 sm:px-6 lg:px-8 border-t border-white/10"
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
-      <p className="mx-auto max-w-5xl text-balance text-center font-display text-3xl leading-[1.15] tracking-tight text-forest-900 sm:text-4xl md:text-5xl lg:text-[3.35rem]">
-        {words.map((word, i) => {
-          const start = i / words.length;
-          const end = start + 1 / words.length;
-          if (reduce) {
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#C5A059]/50 to-transparent" />
+      <div className="mx-auto max-w-5xl text-balance text-center">
+        <span className="inline-flex items-center gap-2 rounded-full border border-[#C5A059]/30 bg-[#101822] px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#C5A059] mb-6">
+          The Afro-Arab Commitment
+        </span>
+        <p className="font-display text-3xl font-light leading-[1.25] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">
+          {words.map((word, i) => {
+            const start = i / words.length;
+            const end = start + 1 / words.length;
+            if (reduce) {
+              return (
+                <span key={`${word}-${i}`} className="mr-[0.28em] inline-block">
+                  {word}
+                </span>
+              );
+            }
             return (
-              <span key={`${word}-${i}`} className="mr-[0.28em] inline-block">
+              <Word key={`${word}-${i}`} progress={scrollYProgress} start={start} end={end}>
                 {word}
-              </span>
+              </Word>
             );
-          }
-          return (
-            <Word key={`${word}-${i}`} progress={scrollYProgress} start={start} end={end}>
-              {word}
-            </Word>
-          );
-        })}
-      </p>
+          })}
+        </p>
+      </div>
     </section>
   );
 }

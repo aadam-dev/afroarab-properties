@@ -7,11 +7,11 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/cn";
 
 const nav = [
-  { href: "/projects", label: "Projects" },
-  { href: "/lands", label: "Lands" },
-  { href: "/payment-plans", label: "Payment Plans" },
+  { href: "/projects", label: "Estates" },
+  { href: "/#plot-explorer", label: "Plot Explorer" },
+  { href: "/#floor-plan", label: "Floor Plans" },
+  { href: "/#payment-calculator", label: "Payment Calculator" },
   { href: "/company", label: "Company" },
-  { href: "/insights", label: "Insights" },
 ];
 
 export function Header() {
@@ -19,12 +19,10 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const reduce = useReducedMotion();
-  const isHome = pathname === "/";
   const isExplorer = pathname.includes("/explorer");
-  const onDark = isHome || isExplorer || !scrolled;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -41,68 +39,52 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-[background,box-shadow,backdrop-filter] duration-300",
-        scrolled || !isHome
-          ? "border-b border-forest-900/8 bg-sand-50/90 shadow-[0_10px_40px_-28px_rgba(12,22,18,0.45)] backdrop-blur-xl"
-          : "bg-transparent",
+        "fixed inset-x-0 top-0 z-50 border-b transition-all duration-300",
+        scrolled
+          ? "border-white/10 bg-[#080E14]/90 shadow-[0_12px_40px_rgba(0,0,0,0.6)] backdrop-blur-xl"
+          : "border-white/5 bg-[#080E14]/65 backdrop-blur-md",
       )}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <Link
-          href="/"
-          className={cn(
-            "font-display text-xl font-semibold tracking-tight transition sm:text-2xl",
-            scrolled || !isHome ? "text-forest-950" : "text-white",
-          )}
-        >
-          Afro Arab
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-8">
+        {/* Afro-Arab Brand Typography Logo */}
+        <Link href="/" className="group flex items-center gap-2">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#C5A059]/40 bg-[#101822] font-display text-lg font-bold text-[#C5A059] shadow-[0_0_15px_rgba(197,160,89,0.3)] transition-transform duration-300 group-hover:scale-105">
+            AA
+          </span>
+          <span className="font-display text-xl font-light tracking-tight text-[#F4EFE6] sm:text-2xl">
+            Afro-Arab <span className="font-normal italic text-[#C5A059]">Properties</span>
+          </span>
         </Link>
 
+        {/* Primary Desktop Navigation Bar */}
         <nav
-          className={cn(
-            "hidden items-center gap-1 px-1.5 py-1 md:flex",
-            scrolled || !isHome
-              ? "rounded-full border border-forest-900/8 bg-white/70"
-              : "rounded-full bg-black/25 backdrop-blur-md",
-          )}
+          className="hidden items-center gap-1 rounded-full border border-white/10 bg-[#101822]/80 px-2 py-1 backdrop-blur-xl md:flex"
           aria-label="Primary"
         >
           {nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={cn(
-                "rounded-full px-3.5 py-2 text-sm font-medium transition",
-                scrolled || !isHome
-                  ? "text-forest-800 hover:bg-forest-900/5 hover:text-forest-950"
-                  : "text-sand-50/90 hover:bg-white/10 hover:text-white",
-              )}
+              className="rounded-full px-4 py-1.5 text-xs font-semibold tracking-wide text-[#F4EFE6]/80 transition-all hover:bg-white/10 hover:text-white"
             >
               {item.label}
             </Link>
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        {/* High-Contrast Gold Action Button & Mobile Menu Toggle */}
+        <div className="flex items-center gap-3">
           <Link
             href="/contact"
-            className={cn(
-              "hidden h-11 items-center rounded-lg px-4 text-sm font-semibold transition sm:inline-flex",
-              scrolled || !isHome
-                ? "bg-brand-red text-white hover:bg-brand-red-dark"
-                : "bg-brand-red text-white hover:bg-brand-red-dark",
-            )}
+            className="btn-gold hidden h-10 items-center rounded-lg px-5 text-xs font-bold sm:inline-flex"
           >
-            Book a viewing
+            Inquire Now
           </Link>
+
+          {/* Mobile Menu Button */}
           <button
             type="button"
-            className={cn(
-              "inline-flex h-11 w-11 items-center justify-center rounded-lg border backdrop-blur md:hidden",
-              onDark && isHome && !scrolled
-                ? "border-white/25 bg-forest-950/40 text-white"
-                : "border-forest-900/15 bg-white text-forest-900",
-            )}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 bg-[#101822] text-[#F4EFE6] backdrop-blur-md md:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
             onClick={() => setOpen((v) => !v)}
@@ -132,6 +114,7 @@ export function Header() {
         </div>
       </div>
 
+      {/* Mobile Slide-Down Drawer */}
       <AnimatePresence>
         {open ? (
           <motion.div
@@ -139,27 +122,29 @@ export function Header() {
             initial={reduce ? false : { opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? undefined : { opacity: 0, y: -8 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="border-t border-forest-900/10 bg-sand-50 px-4 py-4 md:hidden"
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="border-t border-white/10 bg-[#080E14]/95 px-5 py-5 shadow-2xl backdrop-blur-2xl md:hidden"
           >
-            <nav className="flex flex-col gap-1" aria-label="Mobile">
+            <nav className="flex flex-col gap-2" aria-label="Mobile Navigation">
               {nav.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="rounded-lg px-3 py-3 text-base font-medium text-forest-900"
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium text-[#F4EFE6] transition hover:bg-white/10"
                   onClick={() => setOpen(false)}
                 >
                   {item.label}
                 </Link>
               ))}
-              <Link
-                href="/contact"
-                className="mt-2 rounded-lg bg-brand-red px-3 py-3 text-center text-base font-semibold text-white"
-                onClick={() => setOpen(false)}
-              >
-                Book a viewing
-              </Link>
+              <div className="mt-3 border-t border-white/10 pt-4">
+                <Link
+                  href="/contact"
+                  className="btn-gold flex h-11 w-full items-center justify-center text-center text-sm font-bold"
+                  onClick={() => setOpen(false)}
+                >
+                  Inquire Now &bull; Private Viewing
+                </Link>
+              </div>
             </nav>
           </motion.div>
         ) : null}

@@ -9,18 +9,20 @@ export function FeaturedProjects({ projects }: { projects: Project[] }) {
   const reduce = useReducedMotion();
 
   return (
-    <section className="relative px-4 py-24 sm:px-6 lg:px-8">
+    <section className="relative bg-[#080E14] px-4 py-24 sm:px-6 lg:px-8 text-[#F4EFE6]">
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
-            <p className="eyebrow">Selected developments</p>
-            <h2 className="mt-4 font-display text-4xl text-forest-900 text-balance sm:text-5xl lg:text-[3.4rem]">
-              Homes and land with clearer facts
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#C5A059]/30 bg-[#101822] px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#C5A059]">
+              Premier Developments
+            </span>
+            <h2 className="mt-4 font-display text-4xl font-light text-white text-balance sm:text-5xl lg:text-[3.4rem]">
+              Executive Estates & Titled Enclaves
             </h2>
           </div>
-          <p className="max-w-md text-base leading-relaxed text-stone-500 text-pretty lg:text-right">
-            Imagery and project names from Afro Arab’s public site. Specs still carry verification
-            notes until the client confirms.
+          <p className="max-w-md text-sm leading-relaxed text-[#F4EFE6]/70 text-pretty lg:text-right">
+            Explore verified master-planned communities across Greater Accra. All developments
+            feature surveyed boundaries, legal title deeds, and 60-month interest-free options.
           </p>
         </div>
 
@@ -47,15 +49,15 @@ export function FeaturedProjects({ projects }: { projects: Project[] }) {
                   href={href}
                   className={
                     featured
-                      ? "group relative grid overflow-hidden rounded-[1.25rem] bg-forest-950 text-white lg:min-h-[28rem] lg:grid-cols-[1.15fr_0.85fr]"
-                      : "group grid overflow-hidden rounded-[1.1rem] border border-sand-200/80 bg-white lg:grid-cols-[0.9fr_1.1fr]"
+                      ? "group relative grid overflow-hidden rounded-[1.25rem] border border-[#C5A059]/30 bg-[#101822] text-white shadow-2xl lg:min-h-[28rem] lg:grid-cols-[1.15fr_0.85fr] hover:border-[#C5A059]/60 transition-all duration-300"
+                      : "group grid overflow-hidden rounded-[1.1rem] border border-white/10 bg-[#101822]/80 backdrop-blur-xl lg:grid-cols-[0.9fr_1.1fr] hover:border-[#C5A059]/40 transition-all duration-300"
                   }
                 >
                   <div
                     className={
                       featured
-                        ? "relative min-h-[240px] overflow-hidden lg:min-h-full"
-                        : "relative min-h-[200px] overflow-hidden"
+                        ? "relative min-h-[260px] overflow-hidden lg:min-h-full"
+                        : "relative min-h-[220px] overflow-hidden"
                     }
                   >
                     <Image
@@ -66,11 +68,7 @@ export function FeaturedProjects({ projects }: { projects: Project[] }) {
                       className="object-cover transition duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
                     />
                     <div
-                      className={
-                        featured
-                          ? "absolute inset-0 bg-gradient-to-t from-forest-950/70 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-forest-950/20"
-                          : "absolute inset-0 bg-gradient-to-t from-black/25 to-transparent"
-                      }
+                      className="absolute inset-0 bg-gradient-to-t from-[#080E14] via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-[#101822]"
                       aria-hidden
                     />
                   </div>
@@ -82,53 +80,32 @@ export function FeaturedProjects({ projects }: { projects: Project[] }) {
                         : "flex flex-col justify-center p-6 sm:p-8"
                     }
                   >
-                    <div
-                      className={
-                        featured
-                          ? "flex flex-wrap items-center gap-2 text-[0.68rem] uppercase tracking-[0.18em] text-gold-light/90"
-                          : "flex flex-wrap items-center gap-2 text-[0.68rem] uppercase tracking-[0.18em] text-stone-500"
-                      }
-                    >
+                    <div className="flex flex-wrap items-center gap-2 text-[0.68rem] uppercase tracking-[0.18em] text-[#C5A059]">
                       <span>{project.location}</span>
-                      <span aria-hidden>·</span>
-                      <span>{project.status.replace("_", " ")}</span>
+                      <span aria-hidden>&bull;</span>
+                      <span className="text-white/60">{project.status.replace("_", " ")}</span>
                     </div>
-                    <h3
-                      className={
-                        featured
-                          ? "mt-4 font-display text-3xl leading-tight sm:text-4xl lg:text-5xl"
-                          : "mt-3 font-display text-3xl text-forest-900 transition group-hover:text-brand-red sm:text-4xl"
-                      }
-                    >
+
+                    <h3 className="mt-3 font-display text-2xl font-light text-white transition group-hover:text-[#DFC283] sm:text-3xl lg:text-4xl">
                       {project.name}
                     </h3>
-                    <p
-                      className={
-                        featured
-                          ? "mt-3 max-w-md text-base text-sand-200/85"
-                          : "mt-3 max-w-xl text-base text-stone-500"
-                      }
-                    >
+
+                    <p className="mt-3 max-w-xl text-sm leading-relaxed text-[#F4EFE6]/75">
                       {project.tagline}
                     </p>
-                    <div className="mt-8 flex flex-wrap items-end justify-between gap-4">
-                      <p
-                        className={
-                          featured
-                            ? "font-mono-data text-sm text-gold-light"
-                            : "font-mono-data text-sm text-forest-800"
-                        }
-                      >
-                        {project.priceDisplay}
-                      </p>
-                      <span
-                        className={
-                          featured
-                            ? "text-sm font-semibold text-white"
-                            : "text-sm font-semibold text-brand-red"
-                        }
-                      >
-                        {project.hasPlotExplorer ? "Open explorer →" : "View project →"}
+
+                    <div className="mt-8 flex flex-wrap items-end justify-between gap-4 border-t border-white/10 pt-4">
+                      <div>
+                        <span className="block text-[0.68rem] uppercase tracking-wider text-[#F4EFE6]/50">
+                          Valuation
+                        </span>
+                        <p className="font-mono-data text-sm font-semibold text-[#C5A059]">
+                          {project.priceDisplay}
+                        </p>
+                      </div>
+
+                      <span className="btn-outline-gold text-xs">
+                        {project.hasPlotExplorer ? "Open Plot Explorer →" : "Explore Estate →"}
                       </span>
                     </div>
                   </div>

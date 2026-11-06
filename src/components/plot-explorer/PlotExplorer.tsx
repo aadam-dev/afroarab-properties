@@ -1,476 +1,509 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { getPosition as getSunPosition } from "suncalc";
 import {
-  demoPlots,
-  plotLegend,
   statusColor,
   statusLabel,
+  estateNames,
+  estateSlugs,
   type Plot,
   type PlotStatus,
 } from "@/data/plots";
-import { EnquiryForm } from "@/components/site/EnquiryForm";
+import { usePlotStore, type FilterStatus } from "@/store/usePlotStore";
+import { usePlotFilter } from "@/hooks/usePlotFilter";
+import { PlotDetailDrawer } from "./PlotDetailDrawer";
 import { cn } from "@/lib/cn";
 
 const PlotScene = dynamic(() => import("./PlotScene").then((m) => m.PlotScene), {
   ssr: false,
   loading: () => (
-    <div className="flex h-full items-center justify-center bg-forest-950 text-sm text-sand-200">
-      Loading 3D view…
+    <div className="flex h-full min-h-[440px] items-center justify-center bg-[#080E14] text-sm text-[#DFC283]">
+      <div className="flex flex-col items-center gap-3">
+        <div className="h-7 w-7 animate-spin rounded-full border-2 border-[#C5A059] border-t-transparent" />
+        <span>Initializing 3D Spatial Canvas…</span>
+      </div>
     </div>
   ),
 });
 
-type Mode = "plan" | "3d";
-type Facing = "N" | "E" | "S" | "W";
+const SIZE_OPTIONS = ["All", "30×40", "40×40", "35×50", "40×50"] as const;
 
-const SIZE_OPTIONS = ["30×40", "40×40", "35×50", "40×50"] as const;
-
-function sizeKey(p: Plot) {
-  return `${p.widthFt}×${p.depthFt}`;
-}
-
-function formatPrice(n: number) {
-  return `GH¢${n.toLocaleString("en-GH")}`;
-}
-
-export function PlotExplorer({ projectSlug }: { projectSlug: string }) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const allPlots = useMemo(
-    () => demoPlots.filter((p) => p.projectSlug === projectSlug),
-    [projectSlug],
-  );
-
-  const [mode, setMode] = useState<Mode>("plan");
-  const [query, setQuery] = useState("");
-  const [facing, setFacing] = useState<Facing | null>(null);
-  const [size, setSize] = useState<string | null>(null);
-  const [availableOnly, setAvailableOnly] = useState(false);
-  const [cornerOnly, setCornerOnly] = useState(false);
-  const [selectedCode, setSelectedCode] = useState<string | null>(
-    searchParams.get("plot"),
-  );
-  const [hour, setHour] = useState(10);
-  const [sunPlaying, setSunPlaying] = useState(false);
-
-  useEffect(() => {
-    const fromUrl = searchParams.get("plot");
-    if (fromUrl) setSelectedCode(fromUrl);
-  }, [searchParams]);
-
-  const selectPlot = useCallback(
-    (code: string | null) => {
-      setSelectedCode(code);
-      const params = new URLSearchParams(searchParams.toString());
-      if (code) params.set("plot", code);
-      else params.delete("plot");
-      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-    },
-    [pathname, router, searchParams],
-  );
-
-  const filtered = useMemo(() => {
-    return allPlots.filter((p) => {
-      if (query && !p.code.includes(query.trim())) return false;
-      if (facing && p.facing !== facing) return false;
-      if (size && sizeKey(p) !== size.replace("×", "×")) {
-        const normalized = size.replace("x", "×").replace("X", "×");
-        if (sizeKey(p) !== normalized) return false;
-      }
-      if (availableOnly && p.status !== "available") return false;
-      if (cornerOnly && !p.isCorner) return false;
-      return true;
-    });
-  }, [allPlots, availableOnly, cornerOnly, facing, query, size]);
-
-  const selected = allPlots.find((p) => p.code === selectedCode) ?? null;
-  const legend = plotLegend(allPlots);
-
-  // Demo Accra-ish coordinates; replace with surveyed lat/long
-  const sun = getSunPosition(
-    new Date(new Date().setHours(hour, 0, 0, 0)),
-    5.6037,
-    -0.187,
-  );
-  const sunAltitudeDeg = (sun.altitude * 180) / Math.PI;
-  const sunAzimuthDeg = ((sun.azimuth * 180) / Math.PI + 180) % 360;
+export function PlotExplorer({
+  initialProjectSlug,
+  projectSlug,
+}: {
+  initialProjectSlug?: string;
+  projectSlug?: string;
+}) {
+  const targetSlug = initialProjectSlug || projectSlug;
+  const {
+    activeEstate,
+    setActiveEstate,
+    selectedPlotCode,
+    selectPlot,
+    statusFilter,
+    setStatusFilter,
+    sizeFilter,
+    setSizeFilter,
+    budgetMax,
+    setBudgetMax,
+    searchQuery,
+    setSearchQuery,
+    facingFilter,
+    setFacingFilter,
+    cornerOnly,
+    setCornerOnly,
+    viewMode,
+    setViewMode,
+    isDrawerOpen,
+    setDrawerOpen,
+    zoomLevel,
+    zoomIn,
+    zoomOut,
+    resetZoom,
+    resetFilters,
+  } = usePlotStore();
 
   useEffect(() => {
-    if (!sunPlaying) return;
-    const id = window.setInterval(() => {
-      setHour((h) => (h >= 18 ? 6 : h + 1));
-    }, 900);
-    return () => window.clearInterval(id);
-  }, [sunPlaying]);
+    if (targetSlug) {
+      setActiveEstate(targetSlug);
+    }
+  }, [targetSlug, setActiveEstate]);
 
+  const { estatePlots, filteredPlots, selectedPlot, counts } = usePlotFilter();
+
+  // Bounding box for SVG canvas
   const bounds = useMemo(() => {
-    const pts = allPlots.flatMap((p) => p.polygon);
+    if (estatePlots.length === 0) {
+      return { minX: 0, maxX: 100, minY: 0, maxY: 100 };
+    }
+    const pts = estatePlots.flatMap((p) => p.polygon);
     const xs = pts.map((p) => p[0]);
     const ys = pts.map((p) => p[1]);
     return {
-      minX: Math.min(...xs) - 4,
-      maxX: Math.max(...xs) + 4,
-      minY: Math.min(...ys) - 4,
-      maxY: Math.max(...ys) + 4,
+      minX: Math.min(...xs) - 8,
+      maxX: Math.max(...xs) + 8,
+      minY: Math.min(...ys) - 8,
+      maxY: Math.max(...ys) + 8,
     };
-  }, [allPlots]);
+  }, [estatePlots]);
 
   const viewBox = `${bounds.minX} ${bounds.minY} ${bounds.maxX - bounds.minX} ${bounds.maxY - bounds.minY}`;
 
   return (
-    <div className="flex min-h-[100svh] flex-col bg-forest-950 pt-20 text-sand-50">
-      <div className="mx-auto flex w-full max-w-[1600px] flex-1 flex-col gap-3 px-3 pb-4 sm:px-4 lg:px-6">
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 px-3 py-3 backdrop-blur">
+    <section id="plot-explorer" className="relative bg-[#080E14] py-16 text-[#F4EFE6]">
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <p className="text-xs uppercase tracking-[0.16em] text-gold">Plot explorer</p>
-            <h1 className="font-display text-2xl text-white sm:text-3xl">Demo Estate</h1>
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#C5A059]/30 bg-[#101822] px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#C5A059]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#00E676]" />
+              Interactive Vector Engine
+            </div>
+            <h2 className="mt-3 font-display text-3xl font-light text-[#F4EFE6] sm:text-4xl lg:text-5xl">
+              Live Masterplan Plot Explorer
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm text-[#F4EFE6]/70 sm:text-base">
+              Inspect surveyed estate boundaries in real time. Select individual titled plots
+              to verify dimensions, cardinal orientation, and 60-month interest-free schedules.
+            </p>
           </div>
-          <form
-            className="flex min-w-[220px] flex-1 items-center gap-2 sm:max-w-sm"
-            onSubmit={(e) => {
-              e.preventDefault();
-              const match = allPlots.find((p) => p.code === query.trim());
-              if (match) selectPlot(match.code);
-            }}
-          >
-            <label className="sr-only" htmlFor="plot-search">
-              Plot number
+
+          {/* Estate Selector Dropdown / Pills */}
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+            <label htmlFor="estate-select" className="text-xs uppercase tracking-wider text-[#F4EFE6]/60">
+              Active Masterplan:
             </label>
-            <input
-              id="plot-search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Go to plot no."
-              className="h-11 w-full rounded-lg border border-white/15 bg-forest-900/80 px-3 text-sm text-white outline-none"
-            />
-            <button
-              type="submit"
-              className="h-11 rounded-lg bg-forest-600 px-4 text-sm font-semibold text-white"
+            <select
+              id="estate-select"
+              value={activeEstate}
+              onChange={(e) => setActiveEstate(e.target.value)}
+              className="h-11 rounded-xl border border-white/15 bg-[#101822] px-4 text-sm font-semibold text-[#DFC283] outline-none transition hover:border-[#C5A059] focus:border-[#C5A059]"
             >
-              Go
-            </button>
-          </form>
-          <div className="flex flex-wrap gap-2" role="group" aria-label="View mode">
-            {(
-              [
-                ["plan", "Plan"],
-                ["3d", "3D"],
-              ] as const
-            ).map(([value, label]) => (
-              <button
-                key={value}
-                type="button"
-                aria-pressed={mode === value}
-                onClick={() => setMode(value)}
-                className={cn(
-                  "h-11 rounded-lg px-4 text-sm font-semibold",
-                  mode === value ? "bg-brand-red text-white" : "bg-white/10 text-white",
-                )}
-              >
-                {label}
-              </button>
-            ))}
+              {estateSlugs.map((slug) => (
+                <option key={slug} value={slug} className="bg-[#101822] text-white">
+                  {estateNames[slug] ?? slug}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
-        <div className="grid flex-1 gap-3 lg:grid-cols-[220px_minmax(0,1fr)_320px]">
-          <aside className="rounded-2xl border border-white/10 bg-white/5 p-4">
-            <h2 className="text-sm font-semibold text-white">Find a plot</h2>
-            <p className="mt-1 text-xs text-sand-200/70">
-              {filtered.length} of {allPlots.length} plots
-            </p>
-
-            <fieldset className="mt-4">
-              <legend className="text-xs uppercase tracking-[0.14em] text-sand-200/70">
-                Facing
-              </legend>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {(["N", "E", "S", "W"] as Facing[]).map((f) => (
+        {/* Real-Time Filter Toolbar */}
+        <div className="mt-8 rounded-2xl border border-white/10 bg-[#101822]/80 p-4 backdrop-blur-xl">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            {/* Status Pills */}
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="mr-2 text-xs uppercase tracking-wider text-[#F4EFE6]/50">Status:</span>
+              {(
+                [
+                  ["all", "All", counts.total],
+                  ["available", "Available", counts.available],
+                  ["reserved", "Reserved", counts.reserved],
+                  ["sold", "Sold Out", counts.sold],
+                ] as const
+              ).map(([statusKey, label, count]) => {
+                const isActive = statusFilter === statusKey;
+                return (
                   <button
-                    key={f}
+                    key={statusKey}
                     type="button"
-                    aria-pressed={facing === f}
-                    onClick={() => setFacing((v) => (v === f ? null : f))}
+                    onClick={() => setStatusFilter(statusKey as FilterStatus)}
                     className={cn(
-                      "h-10 min-w-10 rounded-lg px-3 text-sm font-semibold",
-                      facing === f ? "bg-gold text-forest-950" : "bg-white/10",
+                      "flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all",
+                      isActive
+                        ? "bg-[#C5A059] text-[#080E14] shadow-[0_2px_12px_rgba(197,160,89,0.4)]"
+                        : "bg-white/5 text-[#F4EFE6]/80 hover:bg-white/10 hover:text-white",
                     )}
                   >
-                    {f}
-                  </button>
-                ))}
-              </div>
-            </fieldset>
-
-            <fieldset className="mt-4">
-              <legend className="text-xs uppercase tracking-[0.14em] text-sand-200/70">
-                Size (ft)
-              </legend>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {SIZE_OPTIONS.map((s) => (
-                  <button
-                    key={s}
-                    type="button"
-                    aria-pressed={size === s}
-                    onClick={() => setSize((v) => (v === s ? null : s))}
-                    className={cn(
-                      "h-10 rounded-lg px-3 text-sm font-semibold",
-                      size === s ? "bg-gold text-forest-950" : "bg-white/10",
-                    )}
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-            </fieldset>
-
-            <div className="mt-4 space-y-2">
-              <label className="flex min-h-11 items-center gap-2 text-sm">
-                <input
-                  type="checkbox"
-                  checked={availableOnly}
-                  onChange={(e) => setAvailableOnly(e.target.checked)}
-                />
-                Available only
-              </label>
-              <label className="flex min-h-11 items-center gap-2 text-sm">
-                <input
-                  type="checkbox"
-                  checked={cornerOnly}
-                  onChange={(e) => setCornerOnly(e.target.checked)}
-                />
-                Corner plots
-              </label>
-            </div>
-
-            <button
-              type="button"
-              className="mt-4 text-sm text-gold underline underline-offset-2"
-              onClick={() => {
-                setFacing(null);
-                setSize(null);
-                setAvailableOnly(false);
-                setCornerOnly(false);
-                setQuery("");
-              }}
-            >
-              Clear all
-            </button>
-
-            <div className="mt-6 space-y-2 text-sm" aria-live="polite">
-              {(Object.keys(legend) as Array<keyof typeof legend>).map((key) => (
-                <div key={key} className="flex items-center justify-between gap-2">
-                  <span className="inline-flex items-center gap-2">
+                    <span>{label}</span>
                     <span
-                      className="inline-block h-2.5 w-2.5 rounded-full"
-                      style={{ background: statusColor[key as PlotStatus] }}
-                      aria-hidden
-                    />
-                    {statusLabel[key as PlotStatus]}
-                  </span>
-                  <span className="font-mono-data">{legend[key]}</span>
-                </div>
-              ))}
-            </div>
-          </aside>
-
-          <section className="relative min-h-[420px] overflow-hidden rounded-2xl border border-white/10 bg-forest-900">
-            {mode === "plan" ? (
-              <svg
-                viewBox={viewBox}
-                className="h-full w-full"
-                role="img"
-                aria-label="Interactive site plan. Select a plot to view details."
-              >
-                <rect
-                  x={bounds.minX}
-                  y={bounds.minY}
-                  width={bounds.maxX - bounds.minX}
-                  height={bounds.maxY - bounds.minY}
-                  fill="#15261d"
-                />
-                {allPlots.map((plot) => {
-                  const active = filtered.some((f) => f.id === plot.id);
-                  const points = plot.polygon.map((p) => p.join(",")).join(" ");
-                  const cx =
-                    plot.polygon.reduce((n, p) => n + p[0], 0) / plot.polygon.length;
-                  const cy =
-                    plot.polygon.reduce((n, p) => n + p[1], 0) / plot.polygon.length;
-                  return (
-                    <g key={plot.id}>
-                      <polygon
-                        points={points}
-                        tabIndex={active ? 0 : -1}
-                        role="button"
-                        aria-label={`Plot ${plot.code}, ${statusLabel[plot.status]}, ${plot.widthFt} by ${plot.depthFt} feet`}
-                        aria-pressed={selectedCode === plot.code}
-                        fill={statusColor[plot.status]}
-                        fillOpacity={active ? 0.85 : 0.18}
-                        stroke={selectedCode === plot.code ? "#f7f4ef" : "#0f1c16"}
-                        strokeWidth={selectedCode === plot.code ? 0.7 : 0.35}
-                        className="cursor-pointer outline-none"
-                        onClick={() => active && selectPlot(plot.code)}
-                        onKeyDown={(e) => {
-                          if (!active) return;
-                          if (e.key === "Enter" || e.key === " ") {
-                            e.preventDefault();
-                            selectPlot(plot.code);
-                          }
-                        }}
-                      />
-                      <text
-                        x={cx}
-                        y={cy}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                        fill="#fff"
-                        fontSize="2.4"
-                        fontFamily="IBM Plex Mono, monospace"
-                        pointerEvents="none"
-                        opacity={active ? 1 : 0.35}
-                      >
-                        {plot.code}
-                      </text>
-                    </g>
-                  );
-                })}
-              </svg>
-            ) : (
-              <PlotScene
-                plots={filtered}
-                allPlots={allPlots}
-                selectedCode={selectedCode}
-                onSelect={selectPlot}
-                sunAltitude={sunAltitudeDeg}
-                sunAzimuth={sunAzimuthDeg}
-              />
-            )}
-
-            <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-forest-950/80 px-3 py-2 text-xs text-sand-100">
-              Tap a plot for details · keyboard supported in Plan mode
-            </div>
-          </section>
-
-          <aside className="space-y-3">
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-              <h2 className="text-sm font-semibold text-white">Sun path</h2>
-              <p className="mt-1 text-xs text-sand-200/70">
-                Indicative only. Based on Accra coordinates and today’s date until surveyed
-                site north is provided.
-              </p>
-              <label className="mt-3 block text-xs text-sand-200/80">
-                Time of day: {String(hour).padStart(2, "0")}:00
-                <input
-                  type="range"
-                  min={6}
-                  max={18}
-                  value={hour}
-                  onChange={(e) => setHour(Number(e.target.value))}
-                  className="mt-2 w-full"
-                  aria-valuemin={6}
-                  aria-valuemax={18}
-                  aria-valuenow={hour}
-                />
-              </label>
-              <p className="mt-2 font-mono-data text-xs text-sand-100">
-                Alt {sunAltitudeDeg.toFixed(1)}° · Az {sunAzimuthDeg.toFixed(1)}°
-              </p>
-              <button
-                type="button"
-                className="mt-3 h-10 rounded-lg bg-white/10 px-3 text-sm font-semibold"
-                onClick={() => setSunPlaying((v) => !v)}
-              >
-                {sunPlaying ? "Pause" : "Play"}
-              </button>
-            </div>
-
-            <div className="max-h-[280px] overflow-auto rounded-2xl border border-white/10 bg-white/5">
-              <ul className="divide-y divide-white/10" aria-label="Plot list">
-                {filtered.map((plot) => (
-                  <li key={plot.id}>
-                    <button
-                      type="button"
-                      onClick={() => selectPlot(plot.code)}
                       className={cn(
-                        "flex w-full items-center justify-between gap-2 px-3 py-3 text-left text-sm",
-                        selectedCode === plot.code && "bg-white/10",
+                        "rounded-full px-1.5 py-0.2 text-[0.65rem] font-bold",
+                        isActive ? "bg-[#080E14]/20 text-[#080E14]" : "bg-black/30 text-[#DFC283]",
                       )}
                     >
-                      <span>
-                        Plot {plot.code}
-                        <span className="mt-0.5 block text-xs text-sand-200/70">
-                          {sizeKey(plot)} · {plot.facing}-facing
-                        </span>
-                      </span>
-                      <span className="font-mono-data text-xs">
-                        {statusLabel[plot.status]}
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
 
-            {selected ? (
-              <div className="rounded-2xl border border-white/10 bg-white p-4 text-ink">
-                <p className="text-xs uppercase tracking-[0.14em] text-stone-500">
-                  Plot {selected.code}
-                </p>
-                <p className="mt-1 font-display text-2xl text-forest-900">
-                  {formatPrice(selected.priceGhs)}
-                </p>
-                <dl className="mt-3 grid grid-cols-2 gap-2 text-sm">
-                  <div>
-                    <dt className="text-stone-500">Size</dt>
-                    <dd className="font-mono-data">{sizeKey(selected)} ft</dd>
-                  </div>
-                  <div>
-                    <dt className="text-stone-500">Area</dt>
-                    <dd className="font-mono-data">{selected.areaSqm} m²</dd>
-                  </div>
-                  <div>
-                    <dt className="text-stone-500">Facing</dt>
-                    <dd>{selected.facing}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-stone-500">Status</dt>
-                    <dd>{statusLabel[selected.status]}</dd>
-                  </div>
-                </dl>
-                <p className="mt-2 text-sm text-stone-500">{selected.roadAccess}</p>
-                {selected.status === "available" ? (
-                  <div className="mt-4">
-                    <EnquiryForm
-                      compact
-                      projectSlug={projectSlug}
-                      plotCode={selected.code}
-                      intent="plot"
-                    />
-                  </div>
-                ) : (
-                  <p className="mt-4 text-sm text-stone-500">
-                    This plot is {statusLabel[selected.status].toLowerCase()}.{" "}
-                    <Link href="/contact" className="underline">
-                      Ask sales about alternatives
-                    </Link>
-                    .
-                  </p>
+            {/* View Mode Toggle (2D Plan vs 3D) */}
+            <div className="flex items-center rounded-xl border border-white/10 bg-black/40 p-1">
+              <button
+                type="button"
+                onClick={() => setViewMode("plan")}
+                className={cn(
+                  "flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-xs font-semibold transition",
+                  viewMode === "plan"
+                    ? "bg-[#C5A059] text-[#080E14]"
+                    : "text-[#F4EFE6]/70 hover:text-white",
                 )}
+              >
+                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                </svg>
+                2D Plan
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode("3d")}
+                className={cn(
+                  "flex items-center gap-1.5 rounded-lg px-3.5 py-1.5 text-xs font-semibold transition",
+                  viewMode === "3d"
+                    ? "bg-[#C5A059] text-[#080E14]"
+                    : "text-[#F4EFE6]/70 hover:text-white",
+                )}
+              >
+                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
+                3D Terrain
+              </button>
+            </div>
+          </div>
+
+          {/* Secondary Controls: Size, Budget, Search */}
+          <div className="mt-4 grid grid-cols-1 gap-4 border-t border-white/5 pt-4 sm:grid-cols-2 lg:grid-cols-4">
+            {/* Search by plot number */}
+            <div>
+              <label htmlFor="plot-query" className="block text-[0.7rem] uppercase tracking-wider text-[#F4EFE6]/60">
+                Search Plot Code:
+              </label>
+              <input
+                id="plot-query"
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="e.g. 12 or BV-04"
+                className="mt-1 h-9 w-full rounded-lg border border-white/10 bg-black/40 px-3 text-xs text-white placeholder-white/30 outline-none focus:border-[#C5A059]"
+              />
+            </div>
+
+            {/* Size filter */}
+            <div>
+              <span className="block text-[0.7rem] uppercase tracking-wider text-[#F4EFE6]/60">
+                Dimensions:
+              </span>
+              <div className="mt-1 flex gap-1">
+                {SIZE_OPTIONS.map((sz) => {
+                  const isCurrent = sz === "All" ? sizeFilter === null : sizeFilter === sz;
+                  return (
+                    <button
+                      key={sz}
+                      type="button"
+                      onClick={() => setSizeFilter(sz === "All" ? null : sz)}
+                      className={cn(
+                        "rounded px-2.5 py-1 text-[0.7rem] font-semibold transition",
+                        isCurrent
+                          ? "bg-[#C5A059]/25 text-[#DFC283] border border-[#C5A059]"
+                          : "bg-white/5 text-[#F4EFE6]/70 hover:bg-white/10",
+                      )}
+                    >
+                      {sz}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Budget slider */}
+            <div>
+              <div className="flex justify-between text-[0.7rem] uppercase tracking-wider text-[#F4EFE6]/60">
+                <span>Max Budget:</span>
+                <span className="font-mono-data text-[#DFC283]">
+                  GH¢{budgetMax.toLocaleString("en-GH")}
+                </span>
+              </div>
+              <input
+                type="range"
+                min={70000}
+                max={200000}
+                step={5000}
+                value={budgetMax}
+                onChange={(e) => setBudgetMax(Number(e.target.value))}
+                className="mt-2 w-full accent-[#C5A059]"
+              />
+            </div>
+
+            {/* Quick Reset */}
+            <div className="flex items-end justify-end">
+              <button
+                type="button"
+                onClick={resetFilters}
+                className="text-xs text-[#C5A059] underline underline-offset-4 hover:text-white transition"
+              >
+                Reset All Filters
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Masterplan Canvas Area */}
+        <div className="relative mt-6 overflow-hidden rounded-2xl border border-white/10 bg-[#0A121A] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)]">
+          {/* Zoom & View Controls Overlay */}
+          <div className="absolute top-4 right-4 z-20 flex flex-col gap-1.5 rounded-xl border border-white/10 bg-[#080E14]/85 p-1.5 backdrop-blur-md">
+            <button
+              type="button"
+              onClick={zoomIn}
+              title="Zoom In"
+              aria-label="Zoom In"
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-white hover:bg-white/10"
+            >
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              onClick={zoomOut}
+              title="Zoom Out"
+              aria-label="Zoom Out"
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-white hover:bg-white/10"
+            >
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              onClick={resetZoom}
+              title="Reset Zoom"
+              aria-label="Reset Zoom"
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-[0.65rem] font-bold text-[#C5A059] hover:bg-white/10"
+            >
+              1:1
+            </button>
+          </div>
+
+          {/* Compass Rose Overlay */}
+          <div className="pointer-events-none absolute bottom-4 left-4 z-20 flex items-center gap-2 rounded-xl border border-white/10 bg-[#080E14]/85 px-3 py-2 backdrop-blur-md">
+            <div className="relative flex h-7 w-7 items-center justify-center rounded-full border border-[#C5A059]/40 bg-black/40">
+              <span className="text-[0.65rem] font-bold text-[#C5A059]">N</span>
+              <div className="absolute -top-1 h-2 w-0.5 bg-[#C5A059]" />
+            </div>
+            <div className="text-[0.7rem] leading-tight text-[#F4EFE6]/70">
+              <span className="font-semibold text-white">Cadastral Grid</span>
+              <br />
+              WGS84 Coordinates
+            </div>
+          </div>
+
+          {/* Canvas Rendering */}
+          <div className="min-h-[520px] w-full overflow-auto p-4 flex items-center justify-center">
+            {viewMode === "plan" ? (
+              <div
+                style={{
+                  transform: `scale(${zoomLevel})`,
+                  transformOrigin: "center center",
+                  transition: "transform 0.25s ease-out",
+                }}
+                className="w-full max-w-[1200px]"
+              >
+                <svg
+                  viewBox={viewBox}
+                  className="h-auto w-full select-none"
+                  role="img"
+                  aria-label={`${estateNames[activeEstate] ?? "Afro-Arab"} estate site plan`}
+                >
+                  <defs>
+                    <pattern id="grid-pattern" width="10" height="10" patternUnits="userSpaceOnUse">
+                      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
+                    </pattern>
+                  </defs>
+
+                  {/* Estate Site Boundary Ground */}
+                  <rect
+                    x={bounds.minX}
+                    y={bounds.minY}
+                    width={bounds.maxX - bounds.minX}
+                    height={bounds.maxY - bounds.minY}
+                    fill="#0F1722"
+                    stroke="#1C2735"
+                    strokeWidth="1"
+                    rx="4"
+                  />
+                  <rect
+                    x={bounds.minX}
+                    y={bounds.minY}
+                    width={bounds.maxX - bounds.minX}
+                    height={bounds.maxY - bounds.minY}
+                    fill="url(#grid-pattern)"
+                  />
+
+                  {/* Access Roads Labeling */}
+                  <text
+                    x={(bounds.minX + bounds.maxX) / 2}
+                    y={bounds.minY + 4}
+                    textAnchor="middle"
+                    fill="rgba(197, 160, 89, 0.4)"
+                    fontSize="3"
+                    fontFamily="Plus Jakarta Sans, sans-serif"
+                    letterSpacing="1"
+                  >
+                    MAIN BOULEVARD &bull; 12M DUAL CARRIAGEWAY
+                  </text>
+
+                  {/* Render Plots */}
+                  {estatePlots.map((plot) => {
+                    const isFiltered = filteredPlots.some((f) => f.id === plot.id);
+                    const isSelected = selectedPlotCode === plot.code;
+                    const points = plot.polygon.map((p) => p.join(",")).join(" ");
+                    const cx = plot.polygon.reduce((n, p) => n + p[0], 0) / plot.polygon.length;
+                    const cy = plot.polygon.reduce((n, p) => n + p[1], 0) / plot.polygon.length;
+                    const fillColor = statusColor[plot.status];
+
+                    return (
+                      <g key={plot.id} className="transition-all duration-200">
+                        <polygon
+                          points={points}
+                          tabIndex={isFiltered ? 0 : -1}
+                          role="button"
+                          aria-label={`Plot ${plot.code}, ${statusLabel[plot.status]}, ${plot.widthFt} by ${plot.depthFt} feet`}
+                          aria-pressed={isSelected}
+                          fill={fillColor}
+                          fillOpacity={isFiltered ? (isSelected ? 0.95 : 0.65) : 0.12}
+                          stroke={isSelected ? "#FFFFFF" : isFiltered ? fillColor : "#1F2937"}
+                          strokeWidth={isSelected ? 1.2 : 0.6}
+                          className={cn(
+                            "cursor-pointer outline-none transition-all duration-150",
+                            isFiltered ? "hover:fill-opacity-90 hover:stroke-white" : "cursor-not-allowed",
+                          )}
+                          onClick={() => {
+                            if (isFiltered) selectPlot(plot.code);
+                          }}
+                          onKeyDown={(e) => {
+                            if (!isFiltered) return;
+                            if (e.key === "Enter" || e.key === " ") {
+                              e.preventDefault();
+                              selectPlot(plot.code);
+                            }
+                          }}
+                        />
+
+                        {/* Plot Number & Dimension Label */}
+                        <text
+                          x={cx}
+                          y={cy - 1.2}
+                          textAnchor="middle"
+                          dominantBaseline="middle"
+                          fill={isSelected ? "#080E14" : "#FFFFFF"}
+                          fontSize="2.4"
+                          fontWeight={isSelected ? "bold" : "600"}
+                          fontFamily="IBM Plex Mono, monospace"
+                          pointerEvents="none"
+                          opacity={isFiltered ? 1 : 0.3}
+                        >
+                          {plot.code}
+                        </text>
+                        <text
+                          x={cx}
+                          y={cy + 2.2}
+                          textAnchor="middle"
+                          dominantBaseline="middle"
+                          fill={isSelected ? "#080E14" : "rgba(255,255,255,0.7)"}
+                          fontSize="1.6"
+                          fontFamily="Plus Jakarta Sans, sans-serif"
+                          pointerEvents="none"
+                          opacity={isFiltered ? 1 : 0.25}
+                        >
+                          {plot.widthFt}×{plot.depthFt}
+                        </text>
+                      </g>
+                    );
+                  })}
+                </svg>
               </div>
             ) : (
-              <div className="rounded-2xl border border-dashed border-white/15 p-4 text-sm text-sand-200/80">
-                Select a plot on the plan or from the list to see pricing and enquire.
+              <div className="h-[520px] w-full">
+                <PlotScene
+                  plots={filteredPlots}
+                  allPlots={estatePlots}
+                  selectedCode={selectedPlotCode}
+                  onSelect={selectPlot}
+                  sunAltitude={35}
+                  sunAzimuth={140}
+                />
               </div>
             )}
-          </aside>
+          </div>
+
+          {/* Bottom Interactive Legend Strip */}
+          <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/10 bg-[#080E14]/90 px-6 py-3.5 backdrop-blur-md">
+            <div className="flex flex-wrap items-center gap-6 text-xs text-[#F4EFE6]/70">
+              <span className="font-semibold text-white">Status Key:</span>
+              <span className="inline-flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-full bg-[#00E676]" />
+                Available ({counts.available})
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-full bg-[#FFB300]" />
+                Reserved ({counts.reserved})
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-full bg-[#374151]" />
+                Sold Out ({counts.sold})
+              </span>
+            </div>
+
+            <div className="text-xs text-[#DFC283]">
+              Click any plot polygon to open 60-Month Payment Schedule
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Slide-over Detail Drawer */}
+      {isDrawerOpen && (
+        <PlotDetailDrawer
+          plot={selectedPlot}
+          estateName={estateNames[activeEstate] ?? "Afro-Arab Estate"}
+          onClose={() => setDrawerOpen(false)}
+        />
+      )}
+    </section>
   );
 }

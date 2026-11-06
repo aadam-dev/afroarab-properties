@@ -77,34 +77,66 @@ const sizes = [
   { widthFt: 40, depthFt: 50 },
 ];
 
-export const demoPlots: Plot[] = Array.from({ length: 24 }, (_, i) => {
-  const col = i % 6;
-  const row = Math.floor(i / 6);
-  const size = sizes[i % sizes.length];
-  const areaSqm = Math.round(size.widthFt * size.depthFt * 0.092903);
-  return {
-    id: `demo-${i + 1}`,
-    projectSlug: "titled-lands-green-valley",
-    code: String(i + 1),
-    status: statuses[i],
-    widthFt: size.widthFt,
-    depthFt: size.depthFt,
-    areaSqm,
-    facing: facings[i % facings.length],
-    isCorner: col === 0 || col === 5 || row === 0 || row === 3,
-    priceGhs: 85000 + (i % 5) * 15000 + (size.widthFt - 30) * 1200,
-    roadAccess: row === 0 || row === 3 ? "9 m internal road" : "7.5 m access road",
-    polygon: gridPolygon(col, row),
-    statusVersion: 1,
-  };
-});
+export const estateSlugs = [
+  "bella-vista",
+  "old-ningo-prampram",
+  "obeyeyie",
+  "santoe",
+  "titled-lands-green-valley",
+] as const;
+
+export const estateNames: Record<string, string> = {
+  "bella-vista": "Bella Vista Luxury Enclave (Prampram Beach Rd)",
+  "old-ningo-prampram": "Old Ningo Masterplan (Prampram Coast)",
+  obeyeyie: "Lamin's Court & Plots (Obeyeyie - Amasaman)",
+  santoe: "Santoe Executive Hills",
+  "titled-lands-green-valley": "Green Valley Titled Lands (Greater Accra)",
+};
+
+function generateEstatePlots(slug: string, basePrice: number, prefix: string): Plot[] {
+  return Array.from({ length: 24 }, (_, i) => {
+    const col = i % 6;
+    const row = Math.floor(i / 6);
+    const size = sizes[i % sizes.length];
+    const areaSqm = Math.round(size.widthFt * size.depthFt * 0.092903);
+    const code = prefix ? `${prefix}-${String(i + 1).padStart(2, "0")}` : String(i + 1);
+    return {
+      id: `${slug}-${i + 1}`,
+      projectSlug: slug,
+      code,
+      status: statuses[(i + slug.length) % statuses.length],
+      widthFt: size.widthFt,
+      depthFt: size.depthFt,
+      areaSqm,
+      facing: facings[i % facings.length],
+      isCorner: col === 0 || col === 5 || row === 0 || row === 3,
+      priceGhs: basePrice + (i % 5) * 12000 + (size.widthFt - 30) * 1500,
+      roadAccess: row === 0 || row === 3 ? "12 m Dual Boulevard" : "9 m Paved Residential Street",
+      polygon: gridPolygon(col, row),
+      statusVersion: 1,
+    };
+  });
+}
+
+export const allEstatePlots: Plot[] = [
+  ...generateEstatePlots("titled-lands-green-valley", 85000, ""),
+  ...generateEstatePlots("bella-vista", 125000, "BV"),
+  ...generateEstatePlots("old-ningo-prampram", 75000, "PR"),
+  ...generateEstatePlots("obeyeyie", 95000, "OB"),
+  ...generateEstatePlots("santoe", 145000, "ST"),
+];
+
+export const demoPlots: Plot[] = allEstatePlots;
 
 export function plotsForProject(slug: string) {
-  return demoPlots.filter((p) => p.projectSlug === slug);
+  const matching = demoPlots.filter((p) => p.projectSlug === slug);
+  if (matching.length > 0) return matching;
+  // If not matched directly, return bella-vista as default
+  return demoPlots.filter((p) => p.projectSlug === "bella-vista");
 }
 
 export function getPlot(slug: string, code: string) {
-  return demoPlots.find((p) => p.projectSlug === slug && p.code === code);
+  return demoPlots.find((p) => (p.projectSlug === slug || !slug) && p.code === code);
 }
 
 export function plotLegend(plots: Plot[]) {
@@ -126,9 +158,9 @@ export const statusLabel: Record<PlotStatus, string> = {
 };
 
 export const statusColor: Record<PlotStatus, string> = {
-  available: "#1f7a4c",
-  held: "#c47b1a",
-  reserved: "#b45309",
-  sold: "#9b1c1c",
-  unreleased: "#6e675d",
+  available: "#00E676",
+  held: "#F59E0B",
+  reserved: "#FFB300",
+  sold: "#374151",
+  unreleased: "#4B5563",
 };

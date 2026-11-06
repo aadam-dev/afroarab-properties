@@ -7,7 +7,7 @@ test.describe("Afro Arab smoke", () => {
     await page.goto("/");
     await expect(page.getByText("Properties").first()).toBeVisible();
     await expect(page.getByRole("heading", { level: 1 })).toContainText(
-      "Everyone can buy a house",
+      "Redefining Modern Living in Ghana",
     );
     await page.locator('img[alt*="Lamin"]').waitFor({ state: "visible" });
     await page.waitForTimeout(500);
@@ -43,7 +43,7 @@ test.describe("Afro Arab smoke", () => {
 
   test("plot explorer shareable URL and enquiry consent", async ({ page }) => {
     await page.goto("/lands/titled-lands-green-valley/explorer?plot=1");
-    await expect(page.getByRole("heading", { name: "Demo Estate" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Plot Explorer/i })).toBeVisible();
     await expect(page.getByText("Plot 1").first()).toBeVisible();
     await expect(page.getByText(/Data Protection Act/i)).toBeVisible();
   });

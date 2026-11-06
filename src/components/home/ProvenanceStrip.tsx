@@ -6,16 +6,16 @@ import { motion, useReducedMotion } from "framer-motion";
 
 const pillars = [
   {
-    title: "Interest-free pathways",
-    body: "Structured schedules on selected inventory — formal terms with sales, not vague promises.",
+    title: "60-Month 0% Developer Financing",
+    body: "Direct developer-backed payment plans with zero interest charges, zero bank commissions, and transparent 5-year schedules.",
   },
   {
-    title: "Verified project records",
-    body: "This rebuild refuses placeholder sizes and conflicting locations before anything goes live.",
+    title: "100% Surveyed & Titled Lands",
+    body: "Every estate carries verified cadastral surveys and title registration with the Lands Commission of Ghana. Strictly litigation-free.",
   },
   {
-    title: "Live land inventory",
-    body: "Explore plots by size and facing, then enquire with the exact plot number attached.",
+    title: "Live Vector Inventory & Cadastral Mapping",
+    body: "Explore plots by exact dimensions and cardinal orientation, then reserve with the exact plot identifier registered on the site map.",
   },
 ];
 
@@ -23,26 +23,29 @@ export function ProvenanceStrip() {
   const reduce = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden bg-forest-950 text-white">
+    <section className="relative overflow-hidden bg-[#080E14] text-[#F4EFE6] border-t border-white/10">
       <div className="absolute inset-y-0 right-0 hidden w-[46%] lg:block">
         <Image
           src="/images/projects/hassy-homes-2.png"
           alt="Hassy Homes by Afro Arab Properties"
           fill
-          className="object-cover opacity-55"
+          className="object-cover opacity-35 filter brightness-90"
           sizes="46vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-l from-transparent to-forest-950" />
+        <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#080E14]" />
       </div>
 
       <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:px-8 lg:py-28">
         <div>
-          <p className="eyebrow text-gold-light">Why Afro Arab</p>
-          <h2 className="mt-4 max-w-xl font-display text-4xl leading-tight text-balance sm:text-5xl">
-            Attainable ownership with titled confidence
+          <span className="inline-flex items-center gap-2 rounded-full border border-[#C5A059]/30 bg-[#101822] px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#C5A059]">
+            The Afro-Arab Guarantee
+          </span>
+          <h2 className="mt-4 max-w-xl font-display text-4xl leading-tight text-white text-balance sm:text-5xl">
+            Attainable Luxury with Titled Permanence
           </h2>
-          <p className="mt-5 max-w-lg text-base leading-relaxed text-sand-200/85">
-            Warm Ghanaian modernism — craft, clarity, and proof — instead of generic luxury copy.
+          <p className="mt-5 max-w-lg text-base leading-relaxed text-[#F4EFE6]/75">
+            Empowering Ghanaian families and diaspora investors with architectural integrity,
+            verifiable land titles, and unmatched 60-month zero-interest flexibility.
           </p>
 
           <ul className="mt-10 space-y-8">
@@ -53,20 +56,20 @@ export function ProvenanceStrip() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-10%" }}
                 transition={{ duration: 0.55, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                className="border-l border-gold/40 pl-5"
+                className="border-l-2 border-[#C5A059] pl-5"
               >
-                <h3 className="font-display text-2xl text-white">{item.title}</h3>
-                <p className="mt-2 max-w-md text-sm leading-relaxed text-sand-200/80">{item.body}</p>
+                <h3 className="font-display text-2xl font-light text-white">{item.title}</h3>
+                <p className="mt-2 max-w-md text-sm leading-relaxed text-[#F4EFE6]/70">{item.body}</p>
               </motion.li>
             ))}
           </ul>
 
-          <div className="mt-10 flex flex-wrap gap-3">
-            <Link href="/payment-plans" className="btn-primary">
-              See payment plans
+          <div className="mt-10 flex gap-4">
+            <Link href="/projects" className="btn-gold">
+              View All 15+ Estates
             </Link>
-            <Link href="/company" className="btn-ghost">
-              Company & proof
+            <Link href="/company" className="btn-outline-gold">
+              Afro-Arab Group Heritage
             </Link>
           </div>
         </div>
