@@ -16,8 +16,9 @@ interface PlotStoreState {
   viewMode: "plan" | "3d";
   isDrawerOpen: boolean;
   zoomLevel: number;
-  
-  // Actions
+  panX: number;
+  panY: number;
+
   setActiveEstate: (estateSlug: string) => void;
   selectPlot: (code: string | null) => void;
   setStatusFilter: (status: FilterStatus) => void;
@@ -29,11 +30,14 @@ interface PlotStoreState {
   setViewMode: (mode: "plan" | "3d") => void;
   setDrawerOpen: (open: boolean) => void;
   setZoomLevel: (zoom: number) => void;
+  setPan: (panX: number, panY: number) => void;
   zoomIn: () => void;
   zoomOut: () => void;
-  resetZoom: () => void;
+  resetView: () => void;
   resetFilters: () => void;
 }
+
+const clampZoom = (z: number) => Math.max(0.6, Math.min(3, z));
 
 export const usePlotStore = create<PlotStoreState>((set) => ({
   activeEstate: "bella-vista",
@@ -47,6 +51,8 @@ export const usePlotStore = create<PlotStoreState>((set) => ({
   viewMode: "plan",
   isDrawerOpen: false,
   zoomLevel: 1,
+  panX: 0,
+  panY: 0,
 
   setActiveEstate: (estateSlug) =>
     set({
@@ -54,6 +60,8 @@ export const usePlotStore = create<PlotStoreState>((set) => ({
       selectedPlotCode: null,
       isDrawerOpen: false,
       zoomLevel: 1,
+      panX: 0,
+      panY: 0,
     }),
 
   selectPlot: (code) =>
@@ -71,16 +79,17 @@ export const usePlotStore = create<PlotStoreState>((set) => ({
   setViewMode: (viewMode) => set({ viewMode }),
   setDrawerOpen: (isDrawerOpen) => set({ isDrawerOpen }),
 
-  setZoomLevel: (zoomLevel) =>
-    set({ zoomLevel: Math.max(0.7, Math.min(2.5, zoomLevel)) }),
+  setZoomLevel: (zoomLevel) => set({ zoomLevel: clampZoom(zoomLevel) }),
+
+  setPan: (panX, panY) => set({ panX, panY }),
 
   zoomIn: () =>
-    set((state) => ({ zoomLevel: Math.min(2.5, state.zoomLevel + 0.25) })),
+    set((state) => ({ zoomLevel: clampZoom(state.zoomLevel + 0.2) })),
 
   zoomOut: () =>
-    set((state) => ({ zoomLevel: Math.max(0.7, state.zoomLevel - 0.25) })),
+    set((state) => ({ zoomLevel: clampZoom(state.zoomLevel - 0.2) })),
 
-  resetZoom: () => set({ zoomLevel: 1 }),
+  resetView: () => set({ zoomLevel: 1, panX: 0, panY: 0 }),
 
   resetFilters: () =>
     set({

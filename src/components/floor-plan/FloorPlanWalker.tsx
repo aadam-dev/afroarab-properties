@@ -37,21 +37,17 @@ export function FloorPlanWalker({ projectName = "Lamin's Court Townhouse" }: { p
   }, [activeRoomId, levelRooms]);
 
   return (
-    <section id="floor-plan" className="relative bg-[#080E14] py-20 text-[#F4EFE6]">
+    <section id="floor-plan" className="relative bg-background py-20 text-foreground">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#C5A059]/30 bg-[#101822] px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#C5A059]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#3D9B6E]" />
-              Spatial Floor Plan Engine
-            </div>
-            <h2 className="mt-3 font-display text-3xl font-light text-[#F4EFE6] sm:text-4xl lg:text-5xl">
-              Spatial Walkthrough & Blueprint Engine
+            <p className="eyebrow">Floor plan · visual only</p>
+            <h2 className="mt-3 font-display text-3xl font-light sm:text-4xl lg:text-5xl">
+              Plan preview
             </h2>
-            <p className="mt-2 max-w-2xl text-sm text-[#F4EFE6]/70 sm:text-base">
-              Navigate architectural levels, click pulsing spatial nodes to inspect
-              interiors, and launch our WebGL 360° panorama inspector with custom finish swatches.
+            <p className="mt-2 max-w-2xl text-sm text-muted sm:text-base">
+              Reconstructed layout for orientation. Dimensions and the panorama are illustrative
+              until project CAD and photographed interiors are provided.
             </p>
           </div>
 

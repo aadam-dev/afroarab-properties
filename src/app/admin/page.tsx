@@ -39,9 +39,9 @@ export default function AdminPage() {
 
   if (!authed) {
     return (
-      <div className="flex min-h-[100svh] items-center justify-center bg-[#080E14] px-4">
+      <div className="flex min-h-[100svh] items-center justify-center bg-background px-4">
         <form
-          className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#101822] p-6 text-[#F4EFE6]"
+          className="w-full max-w-sm rounded-2xl border border-border bg-surface p-6 text-foreground"
           onSubmit={(e) => {
             e.preventDefault();
             setAuthed(password === expected);
@@ -49,16 +49,16 @@ export default function AdminPage() {
           }}
         >
           <h1 className="font-display text-2xl font-light text-white">Admin</h1>
-          <p className="mt-2 text-sm text-[#F4EFE6]/65">
+          <p className="mt-2 text-sm text-foreground/65">
             Demo gate. Production uses Supabase Auth roles.
           </p>
-          <label className="mt-4 block text-sm text-[#F4EFE6]/80">
+          <label className="mt-4 block text-sm text-foreground/80">
             Password
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 h-11 w-full rounded-lg border border-white/10 bg-black/40 px-3 text-white outline-none focus:border-[#C5A059]"
+              className="mt-1 h-11 w-full rounded-lg border border-border bg-black/40 px-3 text-white outline-none focus:border-[#C5A059]"
             />
           </label>
           <button type="submit" className="btn-gold mt-4 h-11 w-full text-sm font-bold">
@@ -71,17 +71,17 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-[100svh] bg-[#080E14] pt-24 text-[#F4EFE6]">
+    <div className="min-h-[100svh] bg-background pt-24 text-foreground">
       <div className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
         <h1 className="font-display text-4xl font-light text-white">Inventory admin</h1>
-        <p className="mt-2 text-[#F4EFE6]/65">
+        <p className="mt-2 text-foreground/65">
           Local demo state. Persist via Supabase `plots` + audit table when env is linked.
         </p>
         <div className="mt-4 flex flex-wrap gap-3 text-sm">
           {(Object.keys(legend) as PlotStatus[]).map((k) => (
             <span
               key={k}
-              className="rounded-full border border-white/10 bg-[#101822] px-3 py-1 text-[#F4EFE6]/80"
+              className="rounded-full border border-border bg-surface px-3 py-1 text-foreground/80"
             >
               {statusLabel[k]}: {legend[k]}
             </span>
@@ -89,7 +89,7 @@ export default function AdminPage() {
         </div>
         {note ? <p className="mt-4 text-sm text-[#DFC283]">{note}</p> : null}
 
-        <div className="mt-8 overflow-x-auto rounded-2xl border border-white/10 bg-[#101822]">
+        <div className="mt-8 overflow-x-auto rounded-2xl border border-border bg-surface">
           <table className="min-w-full text-left text-sm">
             <thead className="bg-black/30 text-xs uppercase tracking-[0.12em] text-[#C5A059]">
               <tr>
@@ -104,7 +104,7 @@ export default function AdminPage() {
               {plots.map((plot) => (
                 <tr key={plot.id} className="border-t border-white/5">
                   <td className="px-3 py-3 font-mono-data text-white">{plot.code}</td>
-                  <td className="px-3 py-3 text-[#F4EFE6]/80">
+                  <td className="px-3 py-3 text-foreground/80">
                     {plot.widthFt}×{plot.depthFt}
                   </td>
                   <td className="px-3 py-3 font-mono-data text-[#DFC283]">
@@ -113,19 +113,19 @@ export default function AdminPage() {
                   <td className="px-3 py-3">
                     <select
                       className={cn(
-                        "h-10 rounded-lg border border-white/10 bg-black/40 px-2 text-white outline-none focus:border-[#C5A059]",
+                        "h-10 rounded-lg border border-border bg-black/40 px-2 text-white outline-none focus:border-[#C5A059]",
                       )}
                       value={plot.status}
                       onChange={(e) => updateStatus(plot.id, e.target.value as PlotStatus)}
                     >
                       {(Object.keys(statusLabel) as PlotStatus[]).map((s) => (
-                        <option key={s} value={s} className="bg-[#101822]">
+                        <option key={s} value={s} className="bg-surface">
                           {statusLabel[s]}
                         </option>
                       ))}
                     </select>
                   </td>
-                  <td className="px-3 py-3 font-mono-data text-[#F4EFE6]/60">
+                  <td className="px-3 py-3 font-mono-data text-foreground/60">
                     {plot.statusVersion}
                   </td>
                 </tr>

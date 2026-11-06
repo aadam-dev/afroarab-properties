@@ -67,7 +67,7 @@ export const ROOM_HOTSPOTS: RoomHotspot[] = [
       "Sunrise-oriented panoramic private terrace",
     ],
     hotspotCoords: { x: 42, y: 40 },
-    previewImage: "/images/projects/estate-7.jpeg",
+    previewImage: "/images/projects/lamins-court-2.jpg",
   },
   {
     id: "junior-suite",
@@ -101,7 +101,7 @@ export const ROOM_HOTSPOTS: RoomHotspot[] = [
       "Reinforced footprint ready for private spa pool",
     ],
     hotspotCoords: { x: 50, y: 48 },
-    previewImage: "/images/projects/estate-10.jpeg",
+    previewImage: "/images/projects/front-view.jpg",
   },
 ];
 

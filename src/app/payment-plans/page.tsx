@@ -4,94 +4,55 @@ import { PaymentCalculator } from "@/components/calculator/PaymentCalculator";
 import { EnquiryForm } from "@/components/site/EnquiryForm";
 
 export const metadata: Metadata = {
-  title: "60-Month Interest-Free Payment Plans & Simulator",
+  title: "Payment plans",
   description:
-    "Explore Afro-Arab Properties 60-Month interest-free payment simulator. 40% initial allocation, 0% interest financing, and guaranteed title delivery.",
+    "Interest-free payment schedules on selected Afro Arab inventory, with a simple repayment calculator.",
 };
 
 export default function PaymentPlansPage() {
   return (
-    <div className="bg-[#080E14] pt-28 text-[#F4EFE6]">
-      {/* Intro Hero */}
+    <div className="bg-background pt-28 text-foreground">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl">
-          <span className="inline-flex items-center gap-2 rounded-full border border-[#C5A059]/30 bg-[#101822] px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#C5A059]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#3D9B6E]" />
-            Direct Developer Financing
-          </span>
-          <h1 className="mt-4 font-display text-4xl font-light text-white sm:text-5xl lg:text-6xl text-balance">
-            60-Month Interest-Free Ownership Schedules
+          <p className="eyebrow">Payment plans</p>
+          <h1 className="mt-3 font-display text-4xl font-light text-balance sm:text-5xl lg:text-6xl">
+            Interest-free schedules on selected inventory
           </h1>
-          <p className="mt-5 text-lg leading-relaxed text-[#F4EFE6]/75 text-pretty">
-            Afro-Arab Properties eliminates the barrier of commercial bank mortgage rates.
-            Acquire titled land or an executive townhouse with an initial 40% allocation
-            deposit and spread the remainder across 60 equal monthly payments with 0.00% interest.
+          <p className="mt-5 text-lg leading-relaxed text-muted text-pretty">
+            Selected homes and plots can use a developer-backed pathway with an allocation
+            deposit and monthly instalments. Confirm formal terms before payment.
           </p>
         </div>
       </div>
 
-      {/* Embedded Live 60-Month Simulator */}
       <div className="mt-8">
         <PaymentCalculator />
       </div>
 
-      {/* Explanatory Terms & Enquiry Form */}
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:px-8 border-t border-white/10">
+      <div className="mx-auto grid max-w-7xl gap-12 border-t border-border px-4 py-20 sm:px-6 lg:grid-cols-2 lg:px-8">
         <div>
-          <h2 className="font-display text-3xl font-light text-white">
-            How Afro-Arab 0% Financing Works
-          </h2>
-          <p className="mt-4 text-sm leading-relaxed text-[#F4EFE6]/70">
-            Unlike traditional bank mortgages that impose 28% to 34% annual percentage rates,
-            Afro-Arab operates a direct developer-to-buyer financing framework backed by our
-            fully titled land bank.
-          </p>
-
-          <div className="mt-8 space-y-5 text-sm">
-            <div className="rounded-xl border border-white/10 bg-[#101822] p-5">
-              <div className="flex items-center gap-3 font-semibold text-[#DFC283]">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#C5A059] text-xs font-bold text-[#080E14]">
-                  1
-                </span>
-                Reserve Inventory on the Live Plot Explorer
-              </div>
-              <p className="mt-2 text-xs text-[#F4EFE6]/70">
-                Select your preferred plot or townhouse unit code with verified boundary coordinates.
-              </p>
-            </div>
-
-            <div className="rounded-xl border border-white/10 bg-[#101822] p-5">
-              <div className="flex items-center gap-3 font-semibold text-[#DFC283]">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#C5A059] text-xs font-bold text-[#080E14]">
-                  2
-                </span>
-                Formal Allocation & 40% Deposit
-              </div>
-              <p className="mt-2 text-xs text-[#F4EFE6]/70">
-                Deposit escrow is wired directly to official accounts at Fidelity Bank or Ecobank Ghana.
-                An official Allocation Deed is immediately executed.
-              </p>
-            </div>
-
-            <div className="rounded-xl border border-white/10 bg-[#101822] p-5">
-              <div className="flex items-center gap-3 font-semibold text-[#DFC283]">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#C5A059] text-xs font-bold text-[#080E14]">
-                  3
-                </span>
-                60 Equal Interest-Free Payments
-              </div>
-              <p className="mt-2 text-xs text-[#F4EFE6]/70">
-                Payments can be executed via standing orders, diaspora international wires, or local clearing.
-                Review our complete{" "}
-                <Link href="/payment-terms" className="text-[#C5A059] underline underline-offset-2">
-                  legal payment terms
+          <h2 className="font-display text-3xl font-light">How it works</h2>
+          <ol className="mt-6 space-y-5 text-sm text-muted">
+            <li>
+              <strong className="text-foreground">1. Choose inventory</strong>
+              <p className="mt-1">Select a plot or unit and confirm availability with sales.</p>
+            </li>
+            <li>
+              <strong className="text-foreground">2. Allocation deposit</strong>
+              <p className="mt-1">Typical marketing path uses a substantial upfront allocation.</p>
+            </li>
+            <li>
+              <strong className="text-foreground">3. Monthly instalments</strong>
+              <p className="mt-1">
+                Remaining balance may be spread over a published tenor. Read{" "}
+                <Link href="/payment-terms" className="text-foreground underline underline-offset-4">
+                  payment terms
                 </Link>
                 .
               </p>
-            </div>
-          </div>
+            </li>
+          </ol>
         </div>
-
         <EnquiryForm intent="payment" />
       </div>
     </div>

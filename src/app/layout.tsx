@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, IBM_Plex_Mono, Manrope } from "next/font/google";
 import { SiteShell } from "@/components/site/SiteShell";
+import { ThemeProvider } from "@/components/site/ThemeProvider";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -32,6 +33,10 @@ export const metadata: Metadata = {
   },
   description:
     "Afro Arab Properties develops homes and titled land across Greater Accra with clearer inventory, interest-free payment paths, and live plot exploration.",
+  icons: {
+    icon: [{ url: "/brand/favicon-180.png", sizes: "180x180", type: "image/png" }],
+    apple: "/brand/favicon-180.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_GH",
@@ -48,6 +53,8 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
+const themeInitScript = `(function(){try{var t=localStorage.getItem('aa-theme');if(t!=='dark'&&t!=='light')t='light';document.documentElement.dataset.theme=t;document.documentElement.style.colorScheme=t;}catch(e){document.documentElement.dataset.theme='light';}})();`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const orgJsonLd = {
     "@context": "https://schema.org",
@@ -62,14 +69,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en-GH"
+      data-theme="light"
       className={`${manrope.variable} ${fraunces.variable} ${plex.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col bg-[#080E14] text-[#F4EFE6]">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body className="flex min-h-full flex-col bg-background text-foreground">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
-        <SiteShell>{children}</SiteShell>
+        <ThemeProvider>
+          <SiteShell>{children}</SiteShell>
+        </ThemeProvider>
       </body>
     </html>
   );

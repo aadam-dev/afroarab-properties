@@ -17,6 +17,9 @@ export type Project = {
   tagline: string;
   location: string;
   city: string;
+  /** Google Maps query from the live WordPress embed (approximate). */
+  mapQuery?: string;
+  mapZoom?: number;
   type: PropertyType;
   status: ProjectStatus;
   priceDisplay: string;
@@ -27,6 +30,8 @@ export type Project = {
   highlights: string[];
   image: string;
   imageAlt: string;
+  /** Additional exterior photos on disk (no interiors available yet) */
+  gallery?: string[];
   featured?: boolean;
   hasPlotExplorer?: boolean;
   hasWalkthrough?: boolean;
@@ -43,9 +48,11 @@ export const projects: Project[] = [
   {
     slug: "bella-vista",
     name: "Bella Vista Luxury Enclave",
-    tagline: "Coastal executive residences and titled plots",
-    location: "Prampram Beach Road",
+    tagline: "Residences and titled plots in Katamanso",
+    location: "Katamanso",
     city: "Greater Accra",
+    mapQuery: "Katamanso",
+    mapZoom: 12,
     type: "mixed",
     status: "published",
     priceDisplay: "From GH¢125,000",
@@ -53,11 +60,11 @@ export const projects: Project[] = [
     baths: "3.5",
     areaDisplay: "180 – 350 m²",
     summary:
-      "A serene master-planned coastal enclave along the burgeoning Prampram corridor, offering fully titled residential plots and bespoke luxury townhouses with 60-month interest-free financing.",
+      "Master-planned residences and titled plots at Katamanso — published on the current Afro Arab site with interactive plot selection and interest-free payment pathways on selected stock.",
     highlights: [
-      "Master-planned coastal community with paved boulevards",
-      "100% titled and registered with Lands Commission",
-      "Eligible for Afro-Arab 60-month zero-interest payment plan",
+      "Katamanso corridor positioning from the live listing",
+      "Interactive plot explorer available on this rebuild",
+      "Interest-free payment plan eligibility TBD with sales",
     ],
     image: "/images/hero-lamins.jpg",
     imageAlt: "Bella Vista Luxury Enclave by Afro Arab Properties",
@@ -65,7 +72,8 @@ export const projects: Project[] = [
     hasPlotExplorer: true,
     hasWalkthrough: true,
     lastVerified: "2026-11-06",
-    verificationNote: "Verified cadastral survey and zoning plan available.",
+    verificationNote:
+      "Location restored from live WP map (Katamanso). Confirm survey, title, and pricing before production claims.",
   },
   {
     slug: "blakk-rastas-court",
@@ -73,6 +81,8 @@ export const projects: Project[] = [
     tagline: "30 exclusive three-bedroom townhouses",
     location: "Community 22 Annex, Zenu",
     city: "Greater Accra",
+    mapQuery: "Community 22 Annex, Zenu, Accra",
+    mapZoom: 14,
     type: "house",
     status: "published",
     priceDisplay: "Price on request",
@@ -99,6 +109,8 @@ export const projects: Project[] = [
     tagline: "Premium living in Achiaman",
     location: "Achiaman, Amasaman",
     city: "Greater Accra",
+    mapQuery: "Achiaman",
+    mapZoom: 14,
     type: "house",
     status: "published",
     priceDisplay: "From GH¢1,100,000",
@@ -109,6 +121,7 @@ export const projects: Project[] = [
     highlights: ["Self-compound living", "Contemporary finishes", "Sales viewing available"],
     image: "/images/projects/cephas-court.png",
     imageAlt: "Cephas Court by Afro Arab Properties",
+    gallery: ["/images/projects/cephas-court.png", "/images/projects/cephas-court-2.png"],
     lastVerified: "2026-11-06",
     verificationNote: "Legacy site listed conflicting sizes; do not publish 95 sqft.",
   },
@@ -118,6 +131,8 @@ export const projects: Project[] = [
     tagline: "Spintex corridor convenience",
     location: "Near O’Reilly Senior High School, Spintex",
     city: "Accra",
+    mapQuery: "O'Reilly Senior High School",
+    mapZoom: 14,
     type: "house",
     status: "published",
     priceDisplay: "From GH¢3,000,000",
@@ -126,6 +141,7 @@ export const projects: Project[] = [
     highlights: ["Spintex location", "Family-oriented compound living"],
     image: "/images/projects/hassy-homes.png",
     imageAlt: "Hassy Homes by Afro Arab Properties",
+    gallery: ["/images/projects/hassy-homes.png", "/images/projects/hassy-homes-2.png"],
     lastVerified: "2026-11-06",
     verificationNote: "Confirm current asking price and availability.",
   },
@@ -135,6 +151,8 @@ export const projects: Project[] = [
     tagline: "Townhouses with lifestyle amenities",
     location: "Narhman, Haatso",
     city: "Accra",
+    mapQuery: "DVLA Botwe",
+    mapZoom: 14,
     type: "house",
     status: "published",
     priceDisplay: "GH¢3,000,000 – GH¢3,600,000",
@@ -156,6 +174,8 @@ export const projects: Project[] = [
     tagline: "East Legon Hills living",
     location: "East Legon Hills",
     city: "Accra",
+    mapQuery: "East Legon Hills",
+    mapZoom: 14,
     type: "house",
     status: "published",
     priceDisplay: "GH¢3,000,000 – GH¢3,600,000",
@@ -164,6 +184,7 @@ export const projects: Project[] = [
     highlights: ["East Legon Hills", "Community-focused positioning"],
     image: "/images/projects/paapas-court.png",
     imageAlt: "Paapa’s Court by Afro Arab Properties",
+    gallery: ["/images/projects/paapas-court.png", "/images/projects/paapas-alt.jpeg"],
     lastVerified: "2026-11-06",
     verificationNote: "Needs verified floor areas. Legacy USD $300,000 claim conflicted with GH¢ ranges.",
   },
@@ -173,6 +194,8 @@ export const projects: Project[] = [
     tagline: "Tema Community 25",
     location: "Tema, Community 25",
     city: "Tema",
+    mapQuery: "Tema, Community 25",
+    mapZoom: 14,
     type: "house",
     status: "published",
     priceDisplay: "From GH¢1,100,000",
@@ -190,6 +213,8 @@ export const projects: Project[] = [
     tagline: "Apartments in Old Ningo / Prampram",
     location: "Old Ningo, Prampram",
     city: "Greater Accra",
+    mapQuery: "Ningo Prampram",
+    mapZoom: 13,
     type: "apartment",
     status: "published",
     priceDisplay: "From GH¢1,100,000",
@@ -207,6 +232,8 @@ export const projects: Project[] = [
     tagline: "Four townhouses in Obeyeyie",
     location: "Obeyeyie, near Amasaman",
     city: "Greater Accra",
+    mapQuery: "Obeyeyie Amasaman",
+    mapZoom: 14,
     type: "house",
     status: "sold_out",
     priceDisplay: "Sold out",
@@ -216,6 +243,11 @@ export const projects: Project[] = [
     highlights: ["Sold out", "Near tarmac access (legacy claim — verify)"],
     image: "/images/projects/lamins-court.jpg",
     imageAlt: "Lamin’s Court townhouses by Afro Arab Properties",
+    gallery: [
+      "/images/projects/lamins-court.jpg",
+      "/images/projects/lamins-court-2.jpg",
+      "/images/hero-lamins.jpg",
+    ],
     hasWalkthrough: true,
     lastVerified: "2026-11-06",
     verificationNote: "Confirm sold-out status and whether waitlist is allowed.",
@@ -226,6 +258,8 @@ export const projects: Project[] = [
     tagline: "Oyarifa residence",
     location: "Oyarifa",
     city: "Greater Accra",
+    mapQuery: "Oyarifa Rd",
+    mapZoom: 16,
     type: "house",
     status: "published",
     priceDisplay: "Price on request",
@@ -238,11 +272,51 @@ export const projects: Project[] = [
     verificationNote: "Needs full brief from Afro Arab.",
   },
   {
+    slug: "zaras-court",
+    name: "Zara’s Court",
+    tagline: "Santoe, Accra",
+    location: "Santoe, Accra",
+    city: "Accra",
+    mapQuery: "Santoe, Accra",
+    mapZoom: 14,
+    type: "house",
+    status: "published",
+    priceDisplay: "Price on request",
+    summary:
+      "Listed on the current Afro Arab site at Santoe, Accra. Full commercial brief still required from the client.",
+    highlights: ["Santoe location from live listing map", "Brief pending client verification"],
+    image: "/images/projects/front-view.jpg",
+    imageAlt: "Afro Arab residential front view",
+    lastVerified: "2026-11-06",
+    verificationNote: "Nav listing only — confirm inventory, pricing, and photography.",
+  },
+  {
+    slug: "mamobi-pride",
+    name: "Mamobi Pride",
+    tagline: "Mamobi residence",
+    location: "Mamobi",
+    city: "Accra",
+    mapQuery: "Mamobi",
+    mapZoom: 14,
+    type: "house",
+    status: "published",
+    priceDisplay: "Price on request",
+    summary:
+      "Listed on the current Afro Arab site in Mamobi. Full commercial brief still required from the client.",
+    highlights: ["Mamobi location from live listing map", "Brief pending client verification"],
+    image: "/images/projects/front-view.jpg",
+    imageAlt: "Afro Arab residential front view",
+    lastVerified: "2026-11-06",
+    verificationNote: "Nav listing only — confirm inventory, pricing, and photography.",
+  },
+  {
     slug: "titled-lands-green-valley",
     name: "Titled Lands",
     tagline: "Interactive plot selection for Afro Arab lands",
     location: "Greater Accra land inventory",
     city: "Greater Accra",
+    mapQuery: "Greater Accra",
+    mapZoom: 10,
     type: "land",
     status: "published",
     priceDisplay: "From GH¢85,000 (demo pricing)",
@@ -266,6 +340,8 @@ export const projects: Project[] = [
     tagline: "Large-scale housing at Old Ningo, Prampram",
     location: "Old Ningo, Prampram",
     city: "Greater Accra",
+    mapQuery: "Ningo Prampram",
+    mapZoom: 12,
     type: "mixed",
     status: "coming_soon",
     priceDisplay: "Coming soon",

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @theme {
   --breakpoint-sm: 40rem;
   --breakpoint-md: 48rem;
@@ -8,41 +10,77 @@
   --breakpoint-2xl: 96rem;
 }
 
-:root {
+:root,
+[data-theme="light"] {
   --aa-slate-950: #080e14;
   --aa-slate-900: #101822;
   --aa-slate-800: #192330;
-  --aa-forest-950: #0c1612;
-  --aa-forest-900: #122019;
-  --aa-forest-800: #1a2c22;
-  --aa-forest-700: #24382c;
+  --aa-forest-950: #0f1c16;
+  --aa-forest-900: #15261d;
+  --aa-forest-800: #1b3022;
+  --aa-forest-700: #234032;
   --aa-forest-600: #2f5643;
-  --aa-sand-50: #f8f5f0;
+  --aa-sand-50: #f7f4ef;
   --aa-sand-100: #efe8dc;
-  --aa-sand-200: #e0d3bf;
+  --aa-sand-200: #e2d5c3;
   --aa-champagne: #f4efe6;
-  --aa-stone-500: #6a635a;
-  --aa-ink: #12100e;
-  --aa-red-600: #b9141a;
-  --aa-red-700: #961016;
+  --aa-stone-500: #6e675d;
+  --aa-ink: #14110f;
+  --aa-red-600: #c4161c;
+  --aa-red-700: #a31217;
   --aa-gold-400: #dfc283;
-  --aa-gold-500: #c5a059;
+  --aa-gold-500: #c4a35a;
   --aa-gold-600: #9e7b36;
+  --aa-available: #1f7a4c;
+  --aa-held: #c47b1a;
+  --aa-reserved: #b45309;
+  --aa-sold: #9b1c1c;
+  --aa-unreleased: #6e675d;
+
+  --background: var(--aa-sand-50);
+  --foreground: var(--aa-ink);
+  --surface: #ffffff;
+  --surface-muted: var(--aa-sand-100);
+  --border: color-mix(in oklab, var(--aa-sand-200) 85%, var(--aa-ink));
+  --muted: var(--aa-stone-500);
+  --header-bg: color-mix(in oklab, var(--aa-sand-50) 88%, white);
+  --band: var(--aa-forest-950);
+  --band-fg: #ffffff;
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-lux: 0 30px 80px -48px rgba(15, 28, 22, 0.45);
+  --shadow-soft: 0 18px 50px -36px rgba(15, 28, 22, 0.28);
+}
+
+[data-theme="dark"] {
   --aa-available: #3d9b6e;
   --aa-held: #c9a227;
   --aa-reserved: #d4a017;
   --aa-sold: #2a3340;
   --aa-unreleased: #3f4a57;
-  --background: var(--aa-slate-950);
-  --foreground: var(--aa-champagne);
-  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
-  --shadow-lux: 0 30px 80px -48px rgba(8, 14, 20, 0.75);
-  --shadow-soft: 0 18px 50px -36px rgba(8, 14, 20, 0.55);
+
+  --background: #080e14;
+  --foreground: #f4efe6;
+  --surface: #101822;
+  --surface-muted: #192330;
+  --border: color-mix(in oklab, white 12%, transparent);
+  --muted: color-mix(in oklab, #f4efe6 55%, transparent);
+  --header-bg: color-mix(in oklab, #080e14 90%, transparent);
+  --band: #080e14;
+  --band-fg: #f4efe6;
+  --shadow-lux: 0 30px 80px -48px rgba(0, 0, 0, 0.75);
+  --shadow-soft: 0 18px 50px -36px rgba(0, 0, 0, 0.55);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-header-bg: var(--header-bg);
+  --color-band: var(--band);
+  --color-band-fg: var(--band-fg);
   --color-slate-950: var(--aa-slate-950);
   --color-slate-900: var(--aa-slate-900);
   --color-slate-800: var(--aa-slate-800);
@@ -90,10 +128,7 @@ html {
 }
 
 body {
-  background:
-    radial-gradient(ellipse 80% 50% at 100% -10%, rgba(196, 163, 90, 0.08), transparent 50%),
-    radial-gradient(ellipse 60% 40% at 0% 20%, rgba(47, 86, 67, 0.06), transparent 45%),
-    var(--background);
+  background: var(--background);
   color: var(--foreground);
   font-family: var(--font-manrope), system-ui, sans-serif;
 }
@@ -126,36 +161,9 @@ select:focus-visible,
 .eyebrow {
   font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--aa-gold-600);
-}
-
-.surface-lux {
-  background: linear-gradient(180deg, #ffffff 0%, #fbf8f3 100%);
-  border: 1px solid color-mix(in oklab, var(--aa-sand-200) 80%, white);
-  box-shadow: var(--shadow-soft);
-}
-
-.glass-card {
-  background: rgba(16, 24, 34, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.glass-card-elevated {
-  background: rgba(16, 24, 34, 0.88);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(197, 160, 89, 0.28);
-  box-shadow: 0 24px 64px -20px rgba(0, 0, 0, 0.65);
-}
-
-.glass-card-gold {
-  background: linear-gradient(135deg, rgba(197, 160, 89, 0.12) 0%, rgba(16, 24, 34, 0.8) 100%);
-  backdrop-filter: blur(24px);
-  border: 1px solid rgba(197, 160, 89, 0.35);
 }
 
 .btn-gold {
@@ -171,13 +179,12 @@ select:focus-visible,
   font-weight: 700;
   letter-spacing: 0.02em;
   transition: all 0.25s var(--ease-out-soft);
-  box-shadow: 0 8px 24px -8px rgba(197, 160, 89, 0.5);
+  box-shadow: 0 8px 24px -8px rgba(197, 160, 89, 0.45);
 }
 
 .btn-gold:hover {
   transform: translateY(-1px);
-  box-shadow: 0 12px 32px -8px rgba(197, 160, 89, 0.7);
-  filter: brightness(1.06);
+  filter: brightness(1.05);
 }
 
 .btn-outline-gold {
@@ -187,19 +194,17 @@ select:focus-visible,
   min-height: 2.75rem;
   padding: 0 1.5rem;
   border-radius: 0.55rem;
-  border: 1px solid rgba(197, 160, 89, 0.5);
-  background: rgba(197, 160, 89, 0.06);
-  color: #f4efe6;
+  border: 1px solid color-mix(in oklab, var(--aa-gold-500) 55%, var(--border));
+  background: transparent;
+  color: var(--foreground);
   font-size: 0.875rem;
   font-weight: 600;
-  backdrop-filter: blur(12px);
   transition: all 0.25s var(--ease-out-soft);
 }
 
 .btn-outline-gold:hover {
-  border-color: #c5a059;
-  background: rgba(197, 160, 89, 0.15);
-  color: #ffffff;
+  border-color: var(--aa-gold-500);
+  background: color-mix(in oklab, var(--aa-gold-500) 10%, transparent);
 }
 
 .btn-primary {
@@ -213,8 +218,7 @@ select:focus-visible,
   color: white;
   font-size: 0.875rem;
   font-weight: 600;
-  letter-spacing: 0.01em;
-  transition: background 0.25s var(--ease-out-soft), transform 0.25s var(--ease-out-soft);
+  transition: background 0.25s var(--ease-out-soft);
 }
 
 .btn-primary:hover {
@@ -228,8 +232,8 @@ select:focus-visible,
   min-height: 3rem;
   padding: 0 1.35rem;
   border-radius: 0.55rem;
-  border: 1px solid color-mix(in oklab, white 35%, transparent);
-  background: color-mix(in oklab, white 8%, transparent);
+  border: 1px solid color-mix(in oklab, white 40%, transparent);
+  background: color-mix(in oklab, white 10%, transparent);
   color: white;
   font-size: 0.875rem;
   font-weight: 600;
@@ -238,32 +242,7 @@ select:focus-visible,
 }
 
 .btn-ghost:hover {
-  background: color-mix(in oklab, white 16%, transparent);
-}
-
-.grain {
-  position: relative;
-}
-
-.grain::after {
-  content: "";
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode: soft-light;
-}
-
-.site-plan-grid {
-  background-image:
-    linear-gradient(to right, color-mix(in oklab, white 8%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklab, white 8%, transparent) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
-
-.mask-rise {
-  clip-path: inset(0 0 0 0);
+  background: color-mix(in oklab, white 18%, transparent);
 }
 
 .divider-gold {
@@ -276,46 +255,11 @@ select:focus-visible,
   );
 }
 
-@keyframes fadeRise {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.anim-fade-rise {
-  animation: fadeRise 0.85s var(--ease-out-soft) both;
-}
-
-.anim-fade-rise-delay-1 {
-  animation-delay: 0.08s;
-}
-
-.anim-fade-rise-delay-2 {
-  animation-delay: 0.14s;
-}
-
-.anim-fade-rise-delay-3 {
-  animation-delay: 0.2s;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .anim-fade-rise {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}
-
 .page-band {
   position: relative;
   overflow: hidden;
-  background: var(--aa-slate-950);
-  color: white;
+  background: var(--band);
+  color: var(--band-fg);
   min-height: 16rem;
 }
 
@@ -327,4 +271,11 @@ select:focus-visible,
     radial-gradient(ellipse at 80% 20%, rgba(196, 163, 90, 0.18), transparent 45%),
     radial-gradient(ellipse at 10% 80%, rgba(47, 86, 67, 0.35), transparent 50%);
   pointer-events: none;
+}
+
+.site-plan-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, currentColor 8%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, currentColor 8%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
 }

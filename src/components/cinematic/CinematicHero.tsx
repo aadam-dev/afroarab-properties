@@ -2,201 +2,78 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-
-const STATS = [
-  {
-    value: "200,000+",
-    label: "Townhouses & Units",
-    sub: "National Housing Initiative",
-  },
-  {
-    value: "100%",
-    label: "Titled & Registered",
-    sub: "Government Surveyed Lands",
-  },
-  {
-    value: "60-Month",
-    label: "0% Interest Plans",
-    sub: "Zero Hidden Surcharges",
-  },
-  {
-    value: "15+",
-    label: "Prime Estates",
-    sub: "Greater Accra Corridors",
-  },
-];
+import { motion, useReducedMotion } from "framer-motion";
+import { BrandLogo } from "@/components/site/BrandLogo";
+import { easeOutLux } from "@/components/motion/ScrollReveal";
 
 export function CinematicHero() {
+  const reduce = useReducedMotion();
+
   return (
-    <section className="relative isolate min-h-[100svh] overflow-hidden bg-[#080E14] text-white">
-      {/* Background Architectural Visual with Subtle Overlay */}
-      <div className="absolute inset-0">
+    <section className="relative isolate min-h-[100svh] overflow-hidden bg-forest-950 text-white">
+      <motion.div
+        className="absolute inset-0"
+        initial={reduce ? false : { scale: 1.08 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: reduce ? 0 : 1.6, ease: easeOutLux }}
+      >
         <Image
           src="/images/hero-lamins.jpg"
-          alt="Afro-Arab Properties Luxury Architectural Masterpiece"
+          alt="Afro Arab residential development"
           fill
           priority
           sizes="100vw"
-          className="scale-105 object-cover object-[55%_35%] opacity-35 filter brightness-90 transition-transform duration-1000 ease-out"
-        />
-        {/* Cinematic Multi-stop Vignette */}
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-[#080E14] via-[#080E14]/70 to-[#080E14]/90"
-          aria-hidden="true"
+          className="object-cover object-[55%_35%]"
         />
         <div
-          className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_#080E14_90%)]"
-          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/55 to-forest-950/40"
+          aria-hidden
         />
-        <div className="absolute inset-0 opacity-15 site-plan-grid mix-blend-soft-light" aria-hidden="true" />
-      </div>
+      </motion.div>
 
-      {/* Main Content Hero Container */}
-      <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-between px-4 pb-10 pt-24 sm:px-6 sm:pb-12 sm:pt-28 lg:px-8">
-        {/* Top Badges — clear of fixed header */}
-        <div className="mt-2 flex flex-wrap items-center justify-between gap-3 sm:mt-4 sm:gap-4">
-          <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex max-w-full items-center gap-2.5 rounded-full border border-[#C5A059]/30 bg-[#101822]/80 px-3 py-1.5 backdrop-blur-xl sm:px-4"
-          >
-            <span className="relative flex h-2 w-2 shrink-0">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#3D9B6E] opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#3D9B6E]" />
-            </span>
-            <span className="truncate text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#C5A059] sm:text-xs sm:tracking-[0.2em]">
-              Executive Platform · Ghana & Diaspora
-            </span>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="hidden text-xs uppercase tracking-[0.18em] text-[#F4EFE6]/60 lg:block"
-          >
-            Accra · Prampram · Obeyeyie · Santoe
-          </motion.div>
-        </div>
-
-        {/* Central Headline & Staggered Reveal */}
-        <div className="my-auto max-w-4xl py-6 sm:py-8">
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="font-display text-base font-normal tracking-[0.12em] text-[#C5A059] sm:text-lg"
-          >
-            AFRO-ARAB PROPERTIES &bull; LUXURY REAL ESTATE GROUP
-          </motion.p>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="mt-3 font-display text-[clamp(2.5rem,7vw,5.5rem)] font-light leading-[1.05] tracking-tight text-[#F4EFE6] sm:mt-4 text-balance"
-          >
-            Redefining Modern Living in Ghana —{" "}
-            <span className="font-normal italic text-[#C5A059]">
-              200,000 Townhouses
-            </span>{" "}
-            & Prime Titled Lands.
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-6 max-w-2xl text-base leading-relaxed text-[#F4EFE6]/80 sm:text-xl text-pretty"
-          >
-            Empowering Ghanaian homeowners and international diaspora investors with
-            live vector plot reservations, spatial 360° floor plan walkthroughs, and
-            guaranteed 60-month interest-free financing.
-          </motion.p>
-
-          {/* Luxury Action Triggers */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-6 flex flex-wrap items-center gap-3 sm:mt-8 sm:gap-4"
-          >
-            <a href="#plot-explorer" className="btn-gold">
-              Explore Live Masterplans
-              <svg
-                className="ml-2 h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </a>
-
-            <a href="#payment-calculator" className="btn-outline-gold">
-              60-Month 0% Calculator
-            </a>
-
-            <a
-              href="#floor-plan"
-              className="inline-flex items-center gap-2 text-sm font-medium text-[#F4EFE6]/80 transition-colors hover:text-[#C5A059]"
-            >
-              <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/5">
-                <svg
-                  className="h-3.5 w-3.5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </span>
-              Take 360° Walkthrough
-            </a>
-          </motion.div>
-        </div>
-
-        {/* Pinned Development Statistics Grid */}
+      <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-4 pb-16 pt-28 sm:px-6 sm:pb-20 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={reduce ? false : { opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="grid grid-cols-2 gap-3 border-t border-white/10 pt-6 sm:grid-cols-4 sm:gap-6"
+          transition={{ duration: 0.7, ease: easeOutLux, delay: 0.1 }}
         >
-          {STATS.map((stat) => (
-            <div
-              key={stat.label}
-              className="group rounded-xl border border-white/5 bg-[#101822]/40 p-3.5 backdrop-blur-md transition-all duration-300 hover:border-[#C5A059]/40 hover:bg-[#101822]/80 sm:p-4"
-            >
-              <div className="font-display text-2xl font-normal text-[#C5A059] sm:text-3xl lg:text-4xl">
-                {stat.value}
-              </div>
-              <div className="mt-1 text-xs font-semibold uppercase tracking-wider text-[#F4EFE6]">
-                {stat.label}
-              </div>
-              <div className="mt-0.5 text-[0.7rem] text-[#F4EFE6]/50">
-                {stat.sub}
-              </div>
-            </div>
-          ))}
+          <BrandLogo size="hero" priority invert className="mb-8" />
+        </motion.div>
+
+        <div className="overflow-hidden">
+          <motion.h1
+            className="max-w-3xl font-display text-[clamp(2.25rem,6vw,4.25rem)] font-light leading-[1.08] tracking-tight text-balance"
+            style={{ textRendering: "geometricPrecision" }}
+            initial={reduce ? false : { y: "110%" }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.95, ease: easeOutLux, delay: 0.18 }}
+          >
+            Homes and titled land across Greater Accra
+          </motion.h1>
+        </div>
+
+        <motion.p
+          className="mt-5 max-w-xl text-base leading-relaxed text-white/80 text-pretty sm:text-lg"
+          initial={reduce ? false : { opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65, ease: easeOutLux, delay: 0.42 }}
+        >
+          Clearer inventory, live plot selection, and interest-free payment paths for
+          buyers in Ghana and the diaspora.
+        </motion.p>
+
+        <motion.div
+          className="mt-8 flex flex-wrap items-center gap-3"
+          initial={reduce ? false : { opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55, ease: easeOutLux, delay: 0.55 }}
+        >
+          <Link href="/projects" className="btn-primary">
+            Explore estates
+          </Link>
+          <Link href="/contact" className="btn-ghost">
+            Enquire
+          </Link>
         </motion.div>
       </div>
     </section>
