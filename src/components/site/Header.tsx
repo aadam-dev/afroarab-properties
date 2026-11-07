@@ -12,6 +12,8 @@ const nav = [
   { href: "/projects", label: "Estates" },
   { href: "/#plot-explorer", label: "Plot Explorer" },
   { href: "/payment-plans", label: "Payment Plans" },
+  { href: "/plotline", label: "Plotline" },
+  { href: "/faq", label: "FAQ" },
   { href: "/company", label: "Company" },
 ];
 

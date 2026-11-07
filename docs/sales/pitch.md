@@ -2,9 +2,9 @@
 
 ## Why this matters now
 
-Afro Arab already builds and sells across Greater Accra. Diaspora and local buyers who land on afroarabproperties.com today still hit the same frictions: conflicting sizes and prices, thin legal pages, slow mobile load, and no live way to see which plots are free or how a floor plan actually works. Serious buyers compare you to developers who answer those questions before the first call.
+Afro Arab already builds and sells across Greater Accra. Diaspora and local buyers who land on afroarabproperties.com today still hit the same frictions: conflicting sizes and prices, thin legal pages, slow mobile load, no live way to see which plots are free, and a blog that stopped telling the story while the company was making national news in 2026. Serious buyers compare you to developers who answer those questions before the first call.
 
-This rebuild is already running as a working demo — not a moodboard. It uses your published estates, photography, Accra sales lines, and payment story, then adds the interactive pieces your current WordPress stack can’t carry cleanly.
+This rebuild is already running as a working demo — not a moodboard. It uses your estates, photography, Accra sales lines, and payment story, then adds the interactive pieces and a current newsroom your WordPress stack can’t carry cleanly.
 
 **Preview:** [https://afroarab-properties.vercel.app](https://afroarab-properties.vercel.app)
 
@@ -14,8 +14,10 @@ This rebuild is already running as a working demo — not a moodboard. It uses y
 2. **Live plot explorer** — Pan/zoom masterplan interaction for titled land (Bella Vista demo live), status colouring, plot detail, and enquiry attribution.
 3. **Floor-plan walkthroughs** — A reusable browser walkthrough path for selected estates, so off-plan buyers aren’t guessing from a flat PDF.
 4. **Interest-free payment clarity** — Calculator + payment terms that surface your allocation + instalment pathway instead of burying it in body copy.
-5. **Site guide (strict RAG)** — “Ask the site” answers only from published website content. Anything beyond that routes to WhatsApp / phone / contact form — no invented availability or prices.
-6. **Same sales numbers buyers already trust** — Kokomlemle office, published phones, WhatsApp on +233 55 985 1280, project manager contact on estate pages.
+5. **Afro Arab guide** — Friendly on-site assistant for estates, payments, and next steps. When a human is needed (live stock, paperwork, quotes), it hands off to WhatsApp / phone / contact — no invented availability or prices. Ready to deepen with your internal docs when you share them.
+6. **FAQ** — Straight answers to the questions buyers ask before they call.
+7. **Plotline** — A modern news & stories section stocked with 2026 coverage (Blakk Rasta’s Court sod cutting, container homes, construction-support package, 200,000-home vision) plus buyer guides — so the brand’s momentum shows up online.
+8. **Same sales numbers buyers already trust** — Kokomlemle office, published phones, WhatsApp on +233 55 985 1280, project manager contact on estate pages.
 
 ## Phased delivery
 
@@ -24,6 +26,8 @@ This rebuild is already running as a working demo — not a moodboard. It uses y
 - Motion-led marketing site on Next.js
 - Verified project pages + company / contact
 - Privacy, terms, cookies, payment terms
+- FAQ + Plotline newsroom
+- Afro Arab guide with sales handoff
 - Book a viewing + WhatsApp with project context
 - SEO baseline, accessibility pass, URL redirect plan
 
@@ -33,6 +37,7 @@ This rebuild is already running as a working demo — not a moodboard. It uses y
 - Supabase-backed inventory replacing demo stock
 - Shareable plot links into sales follow-up
 - Enquiry logging into your preferred CRM or inbox
+- Guide knowledge enriched from approved internal docs / brochures
 
 ### Phase 3 — Signature experiences (per flagship)
 
@@ -44,16 +49,18 @@ This rebuild is already running as a working demo — not a moodboard. It uses y
 
 | Today | With this platform |
 | --- | --- |
-| Buyers chase WhatsApp for “is this still available?” | Plot status visible; questions that need humans go straight to sales |
+| Buyers chase WhatsApp for “is this still available?” | Plot status visible; hard questions go straight to sales |
 | Conflicting WordPress figures undermine trust | One canonical data file → one story on every page |
 | Payment plan is easy to miss | Calculator + dedicated payment journey |
 | Off-plan buyers can’t feel the layout | Walkthrough demos + path to production plans |
-| Chatbots that invent answers | Site guide refuses unknowns and hands off |
+| Blog frozen while press moves on | Plotline carries 2026 news and offers |
+| Chatbots that invent answers | Guide stays grounded; unknowns hand off to the team |
 
 ## What we need from Afro Arab
 
 - Verified spreadsheet: prices, sizes, statuses, title notes
 - Logos, photography, brochures, floor plans, masterplans
+- Internal FAQs / sales briefs to deepen the guide (optional Phase 2)
 - Preferred WhatsApp routing and who owns leads after hours
 - Legal entity details for privacy / terms finalisation
 - DNS / hosting cutover window when you green-light launch
@@ -70,4 +77,4 @@ Fees and timeline lock after a short asset audit — we won’t quote fiction ag
 
 ## Closing line for the room
 
-You’re not buying another website. You’re buying fewer wasted sales hours, clearer diaspora conversations, and a digital front door that matches the seriousness of titled Accra land and estate stock.
+You’re not buying another website. You’re buying fewer wasted sales hours, a newsroom that matches your 2026 momentum, clearer diaspora conversations, and a digital front door that matches the seriousness of titled Accra land and estate stock.

@@ -16,6 +16,7 @@ Evidence, brand, product specs, sales materials, and delivery logs for the Afro 
 | [product/floorplan-workflow.md](product/floorplan-workflow.md) | Reusable walkthrough production pipeline |
 | [product/finish-gates.md](product/finish-gates.md) | Cross-phase QA checklist status |
 | [sales/pitch.md](sales/pitch.md) | Client pitch and phased offer |
+| Site routes | `/plotline` (news), `/faq` (buyer questions) |
 | [sales/outreach-emails.md](sales/outreach-emails.md) | Outreach sequences |
 | [research/references.md](research/references.md) | GitHub, demos, licenses, tech choices |
 | [decisions/ADR.md](decisions/ADR.md) | Architecture decision records |

@@ -6,9 +6,14 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { site, whatsappHref } from "@/data/site";
+import { whatsappHref } from "@/data/site";
 import { OPEN_ASSISTANT_EVENT } from "@/lib/assistant/events";
-import { ASSISTANT_NAME } from "@/lib/assistant/identity";
+import {
+  ASSISTANT_NAME,
+  ASSISTANT_TAGLINE,
+  ASSISTANT_TEASER,
+  ASSISTANT_WELCOME,
+} from "@/lib/assistant/identity";
 import { cn } from "@/lib/cn";
 
 const SUGGESTIONS = [
@@ -170,7 +175,7 @@ export function AssistantWidget() {
                       {ASSISTANT_NAME}
                     </p>
                     <p className="mt-0.5 text-xs leading-snug text-band-fg/75">
-                      Answers from this website only · unknowns go to sales
+                      {ASSISTANT_TAGLINE}
                     </p>
                   </div>
                 </div>
@@ -193,14 +198,10 @@ export function AssistantWidget() {
                       Hello
                     </p>
                     <p className="mt-2 text-sm leading-relaxed text-foreground">
-                      I’m the <strong className="font-semibold">{ASSISTANT_NAME}</strong>{" "}
-                      for {site.name}. I can help with estates, titled land, payment
-                      pathways, and how to reach the Accra sales team — using only what’s
-                      published on this site.
+                      {ASSISTANT_WELCOME[0]}
                     </p>
                     <p className="mt-2 text-sm leading-relaxed text-muted">
-                      I won’t invent prices or availability. If it’s not on the website,
-                      I’ll connect you to sales.
+                      {ASSISTANT_WELCOME[1]}
                     </p>
                   </div>
                   <div>
@@ -244,7 +245,7 @@ export function AssistantWidget() {
                       <div className="mt-3 flex flex-wrap gap-2 border-t border-border pt-3">
                         <a
                           href={whatsappHref(
-                            "Hello Afro Arab sales — I need help with a question the website guide couldn’t answer.",
+                            "Hello Afro Arab sales — I’d like help with a question from the site guide.",
                           )}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -346,8 +347,7 @@ export function AssistantWidget() {
                   {ASSISTANT_NAME}
                 </p>
                 <p className="mt-1 text-sm leading-snug text-muted">
-                  I answer from this website only — estates, payments, and how to reach
-                  sales. Ask me anything published here.
+                  {ASSISTANT_TEASER}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <button
@@ -381,7 +381,7 @@ export function AssistantWidget() {
         )}
         aria-expanded={open}
         aria-controls="aa-assistant-panel"
-        aria-label={open ? "Hide site guide" : "Open Afro Arab site guide"}
+        aria-label={open ? "Hide guide" : `Open ${ASSISTANT_NAME}`}
       >
         <span className="relative size-10 shrink-0 overflow-hidden border border-white/15 bg-forest-900">
           <Image
@@ -400,11 +400,11 @@ export function AssistantWidget() {
         </span>
         <span className="text-left">
           <span className="block font-display text-base font-light tracking-wide">
-            {open ? "Hide guide" : "Ask the site"}
+            {open ? "Hide guide" : "Ask us"}
           </span>
           {!open ? (
             <span className="mt-0.5 block text-[0.65rem] uppercase tracking-[0.14em] text-band-fg/70">
-              Site guide · free to ask
+              {ASSISTANT_TAGLINE}
             </span>
           ) : null}
         </span>

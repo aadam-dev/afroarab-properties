@@ -2,6 +2,13 @@
 
 Append-only. Newest entries at the top.
 
+## 2026-11-07 — Plotline newsroom, FAQ, softer guide copy
+
+- Renamed Insights → Plotline; stocked 2026 press (Blakk Rasta’s Court, container homes, land package, 200k vision) with source links
+- Added `/faq` accordion + nav/footer; redirects from `/blog` and `/insights`
+- Visitor-facing guide copy no longer reveals knowledge-source; RAG + sales handoff unchanged under the hood
+- Pitch docs updated to match shipped preview
+
 ## 2026-11-06 — Site guide RAG + README/pitch rewrite
 
 - Strict website-only RAG assistant (`/api/assistant` + floating “Ask the site” widget)

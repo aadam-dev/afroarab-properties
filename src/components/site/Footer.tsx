@@ -24,7 +24,8 @@ const columns = [
     title: "Company",
     links: [
       { href: "/company", label: "About" },
-      { href: "/insights", label: "Insights" },
+      { href: "/plotline", label: "Plotline" },
+      { href: "/faq", label: "FAQ" },
       { href: "/privacy", label: "Privacy" },
       { href: "/terms", label: "Terms" },
       { href: "/cookies", label: "Cookies" },
@@ -69,7 +70,8 @@ export function Footer() {
               <OpenAssistantButton />
             </p>
             <p className="pt-1 text-xs text-muted">
-              The site guide answers from published pages only; anything else goes to sales.
+              Prefer a quick chat first? Our guide can help, then hand you to sales when you
+              need a person.
             </p>
           </div>
         </div>

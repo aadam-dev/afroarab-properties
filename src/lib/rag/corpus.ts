@@ -1,11 +1,13 @@
+import { faqItems } from "@/data/faq";
 import { publishedProjects, type Project } from "@/data/projects";
+import { plotlinePosts } from "@/data/plotline";
 import { leadership, site } from "@/data/site";
 
 export type CorpusDoc = {
   id: string;
   title: string;
   url: string;
-  category: "project" | "company" | "payment" | "contact" | "site";
+  category: "project" | "company" | "payment" | "contact" | "site" | "faq" | "news";
   text: string;
   keywords: string[];
 };
@@ -155,7 +157,9 @@ export function buildCorpus(): CorpusDoc[] {
         "Floor-plan walkthrough demos for selected estates.",
         "Payment plan calculator and enquiry forms attributed to project or plot.",
         "Legal pages: privacy, terms, cookies, and payment terms.",
-        "A site assistant that answers only from published website content and hands unknowns to the sales team.",
+        "FAQ answers common buyer questions.",
+        "Plotline carries company news, offers, and buyer guides.",
+        "An on-site guide helps with estates and payments, and connects visitors to sales when needed.",
       ].join("\n"),
       keywords: [
         "website",
@@ -166,7 +170,10 @@ export function buildCorpus(): CorpusDoc[] {
         "plan",
         "assistant",
         "chat",
-        "bot",
+        "guide",
+        "faq",
+        "plotline",
+        "news",
         "legal",
         "privacy",
       ],
@@ -175,6 +182,35 @@ export function buildCorpus(): CorpusDoc[] {
 
   for (const project of publishedProjects()) {
     docs.push(projectDoc(project));
+  }
+
+  for (const item of faqItems) {
+    docs.push({
+      id: `faq:${item.id}`,
+      title: item.question,
+      url: "/faq",
+      category: "faq",
+      text: [item.question, ...item.answer].join("\n"),
+      keywords: item.question
+        .toLowerCase()
+        .split(/[^a-z0-9]+/)
+        .filter((t) => t.length > 2),
+    });
+  }
+
+  for (const post of plotlinePosts) {
+    docs.push({
+      id: `news:${post.slug}`,
+      title: post.title,
+      url: `/plotline/${post.slug}`,
+      category: "news",
+      text: [post.title, post.excerpt, ...post.body].join("\n"),
+      keywords: [
+        post.slug,
+        post.category,
+        ...post.title.toLowerCase().split(/[^a-z0-9]+/),
+      ].filter(Boolean),
+    });
   }
 
   return docs;

@@ -19,7 +19,7 @@ export function OpenAssistantButton({ className, children }: Props) {
         className,
       )}
     >
-      {children ?? "Ask the site guide"}
+      {children ?? "Ask our guide"}
     </button>
   );
 }

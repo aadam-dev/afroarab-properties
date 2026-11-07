@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { publishedProjects } from "@/data/projects";
+import { plotlinePosts } from "@/data/plotline";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
@@ -9,7 +10,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/lands",
     "/payment-plans",
     "/company",
-    "/insights",
+    "/plotline",
+    "/faq",
     "/contact",
     "/privacy",
     "/terms",
@@ -24,8 +26,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return urls;
   });
 
-  return [...staticPaths, ...projectPaths].map((path) => ({
+  const plotlinePaths = plotlinePosts.map((p) => `/plotline/${p.slug}`);
+
+  return [...staticPaths, ...projectPaths, ...plotlinePaths].map((path) => ({
     url: `${base}${path}`,
-    lastModified: new Date("2026-11-05"),
+    lastModified: new Date("2026-11-07"),
   }));
 }

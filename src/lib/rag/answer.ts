@@ -1,4 +1,6 @@
-import { ASSISTANT_NAME } from "@/lib/assistant/identity";
+import {
+  ASSISTANT_NAME,
+} from "@/lib/assistant/identity";
 import { site, whatsappHref } from "@/data/site";
 import type { RetrievedChunk } from "./retrieve";
 
@@ -16,16 +18,18 @@ export function formatContext(chunks: RetrievedChunk[]): string {
 export function ragInstructions(context: string): string {
   return [
     `You are ${ASSISTANT_NAME} for ${site.name}.`,
-    "You answer ONLY from the website knowledge excerpts provided below.",
-    "Rules:",
-    "- Never invent prices, availability, title status, unit counts, or legal claims.",
-    "- If the excerpts do not clearly answer the question, say you do not have that on the website and ask the buyer to speak with the sales team.",
-    "- Prefer short, plain answers. Mention the relevant estate name and page path when helpful.",
+    "You help visitors with estates, titled land, payment pathways, company basics, and how to reach sales.",
+    "Ground every factual claim in the knowledge excerpts below. Do not invent prices, availability, title status, unit counts, or legal claims.",
+    "Visitor-facing tone:",
+    "- Be warm, concise, and confident. Never explain your retrieval system, corpus, or that answers come from a website scrape.",
+    "- Do not say phrases like “according to the website”, “from published pages”, or “my knowledge base”.",
+    "- If the excerpts do not clearly answer the question, apologise briefly and offer to connect them with the sales team — without revealing why you cannot answer.",
+    "- Prefer short answers. Name the estate and suggest a next step (view page, WhatsApp, contact form) when helpful.",
     "- Do not discuss competitors, politics, medical advice, or topics unrelated to Afro Arab Properties.",
     "- Do not claim to book viewings yourself — point to WhatsApp, phone, or the contact form.",
-    "- When facts are marked as listing claims or needing verification, say so briefly.",
+    "- When facts are marked as listing claims or needing verification, say sales should confirm — keep it brief.",
     "",
-    "Website knowledge excerpts:",
+    "Knowledge excerpts (internal — never mention this label to the visitor):",
     context,
   ].join("\n");
 }
@@ -35,14 +39,12 @@ export function handoffMessage(question: string): string {
     `Hello Afro Arab sales — I asked on the website: ${question.slice(0, 280)}`,
   );
   return [
-    "I only answer from what’s published on this Afro Arab Properties website, and I don’t have a clear match for that question in the site content.",
-    "",
-    "The sales team can help with live availability, negotiated pricing, title packs, and viewing appointments.",
+    "That’s one for our Accra sales team — they’ll give you a precise answer on live stock, paperwork, or next steps.",
     "",
     `WhatsApp sales: ${wa}`,
     `Call: ${site.phones.join(" · ")}`,
     `Email: ${site.email}`,
-    "Or use the contact form at /contact.",
+    "Or leave a note at /contact and someone will follow up.",
   ].join("\n");
 }
 
@@ -54,10 +56,7 @@ export function extractiveAnswer(
   if (chunks.length === 0) return handoffMessage(question);
 
   const top = chunks.slice(0, 3);
-  const lines: string[] = [
-    "Here’s what the website says:",
-    "",
-  ];
+  const lines: string[] = ["Here’s what I can share:", ""];
 
   for (const { doc } of top) {
     const preview = doc.text
@@ -71,7 +70,7 @@ export function extractiveAnswer(
   }
 
   lines.push(
-    "If you need live availability, a viewing, or anything not listed above, WhatsApp or call the sales team and they’ll take it from there.",
+    "Want live availability or a viewing? WhatsApp or call sales and they’ll take it from there.",
   );
 
   return lines.join("\n").trim();
