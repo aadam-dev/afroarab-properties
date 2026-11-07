@@ -37,7 +37,7 @@ export function CinematicHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: easeOutLux, delay: 0.1 }}
         >
-          <BrandLogo size="hero" priority invert className="mb-8" />
+          <BrandLogo size="hero" priority surface="dark" className="mb-8" />
         </motion.div>
 
         <div className="overflow-hidden">
@@ -53,7 +53,7 @@ export function CinematicHero() {
         </div>
 
         <motion.p
-          className="mt-5 max-w-xl text-base leading-relaxed text-white/80 text-pretty sm:text-lg"
+          className="prose-lux mt-5 max-w-xl text-white/85 text-pretty"
           initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, ease: easeOutLux, delay: 0.42 }}

@@ -16,7 +16,7 @@ export function HomeContact() {
           <h2 className="mt-3 max-w-xl font-display text-3xl font-light text-balance sm:text-4xl lg:text-5xl">
             Arrange a viewing
           </h2>
-          <p className="mt-4 max-w-lg text-base leading-relaxed text-muted text-pretty">
+          <p className="prose-lux mt-4 max-w-lg text-muted text-pretty">
             Tell us which estate or plot you are considering. Call, WhatsApp, or send the
             form — same sales support published on the current site.
           </p>

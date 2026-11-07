@@ -1,56 +1,73 @@
 # Pitch — Afro Arab Properties interactive website
 
-## The opportunity
+## Why this matters now
 
-Afro Arab already sells homes and land across Greater Accra. The current WordPress site creates friction: conflicting project data, missing legal pages, slow load, and no live way to explore plots or walk floor plans. Buyers comparing developers expect clarity and interaction.
+Afro Arab already builds and sells across Greater Accra. Diaspora and local buyers who land on afroarabproperties.com today still hit the same frictions: conflicting sizes and prices, thin legal pages, slow mobile load, and no live way to see which plots are free or how a floor plan actually works. Serious buyers compare you to developers who answer those questions before the first call.
 
-## What we propose
+This rebuild is already running as a working demo — not a moodboard. It uses your published estates, photography, Accra sales lines, and payment story, then adds the interactive pieces your current WordPress stack can’t carry cleanly.
 
-A phased rebuild that fixes trust and conversion first, then adds signature interactive experiences:
+**Preview:** [https://afroarab-properties.vercel.app](https://afroarab-properties.vercel.app)
 
-### Phase 1 — Foundation & marketing site (2–4 weeks)
+## What buyers get
 
-- Modern motion-led marketing site (Next.js)
-- Canonical project pages with verified facts
-- Working privacy/terms/payment disclosures
-- Project-aware Book a viewing + WhatsApp
-- Performance, SEO schema, accessibility baseline
-- Redirects from existing URLs
+1. **Clear estate pages** — Canonical facts per project (location, beds, price bands, galleries, agent contact), with verification notes so marketing copy doesn’t outrun title reality.
+2. **Live plot explorer** — Pan/zoom masterplan interaction for titled land (Bella Vista demo live), status colouring, plot detail, and enquiry attribution.
+3. **Floor-plan walkthroughs** — A reusable browser walkthrough path for selected estates, so off-plan buyers aren’t guessing from a flat PDF.
+4. **Interest-free payment clarity** — Calculator + payment terms that surface your allocation + instalment pathway instead of burying it in body copy.
+5. **Site guide (strict RAG)** — “Ask the site” answers only from published website content. Anything beyond that routes to WhatsApp / phone / contact form — no invented availability or prices.
+6. **Same sales numbers buyers already trust** — Kokomlemle office, published phones, WhatsApp on +233 55 985 1280, project manager contact on estate pages.
 
-### Phase 2 — Live Plot Explorer (3–5 weeks)
+## Phased delivery
 
-- Interactive plan + 3D explorer for titled land / estates
-- Live availability from staff admin
-- Filters, sun orientation study, shareable plot links
-- Enquiry attribution into your sales workflow
+### Phase 1 — Foundation (largely demo-ready)
 
-### Phase 3 — Floor-plan walkthroughs (ongoing / per project)
+- Motion-led marketing site on Next.js
+- Verified project pages + company / contact
+- Privacy, terms, cookies, payment terms
+- Book a viewing + WhatsApp with project context
+- SEO baseline, accessibility pass, URL redirect plan
 
-- Reusable pipeline from CAD/IFC/plan → browser walkthrough
-- Optional 360 / cinematic video for marketing
-- Same system reusable for future developments
+### Phase 2 — Live inventory (next commercial step)
 
-## Outcomes
+- Staff admin for plot status (available / held / reserved / sold)
+- Supabase-backed inventory replacing demo stock
+- Shareable plot links into sales follow-up
+- Enquiry logging into your preferred CRM or inbox
 
-- Fewer “is this still available?” loops — status is live
-- Higher-quality leads with project/plot context
-- Faster mobile experience than the current ~8s first paint
-- A distinctive digital presence matching a serious developer brand
+### Phase 3 — Signature experiences (per flagship)
+
+- Production walkthroughs from CAD / plans with human QA
+- Optional cinematic film for marketing (not a substitute for accurate geometry)
+- Training for sales on plot explorer + lead handoff
+
+## Outcomes you can hold us to
+
+| Today | With this platform |
+| --- | --- |
+| Buyers chase WhatsApp for “is this still available?” | Plot status visible; questions that need humans go straight to sales |
+| Conflicting WordPress figures undermine trust | One canonical data file → one story on every page |
+| Payment plan is easy to miss | Calculator + dedicated payment journey |
+| Off-plan buyers can’t feel the layout | Walkthrough demos + path to production plans |
+| Chatbots that invent answers | Site guide refuses unknowns and hands off |
 
 ## What we need from Afro Arab
 
-- Verified project spreadsheet (prices, sizes, statuses)
+- Verified spreadsheet: prices, sizes, statuses, title notes
 - Logos, photography, brochures, floor plans, masterplans
-- WhatsApp sales number and preferred lead routing
-- Legal entity details for privacy/terms
-- Access for cutover / DNS when ready
+- Preferred WhatsApp routing and who owns leads after hours
+- Legal entity details for privacy / terms finalisation
+- DNS / hosting cutover window when you green-light launch
 
-## Commercial framing (editable)
+## Commercial packages (editable)
 
 | Package | Includes |
 | --- | --- |
-| Launch site | Phase 1 |
-| Launch + Plots | Phases 1–2 for one land project |
-| Signature estate | Phases 1–3 for flagship project + staff training |
+| **Launch site** | Phase 1 cutover of the marketing platform |
+| **Launch + Plots** | Phases 1–2 for one land project with live admin |
+| **Signature estate** | Phases 1–3 for a flagship + sales training |
 
-Exact fees/timeline to be confirmed after asset audit.
+Fees and timeline lock after a short asset audit — we won’t quote fiction against missing drawings.
+
+## Closing line for the room
+
+You’re not buying another website. You’re buying fewer wasted sales hours, clearer diaspora conversations, and a digital front door that matches the seriousness of titled Accra land and estate stock.

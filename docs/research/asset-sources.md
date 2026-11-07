@@ -8,7 +8,11 @@
 - Support-page office map query: `Afro Arab Properties, Alhaji Moro St. Nima, Accra` (confirm entrance vs Cotton Avenue copy)
 - Per-estate Google Maps embeds restored into `mapQuery` on project records (Achiaman, O’Reilly Spintex, DVLA Botwe, East Legon Hills, Tema C25, Ningo Prampram, Obeyeyie Amasaman, Oyarifa Rd, Katamanso, Santoe, Mamobi)
 - Leadership headshots from `/about`: Alhaji Salamu Amadu (Chairman/CEO), Abdul S. Mohammed (MD), Cephas Kwaku Forfoe (GM) → `public/images/team/`
+- Project agent on estate pages: Hosni Mubarack Salih (Project Manager/Agent) → `public/images/team/hosni-mubarack-salih.jpeg`
 - WhatsApp sales path uses `+233 55 985 1280` (`NEXT_PUBLIC_WHATSAPP_NUMBER` override)
+- Estate galleries expanded from live WP media (Ibra 10–14, Cephas 11–13, Hassy 1/12/13, Paapa 11–13, Afugu views, Lamin extras, Hawa Prampram stills, Dexter WhatsApp stills, Bella brochure stills)
+- Related estates strip mirrors live “Listed latest properties” recommendations
+- Template `95 sqft` from live cards is intentionally not republished
 - Public WordPress media downloaded into `public/images/projects/` and `public/brand/` for this rebuild preview
 - Brand marks in use: `public/brand/logo-green.png`, `logo-lockup.png`, `favicon-180.png`
 

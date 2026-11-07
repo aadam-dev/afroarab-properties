@@ -12,7 +12,7 @@ export function PaymentPathStrip() {
           <h2 className="mt-3 font-display text-3xl font-light text-balance sm:text-4xl">
             Interest-free schedules on selected inventory
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-muted text-pretty">
+          <p className="prose-lux mt-4 text-muted text-pretty">
             Selected homes and plots offer developer-backed payment pathways. Review
             formal terms before you pay.
           </p>

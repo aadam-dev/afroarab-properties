@@ -14,7 +14,7 @@ export function FeaturedProjects({ projects }: { projects: Project[] }) {
           <h2 className="mt-3 font-display text-3xl font-light text-balance sm:text-4xl lg:text-5xl">
             Developments across Greater Accra
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-muted text-pretty">
+          <p className="prose-lux mt-4 text-muted text-pretty">
             Townhouses, courts, and titled land corridors — with locations restored from
             the live listing maps. Prices and unit facts publish only when verified.
           </p>
@@ -56,10 +56,10 @@ export function FeaturedProjects({ projects }: { projects: Project[] }) {
                     <h3 className="mt-2 font-display text-3xl font-light sm:text-4xl">
                       {project.name}
                     </h3>
-                    <p className="mt-3 text-base leading-relaxed text-muted">
+                    <p className="prose-lux mt-3 text-[1.05rem] text-muted">
                       {project.tagline}
                     </p>
-                    <p className="mt-6 font-mono-data text-sm text-foreground">
+                    <p className="font-figure mt-6 text-xl text-foreground sm:text-2xl">
                       {project.priceDisplay}
                     </p>
                     <span className="mt-6 inline-block text-sm font-semibold text-brand-red underline-offset-4 group-hover:underline">

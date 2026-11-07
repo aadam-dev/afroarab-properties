@@ -24,13 +24,13 @@
   --aa-sand-100: #efe8dc;
   --aa-sand-200: #e2d5c3;
   --aa-champagne: #f4efe6;
-  --aa-stone-500: #6e675d;
+  --aa-stone-500: #5c564e;
   --aa-ink: #14110f;
   --aa-red-600: #c4161c;
   --aa-red-700: #a31217;
   --aa-gold-400: #dfc283;
-  --aa-gold-500: #c4a35a;
-  --aa-gold-600: #9e7b36;
+  --aa-gold-500: #b8923f;
+  --aa-gold-600: #7a5c22;
   --aa-available: #1f7a4c;
   --aa-held: #c47b1a;
   --aa-reserved: #b45309;
@@ -41,9 +41,9 @@
   --foreground: var(--aa-ink);
   --surface: #ffffff;
   --surface-muted: var(--aa-sand-100);
-  --border: color-mix(in oklab, var(--aa-sand-200) 85%, var(--aa-ink));
-  --muted: var(--aa-stone-500);
-  --header-bg: color-mix(in oklab, var(--aa-sand-50) 88%, white);
+  --border: color-mix(in oklab, var(--aa-sand-200) 70%, var(--aa-ink));
+  --muted: #4f4942;
+  --header-bg: color-mix(in oklab, var(--aa-sand-50) 92%, white);
   --band: var(--aa-forest-950);
   --band-fg: #ffffff;
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
@@ -63,7 +63,9 @@
   --surface: #101822;
   --surface-muted: #192330;
   --border: color-mix(in oklab, white 12%, transparent);
-  --muted: color-mix(in oklab, #f4efe6 55%, transparent);
+  --muted: color-mix(in oklab, #f4efe6 68%, transparent);
+  --aa-gold-500: #d4b56a;
+  --aa-gold-600: #e0c57e;
   --header-bg: color-mix(in oklab, #080e14 90%, transparent);
   --band: #080e14;
   --band-fg: #f4efe6;
@@ -106,6 +108,7 @@
   --color-unreleased: var(--aa-unreleased);
   --font-sans: var(--font-manrope);
   --font-display: var(--font-fraunces);
+  --font-serif: var(--font-cormorant);
   --font-mono: var(--font-plex);
 }
 
@@ -151,6 +154,12 @@ select:focus-visible,
 .font-display {
   font-family: var(--font-fraunces), Georgia, serif;
   font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 40, "WONK" 0.4;
+}
+
+.font-serif {
+  font-family: var(--font-cormorant), "Times New Roman", serif;
+  font-optical-sizing: auto;
 }
 
 .font-mono-data {
@@ -158,9 +167,31 @@ select:focus-visible,
   font-variant-numeric: tabular-nums;
 }
 
-.eyebrow {
-  font-size: 0.7rem;
+/** Prices, dimensions, and other marketing figures */
+.font-figure {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-variant-numeric: tabular-nums;
   font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.prose-lux {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+}
+
+@media (min-width: 640px) {
+  .prose-lux {
+    font-size: 1.25rem;
+  }
+}
+
+.eyebrow {
+  font-family: var(--font-manrope), system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--aa-gold-600);

@@ -28,6 +28,7 @@ Replace the current WordPress/Elementor site with a modern, motion-led marketing
 1. Live plot explorer for land inventory interaction
 2. Floor-plan walkthrough pipeline reusable across real-estate clients
 3. Supabase-backed inventory, leads, and lightweight admin
+4. Strict website-only RAG site guide with sales handoff for unknowns
 
 ## Non-negotiables
 

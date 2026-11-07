@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, IBM_Plex_Mono, Manrope } from "next/font/google";
+import { Cormorant_Garamond, Fraunces, IBM_Plex_Mono, Manrope } from "next/font/google";
 import { SiteShell } from "@/components/site/SiteShell";
 import { ThemeProvider } from "@/components/site/ThemeProvider";
 import "./globals.css";
@@ -13,6 +13,15 @@ const manrope = Manrope({
 const fraunces = Fraunces({
   variable: "--font-fraunces",
   subsets: ["latin"],
+  display: "swap",
+  axes: ["SOFT", "opsz", "WONK"],
+});
+
+/** Editorial body + figure numerals for luxury write-ups */
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -70,7 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en-GH"
       data-theme="light"
-      className={`${manrope.variable} ${fraunces.variable} ${plex.variable} h-full antialiased`}
+      className={`${manrope.variable} ${fraunces.variable} ${cormorant.variable} ${plex.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

@@ -2,6 +2,13 @@
 
 Append-only. Newest entries at the top.
 
+## 2026-11-06 — Site guide RAG + README/pitch rewrite
+
+- Strict website-only RAG assistant (`/api/assistant` + floating “Ask the site” widget)
+- Lexical retrieval over projects/company/payment/contact corpus; below-threshold questions hand off to WhatsApp/sales
+- Optional Vercel AI Gateway phrasing (`AI_GATEWAY_API_KEY`); extractive answers without a key
+- Human README rewrite; sales pitch + executive proposal updated to match shipped preview
+
 ## 2026-11-06 — Public GitHub + Vercel share link
 
 - Pulled public Afro Arab logo, favicon, and project photography into `public/`

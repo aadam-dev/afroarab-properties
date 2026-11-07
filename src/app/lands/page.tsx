@@ -50,7 +50,7 @@ export default function LandsPage() {
                   <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted">
                     {land.summary}
                   </p>
-                  <p className="mt-6 font-mono-data text-sm">{land.priceDisplay}</p>
+                  <p className="font-figure mt-6 text-xl">{land.priceDisplay}</p>
                   <span className="mt-4 inline-block text-sm font-semibold text-brand-red underline-offset-4 group-hover:underline">
                     Open plot explorer
                   </span>

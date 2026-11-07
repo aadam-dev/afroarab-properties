@@ -1,12 +1,15 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { AssistantWidget } from "@/components/assistant/AssistantWidget";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isExplorer = pathname.includes("/explorer");
+  const isWalkthrough = pathname.includes("/walkthrough");
+  const hideAssistant = isExplorer || isWalkthrough || pathname.startsWith("/admin");
 
   return (
     <>
@@ -21,6 +24,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         {children}
       </main>
       {isExplorer ? null : <Footer />}
+      {hideAssistant ? null : <AssistantWidget />}
     </>
   );
 }

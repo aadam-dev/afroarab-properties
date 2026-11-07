@@ -37,7 +37,7 @@ export function Footer() {
       <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.2fr_2fr] lg:px-8">
         <div>
           <BrandLogo size="footer" />
-          <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted">
+          <p className="prose-lux mt-5 max-w-sm text-[1.05rem] text-muted">
             Homes and titled land across Greater Accra, with clearer inventory and
             interest-free payment paths for Ghana and the diaspora.
           </p>
@@ -93,7 +93,7 @@ export function Footer() {
 
       <div className="border-t border-border px-4 py-5 text-xs text-muted sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 sm:flex-row sm:justify-between">
-          <p>© {new Date().getFullYear()} Afro Arab Properties Ltd.</p>
+          <p>© 2026 Afro Arab Properties Ltd.</p>
           <p>Data Protection Act 2012 (Act 843)</p>
         </div>
       </div>
