@@ -70,3 +70,8 @@ supabase/.branches
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# Internal strategy / pitch / audit docs (keep local; do not publish with the site repo)
+/docs/
+.impeccable/
+.tmp/

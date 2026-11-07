@@ -78,8 +78,8 @@ export function PaymentCalculator() {
         {/* Header */}
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#C5A059]/30 bg-surface px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#C5A059]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#3D9B6E]" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-gold/35 bg-surface px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+              <span className="h-1.5 w-1.5 rounded-full bg-available" />
               Institutional Financial Simulator
             </div>
             <h2 className="mt-3 font-display text-3xl font-light text-foreground sm:text-4xl lg:text-5xl">
@@ -99,8 +99,8 @@ export function PaymentCalculator() {
               className={cn(
                 "rounded-lg px-4 py-2 text-xs font-semibold transition-all",
                 currency === "USD"
-                  ? "bg-[#C5A059] text-[#080E14] shadow-md"
-                  : "text-foreground/70 hover:text-white",
+                  ? "bg-gold text-ink shadow-md"
+                  : "text-muted hover:text-foreground",
               )}
             >
               USD ($)
@@ -111,8 +111,8 @@ export function PaymentCalculator() {
               className={cn(
                 "rounded-lg px-4 py-2 text-xs font-semibold transition-all",
                 currency === "GHS"
-                  ? "bg-[#C5A059] text-[#080E14] shadow-md"
-                  : "text-foreground/70 hover:text-white",
+                  ? "bg-gold text-ink shadow-md"
+                  : "text-muted hover:text-foreground",
               )}
             >
               GHS (GH¢)
@@ -133,8 +133,8 @@ export function PaymentCalculator() {
               className={cn(
                 "rounded-lg border px-3.5 py-1.5 text-xs font-semibold transition-all",
                 propertyPrice === preset.priceUsd
-                  ? "border-[#C5A059] bg-[#C5A059]/20 text-[#DFC283]"
-                  : "border-border bg-surface/60 text-foreground/80 hover:border-white/20 hover:text-white",
+                  ? "border-gold bg-gold/15 text-gold"
+                  : "border-border bg-surface text-foreground/80 hover:border-gold/40 hover:text-foreground",
               )}
             >
               {preset.label} &bull; ${preset.priceUsd.toLocaleString("en-US")}
@@ -147,15 +147,15 @@ export function PaymentCalculator() {
           {/* Sliders & Input Controls */}
           <div className="rounded-2xl border border-border bg-surface/90 p-6 backdrop-blur-xl sm:p-8">
             {/* Mode Toggle: 60-Month vs 100% Upfront */}
-            <div className="grid grid-cols-2 gap-3 rounded-xl border border-border bg-black/40 p-1.5">
+            <div className="grid grid-cols-2 gap-3 rounded-xl border border-border bg-surface-muted p-1.5">
               <button
                 type="button"
                 onClick={() => setPaymentMode("installment")}
                 className={cn(
                   "rounded-lg py-2.5 text-xs font-bold transition-all sm:text-sm",
                   paymentMode === "installment"
-                    ? "bg-[#C5A059] text-[#080E14] shadow-lg"
-                    : "text-foreground/70 hover:text-white",
+                    ? "bg-gold text-ink shadow-lg"
+                    : "text-muted hover:text-foreground",
                 )}
               >
                 60-Month 0% Interest Plan
@@ -166,12 +166,12 @@ export function PaymentCalculator() {
                 className={cn(
                   "flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs font-bold transition-all sm:text-sm",
                   paymentMode === "upfront"
-                    ? "bg-[#3D9B6E] text-[#080E14] shadow-lg"
-                    : "text-foreground/70 hover:text-white",
+                    ? "bg-available text-ink shadow-lg"
+                    : "text-muted hover:text-foreground",
                 )}
               >
                 <span>100% Upfront</span>
-                <span className="rounded bg-black/30 px-1.5 py-0.5 text-[0.65rem] uppercase">
+                <span className="rounded bg-foreground/10 px-1.5 py-0.5 text-[0.65rem] uppercase">
                   10% OFF
                 </span>
               </button>
@@ -180,10 +180,10 @@ export function PaymentCalculator() {
             {/* Property Price Slider */}
             <div className="mt-8">
               <div className="flex items-center justify-between">
-                <label htmlFor="price-slider" className="text-xs uppercase tracking-wider text-[#C5A059]">
+                <label htmlFor="price-slider" className="text-xs uppercase tracking-wider text-gold">
                   Property / Land Valuation
                 </label>
-                <div className="font-display text-2xl font-light text-white sm:text-3xl">
+                <div className="font-display text-2xl font-light text-foreground sm:text-3xl">
                   {currency === "USD"
                     ? `$${propertyPrice.toLocaleString("en-US")}`
                     : `GH¢${Math.round(propertyPrice * rate).toLocaleString("en-GH")}`}
@@ -198,7 +198,7 @@ export function PaymentCalculator() {
                 step={5000}
                 value={propertyPrice}
                 onChange={(e) => setPropertyPrice(Number(e.target.value))}
-                className="mt-4 w-full accent-[#C5A059]"
+                className="mt-4 w-full accent-gold"
               />
 
               <div className="mt-2 flex justify-between text-[0.7rem] text-foreground/50">
@@ -213,12 +213,12 @@ export function PaymentCalculator() {
               <div className="mt-8 border-t border-border pt-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <label htmlFor="down-slider" className="text-xs uppercase tracking-wider text-[#C5A059]">
+                    <label htmlFor="down-slider" className="text-xs uppercase tracking-wider text-gold">
                       Upfront Allocation Deposit
                     </label>
                     <p className="text-xs text-foreground/60">Minimum 40% standard</p>
                   </div>
-                  <div className="font-display text-2xl font-light text-white">
+                  <div className="font-display text-2xl font-light text-foreground">
                     {downPaymentPercent}%
                   </div>
                 </div>
@@ -231,7 +231,7 @@ export function PaymentCalculator() {
                   step={5}
                   value={downPaymentPercent}
                   onChange={(e) => setDownPaymentPercent(Number(e.target.value))}
-                  className="mt-4 w-full accent-[#C5A059]"
+                  className="mt-4 w-full accent-gold"
                 />
 
                 <div className="mt-2 flex justify-between text-[0.7rem] text-foreground/50">
@@ -244,23 +244,23 @@ export function PaymentCalculator() {
 
             {/* Construction & Handover Milestones Timeline */}
             <div className="mt-8 border-t border-border pt-6">
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-[#C5A059]">
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-gold">
                 5-Year Development & Payment Milestones
               </h4>
               <div className="mt-4 space-y-3">
                 {PAYMENT_MILESTONES.map((ms) => (
                   <div
                     key={ms.month}
-                    className="flex items-start gap-3 rounded-lg border border-white/5 bg-black/20 p-3 text-xs"
+                    className="flex items-start gap-3 rounded-lg border border-border bg-surface-muted p-3 text-xs"
                   >
-                    <span className="rounded bg-[#C5A059]/20 px-2 py-1 font-mono font-bold text-[#DFC283]">
+                    <span className="rounded bg-gold/15 px-2 py-1 font-mono font-bold text-gold">
                       M{ms.month}
                     </span>
                     <div className="flex-1">
-                      <div className="font-semibold text-white">{ms.label}</div>
+                      <div className="font-semibold text-foreground">{ms.label}</div>
                       <div className="text-foreground/60">{ms.description}</div>
                     </div>
-                    <span className="font-mono text-white/70">{ms.sharePercent}%</span>
+                    <span className="font-mono text-muted">{ms.sharePercent}%</span>
                   </div>
                 ))}
               </div>
@@ -268,17 +268,17 @@ export function PaymentCalculator() {
           </div>
 
           {/* Results & Schedule Breakdown Card */}
-          <div className="rounded-2xl border border-[#C5A059]/30 bg-surface p-6 shadow-2xl backdrop-blur-2xl sm:p-8">
+          <div className="rounded-2xl border border-gold/35 bg-surface p-6 shadow-2xl backdrop-blur-2xl sm:p-8">
             <div className="flex items-center justify-between border-b border-border pb-5">
               <div>
-                <span className="text-xs uppercase tracking-wider text-[#C5A059]">
+                <span className="text-xs uppercase tracking-wider text-gold">
                   Schedule Preview
                 </span>
-                <h3 className="font-display text-2xl font-light text-white">
+                <h3 className="font-display text-2xl font-light text-foreground">
                   Payment Summary
                 </h3>
               </div>
-              <span className="rounded-full bg-[#3D9B6E]/20 px-3 py-1 text-xs font-bold text-[#3D9B6E]">
+              <span className="rounded-full bg-available/20 px-3 py-1 text-xs font-bold text-available">
                 0% APR Guaranteed
               </span>
             </div>
@@ -287,11 +287,11 @@ export function PaymentCalculator() {
             <div className="mt-6 space-y-4">
               {paymentMode === "installment" ? (
                 <>
-                  <div className="rounded-xl border border-white/5 bg-black/40 p-4">
+                  <div className="rounded-xl border border-border bg-surface-muted p-4">
                     <div className="text-xs uppercase tracking-wider text-foreground/60">
                       Upfront Allocation ({downPaymentPercent}%)
                     </div>
-                    <div className="mt-1 font-display text-3xl font-light text-white">
+                    <div className="mt-1 font-display text-3xl font-light text-foreground">
                       {currency === "USD"
                         ? `$${calculations.downPayment.toLocaleString("en-US")}`
                         : `GH¢${calculations.downPayment.toLocaleString("en-GH")}`}
@@ -301,11 +301,11 @@ export function PaymentCalculator() {
                     </p>
                   </div>
 
-                  <div className="rounded-xl border border-[#3D9B6E]/30 bg-[#3D9B6E]/5 p-4">
-                    <div className="text-xs uppercase tracking-wider text-[#3D9B6E]">
+                  <div className="rounded-xl border border-available/30 bg-available/5 p-4">
+                    <div className="text-xs uppercase tracking-wider text-available">
                       Monthly Payment (60 Installments)
                     </div>
-                    <div className="mt-1 font-display text-3xl font-light text-[#3D9B6E]">
+                    <div className="mt-1 font-display text-3xl font-light text-available">
                       {currency === "USD"
                         ? `$${calculations.monthlyPayment.toLocaleString("en-US")}`
                         : `GH¢${calculations.monthlyPayment.toLocaleString("en-GH")}`}
@@ -317,18 +317,18 @@ export function PaymentCalculator() {
                   </div>
                 </>
               ) : (
-                <div className="rounded-xl border border-[#3D9B6E]/40 bg-[#3D9B6E]/10 p-5">
-                  <div className="text-xs uppercase tracking-wider text-[#3D9B6E]">
+                <div className="rounded-xl border border-available/40 bg-available/10 p-5">
+                  <div className="text-xs uppercase tracking-wider text-available">
                     Instant Cash Savings (10% Off)
                   </div>
-                  <div className="mt-1 font-display text-3xl font-light text-white">
+                  <div className="mt-1 font-display text-3xl font-light text-foreground">
                     {currency === "USD"
                       ? `$${calculations.discount.toLocaleString("en-US")}`
                       : `GH¢${calculations.discount.toLocaleString("en-GH")}`}
                   </div>
-                  <div className="mt-3 border-t border-[#3D9B6E]/20 pt-3">
+                  <div className="mt-3 border-t border-available/20 pt-3">
                     <div className="text-xs text-foreground/70">Net Settlement Due:</div>
-                    <div className="font-display text-2xl text-[#3D9B6E]">
+                    <div className="font-display text-2xl text-available">
                       {currency === "USD"
                         ? `$${calculations.finalPrice.toLocaleString("en-US")}`
                         : `GH¢${calculations.finalPrice.toLocaleString("en-GH")}`}
@@ -338,24 +338,24 @@ export function PaymentCalculator() {
               )}
 
               {/* Financial Metrics */}
-              <dl className="divide-y divide-white/5 rounded-xl border border-white/5 bg-black/20 p-4 text-xs">
+              <dl className="divide-y divide-border rounded-xl border border-border bg-surface-muted p-4 text-xs">
                 <div className="flex justify-between py-2">
                   <dt className="text-foreground/60">Financing Interest Rate</dt>
-                  <dd className="font-bold text-[#3D9B6E]">0.00% (Strictly Free)</dd>
+                  <dd className="font-bold text-available">0.00% (Strictly Free)</dd>
                 </div>
                 <div className="flex justify-between py-2">
                   <dt className="text-foreground/60">Arrangement & Bank Fees</dt>
-                  <dd className="font-bold text-[#3D9B6E]">$0.00 (Zero Fees)</dd>
+                  <dd className="font-bold text-available">$0.00 (Zero Fees)</dd>
                 </div>
                 <div className="flex justify-between py-2">
                   <dt className="text-foreground/60">Tenor Length</dt>
-                  <dd className="text-white">
+                  <dd className="text-foreground">
                     {paymentMode === "installment" ? "60 Months (5 Years)" : "Immediate"}
                   </dd>
                 </div>
                 <div className="flex justify-between py-2">
                   <dt className="text-foreground/60">Title Deed Clearance</dt>
-                  <dd className="text-white">Upon 100% Final Settlement</dd>
+                  <dd className="text-foreground">Upon 100% Final Settlement</dd>
                 </div>
               </dl>
             </div>
@@ -392,20 +392,20 @@ export function PaymentCalculator() {
           role="dialog"
           aria-modal="true"
         >
-          <div className="relative w-full max-w-lg rounded-2xl border border-white/20 bg-background p-6 shadow-2xl sm:p-8">
+          <div className="relative w-full max-w-lg rounded-2xl border border-border bg-surface p-6 shadow-2xl sm:p-8">
             <div className="flex items-center justify-between border-b border-border pb-4">
               <div>
-                <span className="text-xs uppercase tracking-wider text-[#C5A059]">
+                <span className="text-xs uppercase tracking-wider text-gold">
                   Official Buyer Summary
                 </span>
-                <h3 className="font-display text-xl text-white">
+                <h3 className="font-display text-xl text-foreground">
                   Afro-Arab Properties Amortization
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={() => setDownloadModalOpen(false)}
-                className="rounded-full p-1.5 text-white/70 hover:bg-white/10"
+                className="rounded-full p-1.5 text-muted hover:bg-surface-muted"
               >
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -423,7 +423,7 @@ export function PaymentCalculator() {
                   value={buyerName}
                   onChange={(e) => setBuyerDetails({ name: e.target.value })}
                   placeholder="e.g. Samuel K. Boateng"
-                  className="mt-1 h-10 w-full rounded-lg border border-white/15 bg-black/40 px-3 text-sm text-white outline-none focus:border-[#C5A059]"
+                  className="mt-1 h-10 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-gold"
                 />
               </div>
 
@@ -437,15 +437,15 @@ export function PaymentCalculator() {
                   value={buyerEmail}
                   onChange={(e) => setBuyerDetails({ email: e.target.value })}
                   placeholder="samuel@example.com"
-                  className="mt-1 h-10 w-full rounded-lg border border-white/15 bg-black/40 px-3 text-sm text-white outline-none focus:border-[#C5A059]"
+                  className="mt-1 h-10 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus:border-gold"
                 />
               </div>
 
               {/* Summary Receipt Box */}
-              <div className="rounded-xl border border-[#C5A059]/40 bg-surface p-4">
+              <div className="rounded-xl border border-gold/40 bg-surface-muted p-4">
                 <div className="flex justify-between border-b border-border pb-2">
                   <span className="text-foreground/70">Property Valuation:</span>
-                  <span className="font-bold text-white">
+                  <span className="font-bold text-foreground">
                     {currency === "USD"
                       ? `$${propertyPrice.toLocaleString("en-US")}`
                       : `GH¢${Math.round(propertyPrice * rate).toLocaleString("en-GH")}`}
@@ -453,7 +453,7 @@ export function PaymentCalculator() {
                 </div>
                 <div className="flex justify-between py-2">
                   <span className="text-foreground/70">Down Payment ({downPaymentPercent}%):</span>
-                  <span className="font-bold text-[#DFC283]">
+                  <span className="font-bold text-gold">
                     {currency === "USD"
                       ? `$${calculations.downPayment.toLocaleString("en-US")}`
                       : `GH¢${calculations.downPayment.toLocaleString("en-GH")}`}
@@ -461,7 +461,7 @@ export function PaymentCalculator() {
                 </div>
                 <div className="flex justify-between border-t border-border pt-2">
                   <span className="text-foreground/70">60-Month Installment:</span>
-                  <span className="font-bold text-[#3D9B6E]">
+                  <span className="font-bold text-available">
                     {currency === "USD"
                       ? `$${calculations.monthlyPayment.toLocaleString("en-US")}`
                       : `GH¢${calculations.monthlyPayment.toLocaleString("en-GH")}`} / mo

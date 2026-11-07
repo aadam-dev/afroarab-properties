@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useSyncExternalStore } from "react";
 import { cn } from "@/lib/cn";
 
 type Surface = "auto" | "light" | "dark";
@@ -23,6 +26,21 @@ const sizes = {
   footer: { width: 220, height: 47, className: "h-11 w-auto" },
   hero: { width: 320, height: 68, className: "h-14 w-auto sm:h-16 md:h-[4.5rem]" },
 } as const;
+
+function subscribeTheme(onStoreChange: () => void) {
+  const el = document.documentElement;
+  const observer = new MutationObserver(onStoreChange);
+  observer.observe(el, { attributes: true, attributeFilter: ["data-theme"] });
+  return () => observer.disconnect();
+}
+
+function getThemeSnapshot(): "light" | "dark" {
+  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+}
+
+function getServerThemeSnapshot(): "light" | "dark" {
+  return "light";
+}
 
 function Mark({
   src,
@@ -54,6 +72,20 @@ export function BrandLogo({
   surface = "auto",
 }: Props) {
   const dim = sizes[size];
+  const theme = useSyncExternalStore(
+    subscribeTheme,
+    getThemeSnapshot,
+    getServerThemeSnapshot,
+  );
+
+  const src =
+    surface === "dark"
+      ? "/brand/logo-on-dark.png"
+      : surface === "light"
+        ? "/brand/logo-on-light.png"
+        : theme === "dark"
+          ? "/brand/logo-on-dark.png"
+          : "/brand/logo-on-light.png";
 
   return (
     <Link
@@ -61,26 +93,7 @@ export function BrandLogo({
       className={cn("inline-flex shrink-0 items-center", className)}
       aria-label="Afro Arab Properties home"
     >
-      {surface === "dark" ? (
-        <Mark src="/brand/logo-on-dark.png" dim={dim} priority={priority} />
-      ) : surface === "light" ? (
-        <Mark src="/brand/logo-on-light.png" dim={dim} priority={priority} />
-      ) : (
-        <span className="relative inline-flex items-center">
-          <Mark
-            src="/brand/logo-on-light.png"
-            dim={dim}
-            priority={priority}
-            className="dark:hidden"
-          />
-          <Mark
-            src="/brand/logo-on-dark.png"
-            dim={dim}
-            priority={priority}
-            className="hidden dark:block"
-          />
-        </span>
-      )}
+      <Mark src={src} dim={dim} priority={priority} />
     </Link>
   );
 }

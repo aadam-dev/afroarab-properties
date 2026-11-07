@@ -28,9 +28,10 @@
   --aa-ink: #14110f;
   --aa-red-600: #c4161c;
   --aa-red-700: #a31217;
-  --aa-gold-400: #dfc283;
-  --aa-gold-500: #b8923f;
-  --aa-gold-600: #7a5c22;
+  /* Gold: darker mid tone for readable text on sand; pale tone reserved for dark bands */
+  --aa-gold-400: #c9a85a;
+  --aa-gold-500: #8a6828;
+  --aa-gold-600: #6b501c;
   --aa-available: #1f7a4c;
   --aa-held: #c47b1a;
   --aa-reserved: #b45309;
@@ -41,8 +42,8 @@
   --foreground: var(--aa-ink);
   --surface: #ffffff;
   --surface-muted: var(--aa-sand-100);
-  --border: color-mix(in oklab, var(--aa-sand-200) 70%, var(--aa-ink));
-  --muted: #4f4942;
+  --border: color-mix(in oklab, var(--aa-sand-200) 55%, var(--aa-ink));
+  --muted: #3f3a35;
   --header-bg: color-mix(in oklab, var(--aa-sand-50) 92%, white);
   --band: var(--aa-forest-950);
   --band-fg: #ffffff;
@@ -194,7 +195,11 @@ select:focus-visible,
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--aa-gold-600);
+  color: var(--aa-gold-500);
+}
+
+[data-theme="dark"] .eyebrow {
+  color: var(--aa-gold-400);
 }
 
 .btn-gold {
