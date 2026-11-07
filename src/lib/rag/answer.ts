@@ -1,7 +1,8 @@
+import { ASSISTANT_NAME } from "@/lib/assistant/identity";
 import { site, whatsappHref } from "@/data/site";
 import type { RetrievedChunk } from "./retrieve";
 
-export const ASSISTANT_NAME = "Afro Arab site guide";
+export { ASSISTANT_NAME };
 
 export function formatContext(chunks: RetrievedChunk[]): string {
   return chunks

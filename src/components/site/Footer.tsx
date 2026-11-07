@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { OpenAssistantButton } from "@/components/assistant/OpenAssistantButton";
 import { site, whatsappHref } from "@/data/site";
 import { BrandLogo } from "./BrandLogo";
 
@@ -64,6 +65,11 @@ export function Footer() {
               >
                 WhatsApp sales
               </a>
+              {" · "}
+              <OpenAssistantButton />
+            </p>
+            <p className="pt-1 text-xs text-muted">
+              The site guide answers from published pages only; anything else goes to sales.
             </p>
           </div>
         </div>

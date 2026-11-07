@@ -1,5 +1,6 @@
 "use client";
 
+import { OpenAssistantButton } from "@/components/assistant/OpenAssistantButton";
 import { EnquiryForm } from "@/components/site/EnquiryForm";
 import { SalesContact } from "@/components/site/SalesContact";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
@@ -18,7 +19,10 @@ export function HomeContact() {
           </h2>
           <p className="prose-lux mt-4 max-w-lg text-muted text-pretty">
             Tell us which estate or plot you are considering. Call, WhatsApp, or send the
-            form — same sales support published on the current site.
+            form — same sales support published on the current site. Prefer a quick
+            answer first?{" "}
+            <OpenAssistantButton className="font-semibold" />
+            {" "}— it only uses what’s on this website.
           </p>
           <SalesContact className="mt-8" compact />
         </ScrollReveal>

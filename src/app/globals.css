@@ -310,3 +310,26 @@ select:focus-visible,
     linear-gradient(to bottom, color-mix(in oklab, currentColor 8%, transparent) 1px, transparent 1px);
   background-size: 48px 48px;
 }
+
+/** Soft attention pulse for the site-guide launcher before the intro teaser appears. */
+@keyframes aa-guide-pulse {
+  0%,
+  100% {
+    box-shadow: var(--shadow-soft);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--aa-gold-500) 55%, transparent),
+      0 18px 50px -36px rgba(15, 28, 22, 0.35);
+  }
+}
+
+.aa-guide-pulse {
+  animation: aa-guide-pulse 2.4s var(--ease-out-soft) 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aa-guide-pulse {
+    animation: none;
+  }
+}
