@@ -1,76 +1,90 @@
 # Executive proposal — Afro Arab Properties digital platform
 
 **To:** Alhaji Salamu Amadu (Chairman / C.E.O) & leadership, Afro-Arab Group  
-**Subject:** Interactive sales platform for Afro Arab Properties  
-**Status:** Working preview available for review  
+**Subject:** Fixing afroarabproperties.com and putting Afro Arab’s 2026 momentum online  
+**Status:** Working preview ready for review  
+
+**Preview:** https://afroarab-properties.vercel.app
 
 ---
 
-## 1. The problem
+## 1. What’s wrong with the current site
 
-Afro Arab Properties has real stock across Greater Accra — estates such as Blakk Rasta’s Court, Cephas Court, Bella Vista, Lamin’s Court, Ibra’s Court, and titled land corridors. Through 2026 the company has also been in the news: container homes, the Blakk Rasta’s Court sod cutting, construction-support packages for titled land, and a public 200,000-home vision.
+Afro Arab Properties has real estates across Greater Accra and has been making news through 2026. The WordPress site at afroarabproperties.com still works against you:
 
-The current site at afroarabproperties.com still behaves like a legacy WordPress brochure:
+1. **Trust leaks** — Conflicting sizes, prices, locations, and template figures (including “95 sqft”) make serious buyers doubt the listing before they call.
+2. **Legal gaps** — Privacy, terms, and cookies resolve to `#` while enquiry forms collect personal data.
+3. **Hidden financing strength** — Interest-free pathways are buried in body copy with no calculator or clear terms journey.
+4. **No live inventory tools** — Buyers cannot see plot status or walk a floor plan; every “is it available?” hits WhatsApp.
+5. **Slow, heavy pages** — Elementor stack; lab first paint measured in many seconds on mobile.
+6. **Silent newsroom** — The blog is stale while Accra media covers sod cuttings, container homes, land packages, and your housing vision. The site looks quieter than the company.
 
-1. **Trust leaks** — Conflicting sizes/prices and thin legal pages make serious buyers hesitate.
-2. **Diaspora drop-off** — International buyers can’t see live plot status, orientation, or a clear payment path before they call.
-3. **Hidden payment strength** — Interest-free schedules on selected inventory are easy to miss in static copy.
-4. **No spatial tools** — Off-plan buyers can’t walk a floor plan or explore a masterplan in-browser.
-5. **Silent newsroom** — Press and offers move offline while the blog stays stale.
-6. **Risky AI chat** — Generic chatbots invent answers. Buyers need a helpful guide that stays grounded and hands hard questions to sales.
+This is not a coat of paint. It is a trust, conversion, tools, and newsroom rebuild.
+
+---
 
 ## 2. What’s already built
 
-A motion-led Next.js platform is running as a private-ready preview:
+| Capability | Addresses | Status |
+| --- | --- | --- |
+| Canonical estate pages (facts, galleries, agent) | Conflicting data | Live in preview |
+| Real privacy / terms / cookies / payment terms | Legal `#` links | Live |
+| Interest-free payment calculator + terms | Buried financing story | Live |
+| Bella Vista plot explorer | “Is it available?” loops | Demo inventory live |
+| Floor-plan walkthroughs | Off-plan uncertainty | Live for selected estates |
+| Enquiry + WhatsApp to Accra sales lines | Generic CTAs | Live |
+| **Afro Arab guide** (assistant with sales handoff) | Invented chatbot answers | Live |
+| FAQ | Pre-call questions | Live |
+| **Plotline** newsroom with 2026 stories | Stale blog | Live |
+| Supabase schema for inventory + leads | Staff-managed stock | Ready to connect |
 
-**https://afroarab-properties.vercel.app**
+### Plotline as build + ongoing service
 
-It includes:
+We already published 2026 coverage on the new site (Blakk Rasta’s Court, container homes, construction package, 200,000-home vision). After launch, we can keep Plotline updated whenever Afro Arab announces, so diaspora buyers see the same momentum online that Ghana’s press already sees. That news ops layer sits **alongside** the platform build; it is not dependent on waiting for a full redesign cycle every time you cut sod or launch an offer.
 
-| Capability | Status |
-| --- | --- |
-| Canonical estate pages from the live-site audit | Live in preview |
-| Bella Vista interactive plot explorer | Demo inventory live |
-| Floor-plan walkthrough demos | Live for selected estates |
-| Interest-free payment calculator + payment terms | Live |
-| Enquiry forms + WhatsApp to published Accra lines | Live |
-| Afro Arab guide — friendly Q&A with sales handoff | Live |
-| FAQ for pre-call buyer questions | Live |
-| **Plotline** newsroom with 2026 stories & offers | Live |
-| Privacy / terms / cookies | Live |
-| Supabase schema for inventory + leads | Ready to connect |
+### The guide
 
-## 3. Why this converts better
+Visitors get a professional on-site assistant for estates, payments, and next steps. It does not invent availability or prices. Hard questions go to your sales team. When you provide internal docs, we deepen what it can answer without changing how it feels to the buyer.
 
-- **Fewer “is it available?” loops** — Plot status and estate facts sit on the page; the guide never invents what it shouldn’t.
-- **Higher-quality leads** — Enquiries carry project/plot context into WhatsApp and forms.
-- **Brand momentum online** — Plotline surfaces Blakk Rasta’s Court, container homes, land packages, and the housing vision so diaspora buyers see what’s current.
-- **Faster mobile first impression** — Modern stack vs. heavy Elementor first paint.
-- **Sales stays in control** — Anything that needs a human goes to the Accra lines, not a guessing bot. Internal docs can deepen the guide later without changing the visitor experience.
+---
 
-We do **not** attach invented conversion percentages. The commercial case is operational: clearer facts, interactive inventory, a living newsroom, and disciplined handoff.
+## 3. Why leadership should care
 
-## 4. Phased commercial offer
+- **Sales time back** — Fewer basic location / availability loops; better-qualified enquiries with project or plot context.
+- **Trust on first visit** — One story per estate; real legal pages; payment path visible.
+- **Brand matches reality** — Plotline puts 2026 wins on your own domain, not only on third-party news sites.
+- **Controlled automation** — The guide helps; sales stays in charge.
+
+No invented conversion percentages. The case is operational: fix what the audit found, show what Afro Arab is already doing, and hand hard questions to people.
+
+---
+
+## 4. Commercial packages (editable)
 
 | Package | Scope |
 | --- | --- |
-| Launch site | Cut over the marketing platform (Phase 1) with redirects, FAQ, Plotline, and guide |
-| Launch + Plots | Add live admin + Supabase inventory for one land project; enrich guide from approved docs |
-| Signature estate | Production walkthroughs + training for a flagship |
+| **Launch site** | Cut over Phase 1: marketing platform, FAQ, Plotline seed, guide, legal, payment tools |
+| **Launch + Plots** | Live admin + Supabase for one land project; deepen the guide from approved docs |
+| **Signature estate** | Production walkthroughs + sales training for a flagship |
+| **Plotline retainer** | Ongoing news and offer publishing onto the site |
 
 Exact fees after a short asset and title-claims audit.
 
+---
+
 ## 5. Outreach note (editable)
 
-**Subject:** Afro Arab Properties — interactive preview ready for your review
+**Subject:** Afro Arab Properties — preview that fixes the current site and tells your 2026 story
 
 Dear Chairman Alhaji Salamu Amadu,
 
-We’ve built a working digital platform for Afro Arab Properties: clearer estate pages, a live plot explorer, floor-plan walkthroughs, an interest-free payment calculator, a buyer FAQ, a Plotline newsroom covering your 2026 announcements, and a friendly guide that connects visitors to your sales team when a person is needed.
+afroarabproperties.com today undercuts a strong business: conflicting listing data, missing legal pages, a buried payment story, no live plot tools, and a blog that went quiet while Afro Arab made national news in 2026.
+
+We have built a working replacement: clearer estate pages, plot explorer, floor-plan walkthroughs, payment calculator, buyer FAQ, an on-site guide that hands hard questions to sales, and **Plotline**, a newsroom already carrying your 2026 announcements, with the option for us to keep it updated after launch.
 
 Preview: https://afroarab-properties.vercel.app
 
-Could we schedule 15 minutes with sales leadership to walk the Bella Vista explorer and Plotline, and agree what must be verified before public cutover?
+Could we schedule 15 minutes with sales leadership to walk Plotline, the Bella Vista explorer, and the guide, and agree what must be verified before public cutover?
 
 Respectfully,  
 [Your name]  
