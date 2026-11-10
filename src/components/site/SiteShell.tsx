@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { AssistantWidget } from "@/components/assistant/AssistantWidget";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -19,6 +20,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       >
         Skip to content
       </a>
+      <SmoothScroll />
       <Header />
       <main id="content" className="flex-1">
         {children}

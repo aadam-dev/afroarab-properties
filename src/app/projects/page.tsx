@@ -1,30 +1,44 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageBand } from "@/components/site/PageBand";
 import { ProjectGrid } from "@/components/projects/ProjectGrid";
+import { Icon } from "@/components/ui/Icon";
 import { publishedProjects } from "@/data/projects";
 
 export const metadata: Metadata = {
-  title: "Estates & Developments",
+  title: "Estates & developments",
   description:
-    "Browse Afro Arab Properties residential developments across Greater Accra — townhouses, courts, and masterplans.",
+    "Browse Afro Arab Properties townhouses, apartment courts and mixed communities across Greater Accra, with locations, published prices and viewing contacts.",
+  alternates: { canonical: "/projects" },
 };
 
 export default function ProjectsPage() {
   const projects = publishedProjects().filter((p) => p.type !== "land");
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <>
       <PageBand
-        eyebrow="Estates"
-        title="Developments across Greater Accra"
-        description="Townhouses, courts, and mixed communities — with locations from the live listing maps. Prices and unit facts publish only when verified."
+        eyebrow="Estates & courts"
+        title={
+          <>
+            Homes across <em>Greater Accra.</em>
+          </>
+        }
+        description="Townhouses, apartment courts and mixed communities. Locations come from Afro Arab's listing maps; prices show only where they have been published."
         imageSrc="/images/projects/cephas-court-2.png"
-        imageAlt="Cephas Court by Afro Arab Properties"
+        imageAlt="Cephas Court townhouses by Afro Arab Properties"
+        current="Estates"
+        actions={
+          <Link href="/lands" className="btn-ghost">
+            Looking for land? <Icon name="arrowRight" size={16} className="btn-arrow" />
+          </Link>
+        }
       />
-
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
-        <ProjectGrid projects={projects} />
-      </div>
-    </div>
+      <section className="section-y bg-background">
+        <div className="shell">
+          <ProjectGrid projects={projects} />
+        </div>
+      </section>
+    </>
   );
 }

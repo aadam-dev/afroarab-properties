@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { PageBand } from "@/components/site/PageBand";
 import { notFound } from "next/navigation";
 import {
   formatPlotlineDate,
@@ -38,36 +38,16 @@ export default async function PlotlineArticlePage({ params }: Props) {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <article>
-        <header className="mx-auto max-w-3xl px-4 pt-28 sm:px-6 lg:px-8">
-          <Link
-            href="/plotline"
-            className="text-sm text-muted underline-offset-4 hover:underline"
-          >
-            ← Plotline
-          </Link>
-          <p className="mt-8 font-mono-data text-xs uppercase tracking-[0.16em] text-muted">
-            {formatPlotlineDate(post.date)} · {plotlineCategoryLabel[post.category]}
-          </p>
-          <h1 className="mt-4 font-display text-4xl font-light text-balance sm:text-5xl lg:text-6xl">
-            {post.title}
-          </h1>
-          <p className="prose-lux mt-6 text-muted text-pretty">{post.excerpt}</p>
-        </header>
-
-        {post.image ? (
-          <div className="mx-auto mt-10 max-w-5xl px-4 sm:px-6 lg:px-8">
-            <div className="relative aspect-[16/9] overflow-hidden bg-surface-muted">
-              <Image
-                src={post.image}
-                alt={post.imageAlt ?? post.title}
-                fill
-                priority
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 64rem"
-              />
-            </div>
-          </div>
-        ) : null}
+        <PageBand
+          eyebrow={`${formatPlotlineDate(post.date)} · ${plotlineCategoryLabel[post.category]}`}
+          title={post.title}
+          description={post.excerpt}
+          imageSrc={post.image}
+          imageAlt={post.imageAlt ?? ""}
+          crumbs={[{ href: "/plotline", label: "Plotline" }]}
+          current={plotlineCategoryLabel[post.category]}
+          size="compact"
+        />
 
         <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
           <div className="space-y-5 text-lg leading-relaxed text-muted">

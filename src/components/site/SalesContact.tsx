@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { site, whatsappHref } from "@/data/site";
 import { cn } from "@/lib/cn";
+import { Icon } from "@/components/ui/Icon";
 
 type Props = {
   className?: string;
@@ -16,7 +17,7 @@ export function SalesContact({ className, projectName, compact }: Props) {
   return (
     <aside
       className={cn(
-        "border border-border bg-surface",
+        "card-lux",
         compact ? "p-5" : "p-6 sm:p-7",
         className,
       )}
@@ -82,7 +83,7 @@ export function SalesContact({ className, projectName, compact }: Props) {
           rel="noopener noreferrer"
           className="btn-primary"
         >
-          WhatsApp sales
+          <Icon name="whatsapp" size={17} /> WhatsApp sales
         </a>
         <Link href="/contact" className="btn-outline-gold">
           Enquiry form

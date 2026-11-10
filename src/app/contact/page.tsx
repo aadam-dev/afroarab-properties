@@ -6,32 +6,41 @@ import { SalesContact } from "@/components/site/SalesContact";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description: "Book a site viewing or speak with Afro Arab Properties sales.",
+  title: "Contact & viewings",
+  description: "Book a site viewing or speak with Afro Arab Properties sales in Accra by phone, WhatsApp or email.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <>
       <PageBand
         eyebrow="Contact"
-        title="Arrange a viewing"
-        description="Share your estate or plot interest. We respond with availability and viewing options."
+        title={
+          <>
+            Arrange a <em>viewing.</em>
+          </>
+        }
+        description="Tell us the estate or plot you're interested in. Sales replies with availability, prices and viewing times."
         imageSrc="/images/projects/front-view.jpg"
-        imageAlt="Afro Arab residential front view"
+        imageAlt="Front view of an Afro Arab residential development"
+        current="Contact"
+        size="compact"
       />
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-20">
-        <div className="space-y-8">
-          <SalesContact />
-          <LocationMap
-            query={site.officeMapQuery}
-            zoom={site.officeMapZoom}
-            title={`${site.address.line1}, ${site.address.line2}`}
-            note={site.officeMapNote}
-          />
+      <section className="section-y bg-background">
+        <div className="shell grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+          <div className="space-y-8">
+            <SalesContact />
+            <LocationMap
+              query={site.officeMapQuery}
+              zoom={site.officeMapZoom}
+              title={`${site.address.line1}, ${site.address.line2}`}
+              note={site.officeMapNote}
+            />
+          </div>
+          <EnquiryForm intent="viewing" />
         </div>
-        <EnquiryForm intent="viewing" />
-      </div>
-    </div>
+      </section>
+    </>
   );
 }

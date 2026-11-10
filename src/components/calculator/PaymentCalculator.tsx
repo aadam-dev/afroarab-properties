@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import {
   useCalculatorStore,
   PAYMENT_MILESTONES,
-  formatCurrencyAmount,
 } from "@/store/useCalculatorStore";
 import { cn } from "@/lib/cn";
 
@@ -28,7 +27,6 @@ export function PaymentCalculator() {
     tenorMonths,
     buyerName,
     buyerEmail,
-    buyerPhone,
     setBuyerDetails,
   } = useCalculatorStore();
 
@@ -80,14 +78,14 @@ export function PaymentCalculator() {
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-gold/35 bg-surface px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
               <span className="h-1.5 w-1.5 rounded-full bg-available" />
-              Institutional Financial Simulator
+              Calculator · indicative
             </div>
-            <h2 className="mt-3 font-display text-3xl font-light text-foreground sm:text-4xl lg:text-5xl">
-              60-Month Interest-Free Simulator
+            <h2 className="t-h2 mt-4 text-foreground">
+              Work out <em>your plan.</em>
             </h2>
             <p className="mt-2 max-w-2xl text-sm text-foreground/70 sm:text-base">
-              Calculate transparent ownership terms. Spread your capital over 5 equal
-              interest-free years with zero bank intermediation and zero hidden surcharges.
+              Try a price and deposit to see the monthly payment on an interest-free schedule. The
+              tenor and terms for each home or plot are confirmed by sales in writing.
             </p>
           </div>
 
@@ -279,7 +277,7 @@ export function PaymentCalculator() {
                 </h3>
               </div>
               <span className="rounded-full bg-available/20 px-3 py-1 text-xs font-bold text-available">
-                0% APR Guaranteed
+                No interest added
               </span>
             </div>
 

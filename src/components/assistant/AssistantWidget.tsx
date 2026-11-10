@@ -5,7 +5,7 @@ import { DefaultChatTransport } from "ai";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { whatsappHref } from "@/data/site";
 import { OPEN_ASSISTANT_EVENT } from "@/lib/assistant/events";
 import {
@@ -24,7 +24,8 @@ const SUGGESTIONS = [
 ];
 
 const TEASER_STORAGE_KEY = "aa-site-guide-teaser";
-const TEASER_DELAY_MS = 4200;
+/** Long enough that the guide never covers the hero on first paint. */
+const TEASER_DELAY_MS = 9000;
 
 function messageText(parts: ReadonlyArray<{ type: string; text?: string }>): string {
   return parts
@@ -50,21 +51,36 @@ function readTeaserDismissed(): boolean {
   }
 }
 
+const teaserListeners = new Set<() => void>();
+let teaserDismissedThisVisit = false;
+
 function persistTeaserDismissed() {
+  teaserDismissedThisVisit = true;
   try {
     localStorage.setItem(TEASER_STORAGE_KEY, "dismissed");
   } catch {
     /* ignore quota / private mode */
   }
+  teaserListeners.forEach((l) => l());
 }
+
+function subscribeTeaser(cb: () => void) {
+  teaserListeners.add(cb);
+  return () => {
+    teaserListeners.delete(cb);
+  };
+}
+
+const teaserEligibleSnapshot = () => !teaserDismissedThisVisit && !readTeaserDismissed();
 
 export function AssistantWidget() {
   const reduceMotion = useReducedMotion();
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [teaserVisible, setTeaserVisible] = useState(false);
-  const [teaserEligible, setTeaserEligible] = useState(false);
-  const [launcherNudge, setLauncherNudge] = useState(false);
+  const teaserEligible = useSyncExternalStore(subscribeTeaser, teaserEligibleSnapshot, () => false);
+  // Pulse the launcher while waiting to show the teaser.
+  const launcherNudge = teaserEligible && !open && !teaserVisible;
   const inputRef = useRef<HTMLInputElement>(null);
   const transport = useMemo(
     () => new DefaultChatTransport({ api: "/api/assistant" }),
@@ -79,14 +95,12 @@ export function AssistantWidget() {
 
   function dismissTeaser() {
     setTeaserVisible(false);
-    setLauncherNudge(false);
     persistTeaserDismissed();
   }
 
   function openPanel() {
     setOpen(true);
     setTeaserVisible(false);
-    setLauncherNudge(false);
     persistTeaserDismissed();
   }
 
@@ -102,15 +116,10 @@ export function AssistantWidget() {
   }
 
   useEffect(() => {
-    setTeaserEligible(!readTeaserDismissed());
-  }, []);
-
-  useEffect(() => {
     if (!teaserEligible || open) return;
-    setLauncherNudge(true);
     const timer = window.setTimeout(() => {
-      setTeaserVisible(true);
-      setLauncherNudge(false);
+      // On phones the bubble would cover page content; the launcher alone is enough.
+      if (window.matchMedia("(min-width: 768px)").matches) setTeaserVisible(true);
     }, TEASER_DELAY_MS);
     return () => window.clearTimeout(timer);
   }, [teaserEligible, open]);
@@ -119,7 +128,6 @@ export function AssistantWidget() {
     function onOpenEvent() {
       setOpen(true);
       setTeaserVisible(false);
-      setLauncherNudge(false);
       persistTeaserDismissed();
     }
     window.addEventListener(OPEN_ASSISTANT_EVENT, onOpenEvent);

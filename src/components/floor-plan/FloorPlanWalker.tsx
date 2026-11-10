@@ -1,11 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import {
   useFloorPlanStore,
   ROOM_HOTSPOTS,
   type FloorLevel,
-  type RoomHotspot,
 } from "@/store/useFloorPlanStore";
 import { PanoramaViewer } from "./PanoramaViewer";
 import { cn } from "@/lib/cn";
@@ -188,7 +187,6 @@ export function FloorPlanWalker({ projectName = "Lamin's Court Townhouse" }: { p
 
               {/* Pulsing Interactive Hotspots */}
               {levelRooms.map((room) => {
-                const isCurrent = currentRoom.id === room.id;
                 return (
                   <button
                     key={room.id}

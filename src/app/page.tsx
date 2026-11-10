@@ -1,27 +1,30 @@
-import { CinematicHero } from "@/components/cinematic/CinematicHero";
-import { FeaturedProjects } from "@/components/home/FeaturedProjects";
-import { PaymentPathStrip } from "@/components/home/PaymentPathStrip";
+import { EstateStory } from "@/components/home/estate-story/EstateStory";
+import { EstatesCoverflow } from "@/components/home/EstatesCoverflow";
 import { HomeContact } from "@/components/home/HomeContact";
-import { PlotExplorerReveal } from "@/components/home/PlotExplorerReveal";
+import { HomeHero } from "@/components/home/HomeHero";
+import { PaymentPathStrip } from "@/components/home/PaymentPathStrip";
+import { PlotlineTeasers } from "@/components/home/PlotlineTeasers";
+import { WhyAfroArab } from "@/components/home/WhyAfroArab";
+import { allPlots } from "@/data/masterplan";
 import { publishedProjects } from "@/data/projects";
 
 export default function HomePage() {
-  const featured = publishedProjects()
-    .filter(
-      (p) =>
-        p.featured ||
-        ["bella-vista", "blakk-rastas-court", "cephas-court", "lamins-court", "hassy-homes"].includes(
-          p.slug,
-        ),
-    )
-    .slice(0, 4);
+  const projects = publishedProjects();
+  const order = ["titled-lands-green-valley", "bella-vista", "lamins-court", "hassy-homes", "ibras-court", "cephas-court"];
+  const showcase = [...projects].sort((a, b) => {
+    const ia = order.indexOf(a.slug);
+    const ib = order.indexOf(b.slug);
+    return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+  });
 
   return (
     <>
-      <CinematicHero />
-      <FeaturedProjects projects={featured} />
-      <PlotExplorerReveal />
+      <HomeHero estateCount={projects.length} plotCount={allPlots.length} />
+      <EstateStory />
+      <EstatesCoverflow projects={showcase} />
+      <WhyAfroArab />
       <PaymentPathStrip />
+      <PlotlineTeasers />
       <HomeContact />
     </>
   );
