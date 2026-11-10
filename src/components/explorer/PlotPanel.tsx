@@ -60,8 +60,8 @@ export function PlotPanel({ plot, estate, onClose }: { plot: Plot; estate: Estat
   const standOnPlot = usePlotStore((s) => s.standOnPlot);
 
   const [expanded, setExpanded] = useState(false);
-  const [deposit, setDeposit] = useState<number>(LAND_PLAN_OPTIONS.deposits[0]);
-  const [months, setMonths] = useState<number>(12);
+  const [deposit, setDeposit] = useState<number>(LAND_PLAN_OPTIONS.defaultDeposit);
+  const [months, setMonths] = useState<number>(LAND_PLAN_OPTIONS.defaultMonths);
   const [enquiring, setEnquiring] = useState(false);
   const [copied, setCopied] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);

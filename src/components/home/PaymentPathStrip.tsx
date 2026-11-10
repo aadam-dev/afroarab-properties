@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { formatGhs, lowestPrice } from "@/data/masterplan";
-import { instalmentPlan } from "@/lib/payments";
+import { instalmentPlan, LAND_PLAN_OPTIONS } from "@/lib/payments";
 import { Icon } from "@/components/ui/Icon";
 import { FadeUp } from "@/components/ui/MaskedText";
 import { Container, Section, SectionHeading } from "@/components/ui/Section";
 
 export function PaymentPathStrip() {
   const from = lowestPrice("titled-lands-green-valley") ?? 87500;
-  const plan = instalmentPlan(from, 30, 12);
+  const plan = instalmentPlan(from, LAND_PLAN_OPTIONS.defaultDeposit, LAND_PLAN_OPTIONS.defaultMonths);
   const steps = [
     { k: "Reserve", v: "Choose a plot or unit and confirm availability with sales." },
     { k: "Deposit", v: "Pay the agreed deposit and sign the payment schedule." },
@@ -44,13 +44,13 @@ export function PaymentPathStrip() {
         <FadeUp className="rounded-[1.75rem] border border-white/12 bg-white/[0.04] p-7 backdrop-blur-sm sm:p-9">
           <p className="t-meta text-[0.62rem] text-band-fg/60">Example · a 70 × 100 ft plot at Green Valley</p>
           <p className="font-figure mt-4 text-5xl leading-none sm:text-6xl">{formatGhs(plan.monthly)}</p>
-          <p className="mt-2 text-sm text-band-fg/70">a month for {plan.months} months, after a {formatGhs(plan.deposit)} deposit (30%)</p>
+          <p className="mt-2 text-sm text-band-fg/70">a month for {plan.months} months, after a {formatGhs(plan.deposit)} deposit ({plan.depositPercent}%)</p>
           <div className="mt-7 h-2 overflow-hidden rounded-full bg-white/10">
-            <div className="h-full w-[30%] rounded-full bg-[#e3c88c]" />
+            <div className="h-full rounded-full bg-[#e3c88c]" style={{ width: `${plan.depositPercent}%` }} />
           </div>
           <div className="mt-2 flex justify-between text-xs text-band-fg/60">
-            <span>Deposit 30%</span>
-            <span>Balance over 12 months · 0% interest</span>
+            <span>Deposit {plan.depositPercent}%</span>
+            <span>Balance over {plan.months} months · 0% interest</span>
           </div>
           <p className="mt-6 text-xs leading-relaxed text-band-fg/55">
             Total {formatGhs(plan.price)}. Indicative figures from the demo layout; sales confirms the

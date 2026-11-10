@@ -47,9 +47,9 @@ export const faqItems: FaqItem[] = [
     id: "plots",
     question: "Can I see which plots are available?",
     answer: [
-      "Yes. Bella Vista includes an interactive plot explorer where you can pan the plan, filter by facing and size, and enquire with plot context. Availability shown in demos should be confirmed with sales before commitment.",
+      "Yes. Green Valley Estate has a 3D plot explorer where every plot is numbered and coloured by status. You can search a plot number, filter by facing, size and corner plots, check the sun path, walk the roads, and enquire about the exact plot. The layout is indicative, so confirm availability with sales before you commit.",
     ],
-    links: [{ href: "/lands/bella-vista/explorer", label: "Open plot explorer" }],
+    links: [{ href: "/lands/titled-lands-green-valley/explorer", label: "Open the 3D explorer" }],
   },
   {
     id: "viewing",

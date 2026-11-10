@@ -24,8 +24,13 @@ export function instalmentPlan(price: number, depositPercent: number, months: nu
   return { price, depositPercent, deposit, months, monthly, finalInstalment };
 }
 
-/** Land plot options: deposit share and tenor in months. */
+/**
+ * Land plot options: deposit share and tenor in months. Afro Arab publishes a
+ * 40% deposit with the balance over up to 24 months at 0% interest for all lands.
+ */
 export const LAND_PLAN_OPTIONS = {
-  deposits: [30, 50] as const,
-  months: [6, 12, 24] as const,
+  deposits: [40, 60] as const,
+  months: [12, 24] as const,
+  defaultDeposit: 40,
+  defaultMonths: 24,
 };

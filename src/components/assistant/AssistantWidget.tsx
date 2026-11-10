@@ -17,11 +17,34 @@ import {
 import { cn } from "@/lib/cn";
 
 const SUGGESTIONS = [
-  "Where is Ibra’s Court?",
+  "Which plots are available at Green Valley?",
   "Do you offer interest-free payment plans?",
+  "What’s the latest news from Afro Arab?",
   "How do I book a viewing?",
-  "Tell me about Bella Vista plots",
 ];
+
+const LINK_CLASS = "font-semibold text-foreground underline underline-offset-4 hover:text-gold";
+
+/** Turns site paths like /payment-plans and full URLs in a reply into links. */
+function linkify(text: string) {
+  return text
+    .split(/((?<=^|\s)\/[a-z0-9][a-z0-9\-/]*[a-z0-9]|https?:\/\/[^\s]+)/g)
+    .map((part, i) => {
+      if (i % 2 === 0) return part;
+      if (part.startsWith("/")) {
+        return (
+          <Link key={i} href={part} className={LINK_CLASS}>
+            {part}
+          </Link>
+        );
+      }
+      return (
+        <a key={i} href={part} target="_blank" rel="noopener noreferrer" className={LINK_CLASS}>
+          {part.includes("wa.me") ? "Open WhatsApp" : part}
+        </a>
+      );
+    });
+}
 
 const TEASER_STORAGE_KEY = "aa-site-guide-teaser";
 /** Long enough that the guide never covers the hero on first paint. */
@@ -248,7 +271,7 @@ export function AssistantWidget() {
                         : "mr-auto border border-border bg-surface-muted px-3 py-2 text-foreground",
                     )}
                   >
-                    {text}
+                    {message.role === "assistant" ? linkify(text) : text}
                     {handoff ? (
                       <div className="mt-3 flex flex-wrap gap-2 border-t border-border pt-3">
                         <a

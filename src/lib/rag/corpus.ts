@@ -2,12 +2,13 @@ import { faqItems } from "@/data/faq";
 import { publishedProjects, type Project } from "@/data/projects";
 import { plotlinePosts } from "@/data/plotline";
 import { leadership, site } from "@/data/site";
+import { estateSlugs, formatGhs, getEstate, plotLegend, plotsForProject, sizeKey } from "@/data/masterplan";
 
 export type CorpusDoc = {
   id: string;
   title: string;
   url: string;
-  category: "project" | "company" | "payment" | "contact" | "site" | "faq" | "news";
+  category: "project" | "plots" | "company" | "payment" | "contact" | "site" | "faq" | "news";
   text: string;
   keywords: string[];
 };
@@ -58,6 +59,35 @@ function projectDoc(project: Project): CorpusDoc {
       .toLowerCase()
       .split(/[^a-z0-9]+/)
       .filter(Boolean),
+  };
+}
+
+/** Live plot inventory for an estate that has a 3D explorer. */
+function plotsDoc(slug: string, name: string): CorpusDoc {
+  const plots = plotsForProject(slug);
+  const legend = plotLegend(plots);
+  const open = plots.filter((p) => p.status === "available");
+  const prices = open.map((p) => p.priceGhs);
+  const sizes = [...new Set(open.toSorted((a, b) => a.frontageFt - b.frontageFt).map(sizeKey))].join(", ");
+  const corners = open.filter((p) => p.isCorner).length;
+  return {
+    id: `plots:${slug}`,
+    title: `${name} plots`,
+    url: `/lands/${slug}/explorer`,
+    category: "plots",
+    text: [
+      `${name} has ${plots.length} plots in the 3D explorer.`,
+      `Available now: ${legend.available}. Reserved: ${legend.reserved}. On hold: ${legend.held}. Sold: ${legend.sold}. Phase 2 (not yet released): ${legend.unreleased}.`,
+      prices.length
+        ? `Available plots range from ${formatGhs(Math.min(...prices))} to ${formatGhs(Math.max(...prices))}, in sizes ${sizes} ft. ${corners} available plots are corner plots.`
+        : "No plots are available right now.",
+      "Each plot shows its size, price, road access, an example payment plan, a suggested home and its title documents.",
+      "The layout and prices are indicative. Sales confirm live availability before any payment.",
+    ].join("\n"),
+    keywords: [
+      "plot", "plots", "available", "availability", "explorer", "3d", "map", "corner",
+      "size", "sizes", "land", "green", "valley", ...slug.split("-"),
+    ],
   };
 }
 
@@ -153,7 +183,7 @@ export function buildCorpus(): CorpusDoc[] {
       text: [
         "This rebuild of afroarabproperties.com includes:",
         "Canonical estate pages with verified marketing facts and galleries.",
-        "Live plot explorer for Bella Vista titled plots (demo inventory until Supabase is linked).",
+        "A 3D plot explorer for Green Valley Estate at /lands/titled-lands-green-valley/explorer, with numbered plots, filters, sun path, plan view and walk mode.",
         "Floor-plan walkthrough demos for selected estates.",
         "Payment plan calculator and enquiry forms attributed to project or plot.",
         "Legal pages: privacy, terms, cookies, and payment terms.",
@@ -182,6 +212,11 @@ export function buildCorpus(): CorpusDoc[] {
 
   for (const project of publishedProjects()) {
     docs.push(projectDoc(project));
+  }
+
+  for (const slug of estateSlugs) {
+    const estate = getEstate(slug);
+    if (estate) docs.push(plotsDoc(slug, estate.name));
   }
 
   for (const item of faqItems) {

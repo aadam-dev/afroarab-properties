@@ -221,7 +221,12 @@ export function retrieve(query: string, limit = 5): RetrievedChunk[] {
 /** Below this top score we treat the question as outside published knowledge. */
 export const HANDOFF_SCORE_THRESHOLD = 3.5;
 
-export function shouldHandoff(chunks: RetrievedChunk[]): boolean {
+/** Requests only a person can action: holding stock, negotiating, signing or refunds. */
+const NEEDS_PERSON =
+  /\b(hold|reserve|reservation|negotiat\w*|discount|bargain|sign|signing|refund|cancel|lower (the )?price|best price)\b/i;
+
+export function shouldHandoff(chunks: RetrievedChunk[], question = ""): boolean {
+  if (NEEDS_PERSON.test(question)) return true;
   if (chunks.length === 0) return true;
   return chunks[0].score < HANDOFF_SCORE_THRESHOLD;
 }

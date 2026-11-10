@@ -1,5 +1,6 @@
 import { ASSISTANT_NAME } from "@/lib/assistant/identity";
 import { site, whatsappHref } from "@/data/site";
+import { plotlinePosts } from "@/data/plotline";
 import {
   isDecisiveMatch,
   type RetrievedChunk,
@@ -124,6 +125,35 @@ function contactAnswer(doc: CorpusDoc): string {
   ].join(" ");
 }
 
+function plotsAnswer(doc: CorpusDoc): string {
+  const [count, statusLine, priceLine] = doc.text.split("\n");
+  const available = statusLine.match(/Available now: (\d+)/)?.[1];
+  return [
+    available ? `${count.replace(/\.$/, "")}, and ${available} are available right now.` : count,
+    priceLine,
+    `Open ${doc.url} to search a plot number, filter by size or facing, and walk the roads in 3D. Sales will confirm a plot before you pay.`,
+  ].join(" ");
+}
+
+function newsAnswer(): string {
+  const latest = [...plotlinePosts]
+    .filter((p) => p.category !== "guide")
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .slice(0, 3);
+  const fmt = (iso: string) =>
+    new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      timeZone: "UTC",
+    });
+  return [
+    "Here is the latest from Plotline:",
+    latest.map((p) => `“${p.title}” (${fmt(p.date)})`).join("; ") + ".",
+    "Read the full stories at /plotline.",
+  ].join(" ");
+}
+
 function faqOrNewsAnswer(doc: CorpusDoc): string {
   const lines = doc.text
     .split("\n")
@@ -152,6 +182,15 @@ export function extractiveAnswer(
   const paymentDoc = chunks.find((c) => c.doc.category === "payment")?.doc;
   const contactDoc = chunks.find((c) => c.doc.category === "contact")?.doc;
   const projectDocHit = chunks.find((c) => c.doc.category === "project")?.doc;
+  const plotsDocHit = chunks.find((c) => c.doc.category === "plots")?.doc;
+
+  if (/\b(news|latest|recent|update|updates|announcement|happening)\b/i.test(question)) {
+    return newsAnswer();
+  }
+
+  if (plotsDocHit && /\b(plots?|3d|explorer|available|availability|corner)\b/i.test(question)) {
+    return plotsAnswer(plotsDocHit);
+  }
 
   if (
     paymentDoc &&

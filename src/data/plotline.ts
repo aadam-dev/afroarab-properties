@@ -127,6 +127,27 @@ export const plotlinePosts: PlotlinePost[] = [
     ],
   },
   {
+    slug: "aceacres-2025-eco-friendly-affordable-developer",
+    title: "Afro Arab named Best Eco-Friendly Affordable Real Estate Company at ACEACRES 2025",
+    excerpt:
+      "Recognised at the ACEACRES 2025 Summit in Accra for sustainable, affordable housing and interest-free payment plans.",
+    date: "2025-10-08",
+    category: "news",
+    image: "/images/detail-entrance.jpg",
+    imageAlt: "Afro Arab corporate entrance",
+    body: [
+      "Afro Arab Properties and Construction was named Best Eco-Friendly Affordable Real Estate Company in Ghana at the ACEACRES 2025 Summit, held on 29 and 30 September 2025 at the De Icon Conference Centre in Accra.",
+      "Mr Dickson Boadi received the award on behalf of the President and Founder, Ambassador Alhaji Salamu Amadu, and dedicated it to every Ghanaian who wants a home that is both affordable and environmentally responsible.",
+      "The citation pointed to the company's interest-free payment plans, which let buyers pay for a home over up to five years, and its target of 200,000 homes by 2050 designed around solar power, rainwater harvesting and energy-efficient materials.",
+    ],
+    sources: [
+      {
+        label: "Afro Arab Properties — ACEACRES 2025 announcement",
+        url: "https://afroarabproperties.com/afro-arab-properties-wins-best-eco-friendly-affordable-real-estate-company-at-aceacres-2025/",
+      },
+    ],
+  },
+  {
     slug: "how-we-verify-project-facts",
     title: "How we verify project facts before publishing",
     excerpt:
@@ -141,15 +162,15 @@ export const plotlinePosts: PlotlinePost[] = [
   },
   {
     slug: "reading-a-plot-explorer",
-    title: "How to use the plot explorer",
+    title: "How to use the 3D plot explorer",
     excerpt:
-      "Filter by facing and size, read status colours with labels, and enquire with plot context.",
+      "Find a plot by number, filter by facing and size, walk the roads, and enquire about the exact plot.",
     date: "2026-11-05",
     category: "guide",
     body: [
-      "Start in Plan mode. Drag to pan, scroll to zoom, search by plot code, or filter by facing, size, and availability.",
-      "Status is shown with colour and text labels. Availability is driven by inventory records.",
-      "Sun path in 3D mode is indicative until surveyed coordinates and true-north rotation are confirmed.",
+      "Open the explorer from Green Valley Estate. Drag to rotate, right-drag to pan and scroll to zoom. Type a plot number in Go to plot to fly straight to it.",
+      "Tap any plot to see its size, price, road access, an example payment plan, a suggested home and its title documents. Plan gives a top-down view, and Walk lets you stand on the plot and look around.",
+      "Status is shown with colour and a text label. The layout, prices and sun path are indicative until the surveyed site plan is published, so confirm with sales before you pay.",
     ],
   },
 ];

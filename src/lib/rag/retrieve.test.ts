@@ -19,4 +19,11 @@ describe("retrieve", () => {
     const hits = retrieve("What is the weather in Tokyo tomorrow and who won the World Cup?");
     expect(shouldHandoff(hits)).toBe(true);
   });
+
+  it("hands off requests only sales can action, but not viewing questions", () => {
+    const hold = "Can you hold plot 22 for me until Friday?";
+    expect(shouldHandoff(retrieve(hold), hold)).toBe(true);
+    const viewing = "How do I book a viewing?";
+    expect(shouldHandoff(retrieve(viewing), viewing)).toBe(false);
+  });
 });

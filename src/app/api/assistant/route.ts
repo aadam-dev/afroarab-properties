@@ -58,7 +58,7 @@ export async function POST(request: Request) {
 
   const chunks = retrieve(question, 5);
   const sources = chunks.map((c) => c.doc.url);
-  const handoff = shouldHandoff(chunks);
+  const handoff = shouldHandoff(chunks, question);
 
   if (handoff) {
     return textStreamResponse(handoffMessage(question), true, sources);
