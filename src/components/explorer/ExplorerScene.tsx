@@ -15,8 +15,15 @@ import { Site } from "./world/Site";
 import { Lamps, Trees } from "./world/Vegetation";
 import { useMatches } from "./useMatches";
 
-function SceneContents({ estate, panelOpen }: { estate: Estate; panelOpen: boolean }) {
-  const selectedCode = usePlotStore((s) => s.selectedCode);
+function SceneContents({
+  estate,
+  panelOpen,
+  selectedCode,
+}: {
+  estate: Estate;
+  panelOpen: boolean;
+  selectedCode: string | null;
+}) {
   const hoveredCode = usePlotStore((s) => s.hoveredCode);
   const colourMode = usePlotStore((s) => s.colourMode);
   const housesVisible = usePlotStore((s) => s.housesVisible);
@@ -63,7 +70,15 @@ function SceneContents({ estate, panelOpen }: { estate: Estate; panelOpen: boole
   );
 }
 
-export default function ExplorerScene({ estate, panelOpen }: { estate: Estate; panelOpen: boolean }) {
+export default function ExplorerScene({
+  estate,
+  panelOpen,
+  selectedCode,
+}: {
+  estate: Estate;
+  panelOpen: boolean;
+  selectedCode: string | null;
+}) {
   const mode = usePlotStore((s) => s.mode);
   const playing = usePlotStore((s) => s.sunPlaying);
   const initial = useMemo(() => {
@@ -82,7 +97,7 @@ export default function ExplorerScene({ estate, panelOpen }: { estate: Estate; p
       className="!absolute inset-0 touch-none"
       aria-label={`3D site plan of ${estate.name}`}
     >
-      <SceneContents estate={estate} panelOpen={panelOpen} />
+      <SceneContents estate={estate} panelOpen={panelOpen} selectedCode={selectedCode} />
     </Canvas>
   );
 }

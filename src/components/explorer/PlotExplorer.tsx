@@ -4,8 +4,8 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useSyncExternalStore } from "react";
-import { getEstate } from "@/data/masterplan";
+import { useEffect, useLayoutEffect, useMemo, useRef, useSyncExternalStore } from "react";
+import { getEstate, getPlot } from "@/data/masterplan";
 import { usePlotStore } from "@/store/usePlotStore";
 import { Icon } from "@/components/ui/Icon";
 import { ThemeToggle } from "@/components/site/ThemeToggle";
@@ -70,28 +70,42 @@ export function PlotExplorer({ slug }: { slug: string }) {
 
   const plots = useMemo(() => estate?.plots ?? [], [estate]);
   const { list: matches, set: matchSet } = useMatches(plots);
-  const selected = plots.find((p) => p.code === selectedCode) ?? null;
+  const plotParam = params.get("plot");
+  const linkedCode = plotParam ? (getPlot(slug, plotParam)?.code ?? null) : null;
+  const queryKey = `${slug}\0${plotParam ?? ""}`;
+  /** Router query last copied into the store. Until then the URL, not the leftover selection, wins. */
+  const appliedQuery = useRef<string | null>(null);
+  const shownCode = appliedQuery.current === queryKey ? selectedCode : linkedCode;
+  const selected = plots.find((p) => p.code === shownCode) ?? null;
 
-  // Boot: estate, deep link, capability check.
-  useEffect(() => {
-    setEstate(slug);
-    const code = params.get("plot");
-    if (code && getEstate(slug)?.plots.some((p) => p.code === code)) {
-      // Let the canvas mount first so the camera can fly.
-      const t = setTimeout(() => usePlotStore.getState().selectPlot(code), 400);
-      return () => clearTimeout(t);
+  // Apply the estate and ?plot= before paint, including a later query change on this page.
+  // setEstate publishes the linked plot in one update, so a leftover selection never clears the URL.
+  useLayoutEffect(() => {
+    const key = `${slug}\0${plotParam ?? ""}`;
+    const sameEstate =
+      appliedQuery.current?.startsWith(`${slug}\0`) && usePlotStore.getState().estateSlug === slug;
+    if (sameEstate) {
+      if (usePlotStore.getState().selectedCode !== linkedCode) selectPlot(linkedCode);
+    } else {
+      setEstate(slug, linkedCode);
     }
-    // Only on first mount for this estate.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slug]);
+    appliedQuery.current = key;
+  }, [slug, plotParam, linkedCode, selectPlot, setEstate]);
 
-  // Keep ?plot= in the address bar so a plot can be shared.
+  // Mirror a user selection into ?plot=. Skip while the store still holds a previous visit's plot.
   useEffect(() => {
+    if (appliedQuery.current !== queryKey) return;
+    const live = usePlotStore.getState().selectedCode;
+    if (live !== selectedCode) return;
     const url = new URL(window.location.href);
-    if (selectedCode) url.searchParams.set("plot", selectedCode);
+    const current = url.searchParams.get("plot");
+    if ((live ?? null) === (current ?? null)) return;
+    if (live) url.searchParams.set("plot", live);
     else url.searchParams.delete("plot");
-    window.history.replaceState(window.history.state, "", url.toString());
-  }, [selectedCode]);
+    const next = `${url.pathname}${url.search}${url.hash}`;
+    const now = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    if (next !== now) window.history.replaceState(window.history.state, "", next);
+  }, [selectedCode, queryKey]);
 
   // Escape: popover → panel → walk.
   useEffect(() => {
@@ -118,14 +132,14 @@ export function PlotExplorer({ slug }: { slug: string }) {
         <div className="absolute inset-0 flex items-center justify-center p-6 pb-28 pt-36">
           <SitePlan2D
             estate={estate}
-            selectedCode={selectedCode}
+            selectedCode={shownCode}
             matches={matchSet}
             onSelect={(c) => selectPlot(c, { fly: false })}
             className="h-full w-auto max-w-full"
           />
         </div>
       ) : webgl ? (
-        <ExplorerScene estate={estate} panelOpen={panelOpen} />
+        <ExplorerScene estate={estate} panelOpen={panelOpen} selectedCode={shownCode} />
       ) : null}
 
       {/* Top bar */}

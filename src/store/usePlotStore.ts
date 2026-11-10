@@ -42,7 +42,7 @@ type State = {
   walkPlotCode: string | null;
   cameraRequest: CameraRequest | null;
 
-  setEstate: (slug: string) => void;
+  setEstate: (slug: string, plotCode?: string | null) => void;
   selectPlot: (code: string | null, opts?: { fly?: boolean }) => void;
   hoverPlot: (code: string | null) => void;
   setMode: (mode: ExplorerMode) => void;
@@ -75,15 +75,18 @@ export const usePlotStore = create<State>((set, get) => ({
   walkPlotCode: null,
   cameraRequest: null,
 
-  setEstate: (estateSlug) =>
+  setEstate: (estateSlug, plotCode = null) =>
     set({
       estateSlug,
-      selectedCode: null,
+      selectedCode: plotCode,
       hoveredCode: null,
       mode: "orbit",
       popover: null,
       filters: DEFAULT_FILTERS,
-      cameraRequest: { kind: "home", nonce: ++nonce },
+      walkPlotCode: null,
+      cameraRequest: plotCode
+        ? { kind: "plot", code: plotCode, nonce: ++nonce }
+        : { kind: "home", nonce: ++nonce },
     }),
 
   selectPlot: (code, opts) => {
