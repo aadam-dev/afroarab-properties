@@ -6,6 +6,13 @@ import { MaskedText } from "@/components/ui/MaskedText";
 
 type Crumb = { href: string; label: string };
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+/** BreadcrumbList.item must be an absolute URL. metadataBase does not rewrite JSON-LD. */
+function breadcrumbItemUrl(path: string) {
+  return new URL(path, siteUrl).href;
+}
+
 type Props = {
   eyebrow?: string;
   /** Use <em> for the italic gold accent. */
@@ -46,7 +53,7 @@ export function PageBand({
             "@type": "ListItem",
             position: i + 1,
             name: c.name,
-            ...(c.path ? { item: c.path } : {}),
+            ...(c.path ? { item: breadcrumbItemUrl(c.path) } : {}),
           }),
         ),
       }
