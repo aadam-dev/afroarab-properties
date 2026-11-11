@@ -41,6 +41,8 @@ const paths = {
   plus: <><path d="M12 5v14M5 12h14" /></>,
   expand: <><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></>,
   moon: <><path d="M19.5 14.5A7.5 7.5 0 0 1 9.5 4.5a7.5 7.5 0 1 0 10 10Z" /></>,
+  camera: <><path d="M4 8h3l1.5-2.5h7L17 8h3a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-.5.5H4a.5.5 0 0 1-.5-.5v-10A.5.5 0 0 1 4 8Z" /><circle cx="12" cy="13" r="3.5" /></>,
+  stairs: <><path d="M3.5 19.5h5v-4h4v-4h4v-4h4" /></>,
 } as const;
 
 export type IconName = keyof typeof paths;

@@ -1,0 +1,657 @@
+{
+  "slug": "lamins-court",
+  "name": "Lamin's Court townhouse",
+  "summary": "Pair of two-storey townhouses under one cladded upper floor. Unit A (left) is modelled inside and out; unit B (right) is modelled as an exterior shell only.",
+  "levels": [
+    {
+      "id": "L0",
+      "name": "Ground floor",
+      "ffl": 0.15,
+      "ceiling": 3.15
+    },
+    {
+      "id": "L1",
+      "name": "First floor",
+      "ffl": 3.5,
+      "ceiling": 6.45
+    }
+  ],
+  "rooms": [
+    {
+      "id": "living",
+      "name": "Living room",
+      "level": "L0",
+      "rect": [
+        0.2,
+        1.2,
+        3.45,
+        5.4
+      ],
+      "areaSqm": 13.7,
+      "areaSqft": 147,
+      "size": "3.2 × 4.2 m",
+      "evidence": "photo:stair",
+      "note": "Open plan with the TV wall; marble-look tile as in the stair photo.",
+      "ffl": 0.15,
+      "ceiling": 3.15,
+      "center": [
+        1.825,
+        0.15,
+        -3.3
+      ]
+    },
+    {
+      "id": "dining",
+      "name": "Dining",
+      "level": "L0",
+      "rect": [
+        0.2,
+        5.4,
+        3.45,
+        7.2
+      ],
+      "areaSqm": 5.8,
+      "areaSqft": 63,
+      "size": "3.2 × 1.8 m",
+      "evidence": "photo:stair",
+      "note": "",
+      "ffl": 0.15,
+      "ceiling": 3.15,
+      "center": [
+        1.825,
+        0.15,
+        -6.3
+      ]
+    },
+    {
+      "id": "kitchen",
+      "name": "Kitchen",
+      "level": "L0",
+      "rect": [
+        0.2,
+        7.2,
+        3.2,
+        10.8
+      ],
+      "areaSqm": 10.8,
+      "areaSqft": 116,
+      "size": "3.0 × 3.6 m",
+      "evidence": "photo:stair",
+      "note": "Grey cabinets, black worktop and dark marble splashback.",
+      "ffl": 0.15,
+      "ceiling": 3.15,
+      "center": [
+        1.7,
+        0.15,
+        -9.0
+      ]
+    },
+    {
+      "id": "stair_hall",
+      "name": "Stair and hallway",
+      "level": "L0",
+      "rect": [
+        3.45,
+        1.2,
+        4.45,
+        9.1
+      ],
+      "areaSqm": 7.9,
+      "areaSqft": 85,
+      "size": "1.0 × 7.9 m",
+      "evidence": "photo:stair",
+      "note": "",
+      "ffl": 0.15,
+      "ceiling": 3.15,
+      "center": [
+        3.95,
+        0.15,
+        -5.15
+      ]
+    },
+    {
+      "id": "guest_wc",
+      "name": "Guest WC",
+      "level": "L0",
+      "rect": [
+        3.26,
+        9.16,
+        4.45,
+        10.8
+      ],
+      "areaSqm": 2.0,
+      "areaSqft": 21,
+      "size": "1.2 × 1.6 m",
+      "evidence": "inferred",
+      "note": "",
+      "ffl": 0.15,
+      "ceiling": 3.15,
+      "center": [
+        3.855,
+        0.15,
+        -9.98
+      ]
+    },
+    {
+      "id": "bed1",
+      "name": "Bedroom 1",
+      "level": "L1",
+      "rect": [
+        0.2,
+        0.2,
+        4.45,
+        3.84
+      ],
+      "areaSqm": 15.5,
+      "areaSqft": 167,
+      "size": "4.2 × 3.6 m",
+      "evidence": "photo:bedroom",
+      "note": "Front bedroom with the full-height glazing band and the side sliding window.",
+      "ffl": 3.5,
+      "ceiling": 6.45,
+      "center": [
+        2.325,
+        3.5,
+        -2.02
+      ]
+    },
+    {
+      "id": "ensuite",
+      "name": "En-suite",
+      "level": "L1",
+      "rect": [
+        0.2,
+        3.96,
+        2.09,
+        5.94
+      ],
+      "areaSqm": 3.7,
+      "areaSqft": 40,
+      "size": "1.9 × 2.0 m",
+      "evidence": "photo:doors",
+      "note": "",
+      "ffl": 3.5,
+      "ceiling": 6.45,
+      "center": [
+        1.145,
+        3.5,
+        -4.95
+      ]
+    },
+    {
+      "id": "bath2",
+      "name": "Bathroom",
+      "level": "L1",
+      "rect": [
+        0.2,
+        6.06,
+        2.09,
+        7.54
+      ],
+      "areaSqm": 2.8,
+      "areaSqft": 30,
+      "size": "1.9 × 1.5 m",
+      "evidence": "inferred",
+      "note": "",
+      "ffl": 3.5,
+      "ceiling": 6.45,
+      "center": [
+        1.145,
+        3.5,
+        -6.8
+      ]
+    },
+    {
+      "id": "landing",
+      "name": "Landing",
+      "level": "L1",
+      "rect": [
+        2.21,
+        3.96,
+        4.45,
+        7.54
+      ],
+      "areaSqm": 8.0,
+      "areaSqft": 86,
+      "size": "2.2 × 3.6 m",
+      "evidence": "photo:doors",
+      "note": "Timber-look floor seen through the landing door.",
+      "ffl": 3.5,
+      "ceiling": 6.45,
+      "center": [
+        3.33,
+        3.5,
+        -5.75
+      ]
+    },
+    {
+      "id": "bed2",
+      "name": "Bedroom 2",
+      "level": "L1",
+      "rect": [
+        0.2,
+        7.66,
+        4.45,
+        10.8
+      ],
+      "areaSqm": 13.3,
+      "areaSqft": 144,
+      "size": "4.2 × 3.1 m",
+      "evidence": "inferred",
+      "note": "",
+      "ffl": 3.5,
+      "ceiling": 6.45,
+      "center": [
+        2.325,
+        3.5,
+        -9.23
+      ]
+    }
+  ],
+  "photos": [
+    {
+      "id": "front",
+      "file": "/images/projects/lamins-court.jpg",
+      "shows": "Front of the pair from unit A's compound: cladded upper floor, recessed ground floor, entrance, side yard, compound walls.",
+      "pos": [
+        -1.7,
+        1.55,
+        6.0
+      ],
+      "target": [
+        3.6,
+        2.75,
+        -1.9
+      ],
+      "lensMm": 20
+    },
+    {
+      "id": "bedroom",
+      "file": "/images/projects/lamins-court-3.jpg",
+      "shows": "Unit A front bedroom: full-height 5 x 2 glazing band to the front, sliding window in the side wall, split AC unit.",
+      "pos": [
+        2.7,
+        4.9,
+        -3.55
+      ],
+      "target": [
+        0.5,
+        4.6,
+        -0.4
+      ],
+      "lensMm": 16
+    },
+    {
+      "id": "doors",
+      "file": "/images/projects/lamins-court-2.jpg",
+      "shows": "First-floor room with an en-suite door (grey tiles, timber-look floor) and a door to the landing with a black bar balustrade.",
+      "pos": [
+        1.9,
+        4.75,
+        -0.6
+      ],
+      "target": [
+        1.9,
+        4.5,
+        -3.9
+      ],
+      "lensMm": 18
+    },
+    {
+      "id": "stair",
+      "file": "/images/projects/lamins-court-4.jpg",
+      "shows": "Floating timber stair on a central steel stringer with black bar balustrade, over the open kitchen, dining and living area.",
+      "pos": [
+        3.75,
+        2.2,
+        -2.7
+      ],
+      "target": [
+        3.95,
+        3.3,
+        -6.6
+      ],
+      "lensMm": 16
+    }
+  ],
+  "anchors": [
+    {
+      "what": "Entrance double door",
+      "value": "1.2 m wide, 2.2 m high",
+      "usedFor": "Vertical scale of the ground floor (about 3 m clear)"
+    },
+    {
+      "what": "Upper glazing band",
+      "value": "5 columns by 2 rows, about 3.9 m by 2.35 m",
+      "usedFor": "Width of each unit's upper floor (about 4.5 m)"
+    },
+    {
+      "what": "Split AC indoor unit",
+      "value": "about 0.85 m wide",
+      "usedFor": "Bedroom wall and window proportions"
+    },
+    {
+      "what": "Storey height",
+      "value": "3.25 m ground, 3.05 m first, 0.6 m parapet",
+      "usedFor": "Overall height of the cladded box"
+    }
+  ],
+  "evidence": {
+    "fromPhotos": [
+      "A_L0_floor",
+      "A_L0_shell",
+      "A_L1_bed1",
+      "A_L1_floor",
+      "A_L1_shell",
+      "A_ac1",
+      "A_ac2",
+      "A_ac3",
+      "A_band",
+      "A_bed1_ac",
+      "A_bed1_door",
+      "A_bed1_side",
+      "A_bed2_side",
+      "A_chair1",
+      "A_chair2",
+      "A_chair3",
+      "A_chair4",
+      "A_downpipe",
+      "A_ensuite_basin",
+      "A_ensuite_door",
+      "A_ensuite_mirror",
+      "A_ensuite_side",
+      "A_ensuite_tile",
+      "A_entrance",
+      "A_kitchen_base",
+      "A_kitchen_splash",
+      "A_kitchen_tall",
+      "A_kitchen_top",
+      "A_kitchen_upper1",
+      "A_kitchen_upper2",
+      "A_living_front",
+      "A_oven",
+      "A_pier",
+      "A_side_living",
+      "A_side_tall",
+      "A_sidelight",
+      "A_stair",
+      "A_table",
+      "A_table_leg1",
+      "A_table_leg2",
+      "A_table_leg3",
+      "A_table_leg4",
+      "A_tv",
+      "A_tv_unit",
+      "B_L0_shell",
+      "B_L1_shell",
+      "B_band",
+      "B_living_front",
+      "B_pier",
+      "bed1",
+      "bed_front",
+      "curb_bound",
+      "curb_side",
+      "dining",
+      "ensuite",
+      "entrance_step",
+      "gate",
+      "grass_bed_side",
+      "grass_bound_side",
+      "kitchen",
+      "landing",
+      "living",
+      "site_divider",
+      "site_front",
+      "site_left",
+      "stair_hall"
+    ],
+    "inferred": [
+      "A_L0_wc",
+      "A_L1_baths",
+      "A_L1_bathsplit",
+      "A_L1_bed2",
+      "A_L1_party",
+      "A_back_door",
+      "A_bath2_basin",
+      "A_bath2_tile",
+      "A_bath_door",
+      "A_bath_side",
+      "A_bed2_back",
+      "A_bed2_bed",
+      "A_bed2_door",
+      "A_bed2_head",
+      "A_ensuite_wc",
+      "A_kitchen",
+      "A_roof",
+      "A_rug",
+      "A_sofa_back",
+      "A_sofa_seat",
+      "A_wc_basin",
+      "A_wc_door",
+      "A_wc_pan",
+      "B_L0_floor",
+      "B_L1_floor",
+      "B_bed1_side",
+      "B_bed2_back",
+      "B_entrance",
+      "B_roof",
+      "B_side_living",
+      "B_sidelight",
+      "bath2",
+      "bed2",
+      "guest_wc",
+      "site_back_b"
+    ]
+  },
+  "walk": {
+    "levels": {
+      "L0": [
+        [
+          0.2,
+          -5.4,
+          3.45,
+          -1.2
+        ],
+        [
+          0.2,
+          -7.2,
+          3.45,
+          -5.4
+        ],
+        [
+          0.2,
+          -10.8,
+          3.2,
+          -7.2
+        ],
+        [
+          3.45,
+          -9.1,
+          4.45,
+          -1.2
+        ],
+        [
+          3.26,
+          -10.8,
+          4.45,
+          -9.16
+        ],
+        [
+          0.3,
+          -1.45,
+          1.46,
+          -0.75
+        ],
+        [
+          1.93,
+          -11.25,
+          2.67,
+          -10.55
+        ],
+        [
+          3.505,
+          -9.41,
+          4.095,
+          -8.79
+        ],
+        [
+          6.63,
+          -1.45,
+          7.47,
+          -0.75
+        ],
+        [
+          -2.4,
+          -1.0,
+          4.45,
+          6.3
+        ],
+        [
+          -1.65,
+          -13.4,
+          -0.75,
+          -1.0
+        ],
+        [
+          -2.4,
+          -2.4,
+          0.0,
+          -1.0
+        ],
+        [
+          -1.65,
+          -13.4,
+          4.45,
+          -10.9
+        ]
+      ],
+      "L1": [
+        [
+          0.2,
+          -3.84,
+          4.45,
+          -0.2
+        ],
+        [
+          0.2,
+          -5.94,
+          2.09,
+          -3.96
+        ],
+        [
+          0.2,
+          -7.54,
+          2.09,
+          -6.06
+        ],
+        [
+          2.21,
+          -7.54,
+          4.45,
+          -3.96
+        ],
+        [
+          0.2,
+          -10.8,
+          4.45,
+          -7.66
+        ],
+        [
+          0.83,
+          -4.21,
+          1.47,
+          -3.59
+        ],
+        [
+          2.455,
+          -4.21,
+          3.145,
+          -3.59
+        ],
+        [
+          1.84,
+          -7.095,
+          2.46,
+          -6.505
+        ],
+        [
+          2.455,
+          -7.91,
+          3.145,
+          -7.29
+        ]
+      ]
+    },
+    "exclude": [
+      {
+        "level": "L1",
+        "rect": [
+          3.4,
+          -6.55,
+          4.5,
+          -3.9
+        ]
+      }
+    ],
+    "eye": 1.6,
+    "start": {
+      "pos": [
+        1.0,
+        4.5
+      ],
+      "facing": [
+        0,
+        -1
+      ]
+    },
+    "stair": {
+      "bottomZone": [
+        3.5,
+        -2.35,
+        4.4,
+        -1.6
+      ],
+      "topZone": [
+        3.5,
+        -6.95,
+        4.4,
+        -6.55
+      ],
+      "bottomPose": {
+        "pos": [
+          3.95,
+          -1.7
+        ],
+        "facing": [
+          0,
+          1
+        ]
+      },
+      "topPose": {
+        "pos": [
+          2.8,
+          -7.15
+        ],
+        "facing": [
+          0,
+          1
+        ]
+      }
+    }
+  },
+  "stairs": [
+    {
+      "from": "L0",
+      "bottom": [
+        3.95,
+        0.15,
+        -2.0
+      ],
+      "top": [
+        3.95,
+        3.5,
+        -6.695
+      ]
+    }
+  ]
+}
