@@ -7,7 +7,7 @@ const eslintConfig = defineConfig([
   ...nextTs,
   {
     // react-three-fiber mutates three.js objects (camera, materials, lights) by design.
-    files: ["src/components/explorer/rig/**", "src/components/explorer/world/**", "src/components/home/estate-story/**"],
+    files: ["src/components/explorer/rig/**", "src/components/explorer/world/**", "src/components/home/estate-story/**", "src/components/house/HouseScene.tsx", "src/components/house/HouseWalker.tsx"],
     rules: { "react-hooks/immutability": "off" },
   },
   // Override default ignores of eslint-config-next.

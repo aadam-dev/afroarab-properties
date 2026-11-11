@@ -113,7 +113,6 @@ export const projects: Project[] = [
     relatedSlugs: ["ibras-court", "paapas-court", "hawas-court"],
     agent: defaultProjectAgent,
     featured: true,
-    hasWalkthrough: true,
     lastVerified: "2026-11-06",
     verificationNote:
       "Location restored from live WP map (Katamanso). Confirm survey, title, and pricing before production claims.",
@@ -144,7 +143,6 @@ export const projects: Project[] = [
     relatedSlugs: ["cephas-court", "lamins-court", "hassy-homes"],
     agent: defaultProjectAgent,
     featured: true,
-    hasWalkthrough: true,
     lastVerified: "2026-11-06",
     verificationNote: "Confirm unit count, prices, and title status with Afro Arab.",
   },
