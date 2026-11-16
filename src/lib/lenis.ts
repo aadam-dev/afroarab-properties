@@ -12,3 +12,8 @@ export function lockScroll(locked: boolean) {
   else instance?.start();
   document.documentElement.style.overflow = locked ? "hidden" : "";
 }
+
+/** Re-measure the page. Lenis only learns the new length when asked or when the root resizes. */
+export function resizeLenis() {
+  instance?.resize();
+}

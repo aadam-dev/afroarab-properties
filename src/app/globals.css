@@ -458,9 +458,10 @@ button:hover .btn-arrow {
 }
 
 /* Lenis */
+/* The root must grow with the page: Lenis reads the page length from it. */
 html.lenis,
 html.lenis body {
-  height: auto;
+  height: auto !important;
 }
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;

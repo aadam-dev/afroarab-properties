@@ -3,7 +3,7 @@
 import Lenis from "lenis";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-import { setLenis } from "@/lib/lenis";
+import { resizeLenis, setLenis } from "@/lib/lenis";
 
 /**
  * Lenis smooth scrolling for content pages. Off for reduced motion and on
@@ -32,9 +32,13 @@ export function SmoothScroll() {
     };
   }, [disabled]);
 
-  // Route changes start at the top.
+  // Route changes start at the top, and the new page is measured afresh: a limit carried over
+  // from a shorter page would stop the wheel partway down this one.
   useEffect(() => {
     window.scrollTo(0, 0);
+    resizeLenis();
+    const later = window.setTimeout(resizeLenis, 400);
+    return () => window.clearTimeout(later);
   }, [pathname]);
 
   return null;
