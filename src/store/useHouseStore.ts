@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type HouseMode = "outside" | "inside" | "walk";
+export type HouseMode = "tour" | "outside" | "inside" | "walk";
 
 export type HouseCameraRequest =
   | { kind: "home"; nonce: number }
@@ -14,6 +14,10 @@ type State = {
   roomId: string | null;
   photoId: string | null;
   cameraRequest: HouseCameraRequest | null;
+  /** Current 360° tour point, and the heading (degrees) to face on arrival. */
+  tourId: string | null;
+  tourLook: number | null;
+  setTour: (id: string, look?: number | null) => void;
   /** True once the model has loaded. */
   ready: boolean;
   setMode: (mode: HouseMode) => void;
@@ -21,7 +25,7 @@ type State = {
   selectRoom: (roomId: string | null, level?: string) => void;
   showPhoto: (photoId: string | null) => void;
   requestHome: () => void;
-  reset: () => void;
+  reset: (mode?: HouseMode) => void;
 };
 
 let nonce = 0;
@@ -33,7 +37,10 @@ export const useHouseStore = create<State>((set, get) => ({
   photoId: null,
   cameraRequest: null,
   ready: false,
+  tourId: null,
+  tourLook: null,
 
+  setTour: (tourId, look = null) => set({ tourId, tourLook: look }),
   setMode: (mode) => {
     if (get().mode === mode) return;
     set({ mode, photoId: null, roomId: mode === "walk" ? null : get().roomId, cameraRequest: { kind: "home", nonce: ++nonce } });
@@ -54,7 +61,7 @@ export const useHouseStore = create<State>((set, get) => ({
       cameraRequest: photoId ? { kind: "photo", photoId, nonce: ++nonce } : get().cameraRequest,
     }),
   requestHome: () => set({ photoId: null, cameraRequest: { kind: "home", nonce: ++nonce } }),
-  reset: () => set({ mode: "outside", level: "L0", roomId: null, photoId: null, cameraRequest: null, ready: false }),
+  reset: (mode: HouseMode = "outside") => set({ mode, level: "L0", roomId: null, photoId: null, cameraRequest: null, ready: false, tourId: null, tourLook: null }),
 }));
 
 /** Joystick and stair input shared between the HUD and the walker. */

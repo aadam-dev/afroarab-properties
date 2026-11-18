@@ -351,10 +351,6 @@
       "A_bed1_door",
       "A_bed1_side",
       "A_bed2_side",
-      "A_chair1",
-      "A_chair2",
-      "A_chair3",
-      "A_chair4",
       "A_downpipe",
       "A_ensuite_basin",
       "A_ensuite_door",
@@ -375,13 +371,6 @@
       "A_side_tall",
       "A_sidelight",
       "A_stair",
-      "A_table",
-      "A_table_leg1",
-      "A_table_leg2",
-      "A_table_leg3",
-      "A_table_leg4",
-      "A_tv",
-      "A_tv_unit",
       "B_L0_shell",
       "B_L1_shell",
       "B_band",
@@ -389,6 +378,11 @@
       "B_pier",
       "bed1",
       "bed_front",
+      "chair1",
+      "chair2",
+      "chair3",
+      "chair4",
+      "console",
       "curb_bound",
       "curb_side",
       "dining",
@@ -403,7 +397,11 @@
       "site_divider",
       "site_front",
       "site_left",
-      "stair_hall"
+      "stair_hall",
+      "tv",
+      "yardplant1",
+      "yardplant2",
+      "yardplant3"
     ],
     "inferred": [
       "A_L0_wc",
@@ -417,15 +415,10 @@
       "A_bath_door",
       "A_bath_side",
       "A_bed2_back",
-      "A_bed2_bed",
       "A_bed2_door",
-      "A_bed2_head",
       "A_ensuite_wc",
       "A_kitchen",
       "A_roof",
-      "A_rug",
-      "A_sofa_back",
-      "A_sofa_seat",
       "A_wc_basin",
       "A_wc_door",
       "A_wc_pan",
@@ -437,10 +430,37 @@
       "B_roof",
       "B_side_living",
       "B_sidelight",
+      "armchair",
       "bath2",
+      "bed1",
       "bed2",
+      "coffee",
+      "curtain_bed1",
+      "curtain_bed2",
       "guest_wc",
-      "site_back_b"
+      "night1",
+      "night2",
+      "night3",
+      "plant_bed",
+      "plant_land",
+      "plant_living",
+      "rug",
+      "rug_bed1",
+      "rug_bed2",
+      "site_back_b",
+      "sofa",
+      "tree0",
+      "tree1",
+      "tree10",
+      "tree11",
+      "tree2",
+      "tree3",
+      "tree4",
+      "tree5",
+      "tree6",
+      "tree7",
+      "tree8",
+      "tree9"
     ]
   },
   "walk": {
@@ -639,6 +659,118 @@
       }
     }
   },
+  "tour": [
+    {
+      "id": "yard",
+      "name": "Front yard",
+      "level": "L0",
+      "pos": [
+        1.0,
+        1.75,
+        3.2
+      ],
+      "links": [
+        "living"
+      ],
+      "start": true,
+      "look": 0
+    },
+    {
+      "id": "living",
+      "name": "Living room",
+      "level": "L0",
+      "pos": [
+        1.7,
+        1.75,
+        -2.3
+      ],
+      "links": [
+        "yard",
+        "dining",
+        "landing"
+      ],
+      "start": false,
+      "look": 0
+    },
+    {
+      "id": "dining",
+      "name": "Dining",
+      "level": "L0",
+      "pos": [
+        3.0,
+        1.75,
+        -7.9
+      ],
+      "links": [
+        "living",
+        "kitchen"
+      ],
+      "start": false,
+      "look": 0
+    },
+    {
+      "id": "kitchen",
+      "name": "Kitchen",
+      "level": "L0",
+      "pos": [
+        1.9,
+        1.75,
+        -9.0
+      ],
+      "links": [
+        "dining"
+      ],
+      "start": false,
+      "look": 0
+    },
+    {
+      "id": "landing",
+      "name": "Landing",
+      "level": "L1",
+      "pos": [
+        2.9,
+        5.1,
+        -7.0
+      ],
+      "links": [
+        "living",
+        "bed1",
+        "bed2"
+      ],
+      "start": false,
+      "look": 180
+    },
+    {
+      "id": "bed1",
+      "name": "Bedroom 1",
+      "level": "L1",
+      "pos": [
+        1.6,
+        5.1,
+        -2.3
+      ],
+      "links": [
+        "landing"
+      ],
+      "start": false,
+      "look": 0
+    },
+    {
+      "id": "bed2",
+      "name": "Bedroom 2",
+      "level": "L1",
+      "pos": [
+        1.6,
+        5.1,
+        -9.2
+      ],
+      "links": [
+        "landing"
+      ],
+      "start": false,
+      "look": 0
+    }
+  ],
   "stairs": [
     {
       "from": "L0",

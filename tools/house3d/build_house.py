@@ -174,6 +174,48 @@ def make_texture(name, base, tex):
 
 MATS = {}
 TEX_SIZE = {}
+ASSETS = os.environ.get("HOUSE3D_ASSETS") or os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "polyhaven")
+
+
+def save_jpg(name, arr):
+    """arr: h x w x 3 floats 0..1 (top row first). Returns a loaded bpy image saved as JPEG."""
+    h, w = arr.shape[:2]
+    path = os.path.join(TEX_DIR, f"{name}.jpg")
+    img = bpy.data.images.new(f"tex_{name}", w, h, alpha=False)
+    rgba = np.concatenate([np.clip(arr, 0, 1), np.ones((h, w, 1))], axis=2)
+    img.pixels.foreach_set(rgba[::-1].astype(np.float32).ravel())
+    img.filepath_raw = path
+    img.file_format = "JPEG"
+    scene.render.image_settings.quality = 88
+    img.save()
+    return img
+
+
+def pbr_images(name, base, pbr):
+    """Poly Haven texture set, re-tinted so its average colour is the spec colour.
+    Keeps the real surface detail while the spec stays in charge of colour."""
+    folder = os.path.join(ASSETS, "textures", pbr["id"])
+    src = bpy.data.images.load(os.path.join(folder, "diff.jpg"))
+    w, h = src.size
+    px = np.empty(w * h * 4, dtype=np.float32)
+    src.pixels.foreach_get(px)
+    rgb = px.reshape(h, w, 4)[::-1, :, :3]
+    mean = rgb.reshape(-1, 3).mean(axis=0)
+    keep = pbr.get("keepColor", 0.0)  # 1 = use the texture's own colour
+    tinted = rgb * (np.array(base) / np.maximum(mean, 1e-3))
+    contrast = pbr.get("contrast", 1.0)
+    tinted = np.array(base) + (tinted - np.array(base)) * contrast
+    out = tinted * (1 - keep) + rgb * keep
+    bpy.data.images.remove(src)
+    diff = save_jpg(f"{name}_diff", out)
+    extra = {}
+    for key in ("rough", "nor"):
+        f = os.path.join(folder, f"{key}.jpg")
+        if os.path.exists(f):
+            im = bpy.data.images.load(f)
+            im.colorspace_settings.name = "Non-Color"
+            extra[key] = im
+    return diff, extra.get("rough"), extra.get("nor")
 
 
 def get_mat(name):
@@ -197,7 +239,28 @@ def get_mat(name):
             pass
     tex = spec.get("texture")
     TEX_SIZE[name] = tex.get("size", 1.0) if tex else 1.0
-    if tex:
+    pbr = spec.get("pbr")
+    if spec.get("emission"):
+        bsdf.inputs["Emission Color"].default_value = (*to_linear(base), 1)
+        bsdf.inputs["Emission Strength"].default_value = spec["emission"]
+    if pbr and os.path.isdir(os.path.join(ASSETS, "textures", pbr["id"])):
+        TEX_SIZE[name] = pbr.get("size", 1.0)
+        diff, rough, nor = pbr_images(name, base, pbr)
+        tn = nt.nodes.new("ShaderNodeTexImage")
+        tn.image = diff
+        nt.links.new(tn.outputs["Color"], bsdf.inputs["Base Color"])
+        if rough is not None and pbr.get("useRough", True):
+            rn = nt.nodes.new("ShaderNodeTexImage")
+            rn.image = rough
+            nt.links.new(rn.outputs["Color"], bsdf.inputs["Roughness"])
+        if nor is not None:
+            nn = nt.nodes.new("ShaderNodeTexImage")
+            nn.image = nor
+            nm = nt.nodes.new("ShaderNodeNormalMap")
+            nm.inputs["Strength"].default_value = pbr.get("normal", 1.0)
+            nt.links.new(nn.outputs["Color"], nm.inputs["Color"])
+            nt.links.new(nm.outputs["Normal"], bsdf.inputs["Normal"])
+    elif tex:
         img = make_texture(name, base, tex)
         node = nt.nodes.new("ShaderNodeTexImage")
         node.image = img
@@ -344,9 +407,27 @@ def face_mats(w, seg_i, plinth_part=False):
     return m
 
 
+def skirting(w, seg, t0, t1):
+    """Skirting board at floor level on the room side(s) of a wall piece."""
+    sk = S.get("skirting")
+    if not sk or w["level"] not in LEVELS or w["level"] in ("SITE", "ROOF") or w["group"] == "B" or w.get("skirting") is False:
+        return
+    ffl = LEVELS[w["level"]]["ffl"]
+    if w["z0"] > ffl + 0.01 or w["z1"] < ffl + 0.5:
+        return
+    th = sk.get("thickness", 0.012)
+    m = {k: sk["material"] for k in ("in", "out", "start", "end", "top")}
+    nm = node_name(w["group"], w["level"], "skirting")
+    sides = [-1] if w["id"].endswith("_shell") else [-1, 1]
+    for sd in sides:
+        seg_box(nm, seg["a"], seg["d"], seg["n"], t0, t1, th, ffl, ffl + sk.get("height", 0.08), m, sd * (w["thickness"] / 2 + th / 2))
+
+
 def wall_piece(w, seg, nodename, t0, t1, z0, z1):
     pl = w.get("plinth")
     thick = w["thickness"]
+    if z0 <= w["z0"] + 1e-6 and t1 - t0 > 0.05 and z1 > LEVELS.get(w["level"], {"ffl": 0})["ffl"] + 0.2:
+        skirting(w, seg, t0, t1)
     if pl and z0 < pl["height"]:
         zp = min(pl["height"], z1)
         seg_box(nodename, seg["a"], seg["d"], seg["n"], t0, t1, thick, z0, zp, {**face_mats(w, seg["i"], True), "top": face_mats(w, seg["i"])["top"] if zp >= z1 else None})
@@ -469,6 +550,12 @@ def build_opening(w, seg, o, t0, t1, z0, z1):
             # leaf runs from inner face inward
             p_off = -thick / 2 - lwid / 2
             seg_box(lnode, p0, d, n, ta, tb, lwid, z0, z1 - 0.01, dm, p_off)
+            # lever handles on both faces, near the free edge
+            hm = {k: "steel" for k in ("in", "out", "start", "end", "top", "bottom")}
+            h_off = -thick / 2 - lwid + 0.09
+            for face in (ta - 0.05, tb):
+                seg_box(lnode, p0, d, n, face, face + 0.05, 0.02, z0 + 1.0, z0 + 1.02, hm, h_off)
+                seg_box(lnode, p0, d, n, face + (0.03 if face == tb else 0.0), face + (0.05 if face == tb else 0.02), 0.13, z0 + 1.0, z0 + 1.02, hm, h_off + 0.055)
     elif o["kind"] == "gate":
         gm = {k: "steel" for k in ("in", "out", "start", "end", "top", "bottom")}
         gnode = "SITE__gate"
@@ -618,6 +705,45 @@ if fence:
             seg_box("SITE__fence", seg["a"], seg["d"], seg["n"], 0, seg["L"], 0.006, w["z1"] + zz, w["z1"] + zz + 0.006,
                     {k: "steel" for k in ("in", "out", "start", "end", "top", "bottom")})
 
+nb = S.get("neighbourhood")
+if nb:
+    # Simple surrounding houses so windows look onto a street, not an empty plain.
+    rnd = np.random.default_rng(nb.get("seed", 3))
+    keep = nb.get("keepClear", [-6, -12, 15, 18])
+    cell = nb.get("lot", 17.0)
+    span = nb.get("rings", 4)
+    walls_p = nb["wallMaterials"]
+    roofs_p = nb["roofMaterials"]
+    for gx in range(-span, span + 1):
+        for gy in range(-span, span + 1):
+            cx = 4 + gx * cell + rnd.uniform(-2, 2)
+            cy = 4 + gy * cell + rnd.uniform(-2, 2)
+            w, d = rnd.uniform(7, 11), rnd.uniform(7, 11)
+            x0, y0, x1, y1 = cx - w / 2, cy - d / 2, cx + w / 2, cy + d / 2
+            if x1 > keep[0] and x0 < keep[2] and y1 > keep[1] and y0 < keep[3]:
+                continue
+            if any(x1 > c["min"][0] - 1 and x0 < c["max"][0] + 1 and y1 > c["min"][1] - 1 and y0 < c["max"][1] + 1 for c in S.get("context", [])):
+                continue
+            if rnd.random() < 0.18:
+                continue
+            h = 3.1 if rnd.random() < 0.6 else 6.2
+            S.setdefault("context", []).append({
+                "id": f"nb_{gx}_{gy}", "min": [x0, y0, 0], "max": [x1, y1, h],
+                "material": str(rnd.choice(walls_p)),
+                "roof": {"height": rnd.uniform(1.2, 2.0), "material": str(rnd.choice(roofs_p)), "ridge": "x" if rnd.random() < 0.5 else "y"},
+                "evidence": "inferred",
+            })
+            # low compound wall around the lot
+            m = 2.2
+            for (a0, b0, a1, b1) in ((x0 - m, y0 - m, x1 + m, y0 - m + 0.2), (x0 - m, y1 + m - 0.2, x1 + m, y1 + m), (x0 - m, y0 - m, x0 - m + 0.2, y1 + m), (x1 + m - 0.2, y0 - m, x1 + m, y1 + m)):
+                aabb("SITE__context", (a0, b0, 0), (a1, b1, 1.9), str(rnd.choice(walls_p)))
+    for i in range(nb.get("trees", 0)):
+        for _ in range(30):
+            tx, ty = rnd.uniform(-55, 60), rnd.uniform(-50, 60)
+            if not (keep[0] - 2 < tx < keep[2] + 2 and keep[1] - 2 < ty < keep[3] + 2):
+                break
+        S.setdefault("props", []).append({"id": f"tree{i}", "model": nb.get("treeModel", "island_tree_02"), "group": "SITE", "at": [tx, ty], "rot": float(rnd.uniform(0, 360)), "scale": float(rnd.uniform(0.8, 1.5)), "evidence": "inferred"})
+
 for c in S.get("context", []):
     aabb("SITE__context", c["min"], c["max"], c["material"])
     rf = c.get("roof")
@@ -690,38 +816,372 @@ for name, nd in NODES.items():
     coll.objects.link(ob)
     OBJS.append(ob)
 
-# ------------------------------------------------------------------ lights for renders
-sun_data = bpy.data.lights.new("sun", "SUN")
-sun_data.energy = 4.0
-sun_data.angle = math.radians(1.5)
-sun = bpy.data.objects.new("sun", sun_data)
-sun.rotation_euler = (math.radians(50), math.radians(10), math.radians(210))
-coll.objects.link(sun)
+# ------------------------------------------------------------------ soft furniture, props, lights
+
+
+def link_under(parent_name, ob):
+    """Parent an object under an empty named like a node, so the viewer can hide it by prefix."""
+    par = bpy.data.objects.get(parent_name)
+    if par is None:
+        par = bpy.data.objects.new(parent_name, None)
+        coll.objects.link(par)
+    ob.parent = par
+    return par
+
+
+def soft_box(parent_name, name, mn, mx, mat, bevel=0.03, rot_deg=0.0, pivot=None):
+    """A rounded box as its own object (bevel modifier), for upholstery and bedding."""
+    sx, sy, sz = (mx[i] - mn[i] for i in range(3))
+    bm = bmesh.new()
+    bmesh.ops.create_cube(bm, size=1.0)
+    for v in bm.verts:
+        v.co.x *= sx
+        v.co.y *= sy
+        v.co.z *= sz
+    me = bpy.data.meshes.new(name)
+    bm.to_mesh(me)
+    bm.free()
+    material = get_mat(mat)
+    size = TEX_SIZE.get(mat, 1.0)
+    uv = me.uv_layers.new(name="UVMap")
+    for poly in me.polygons:
+        for li in poly.loop_indices:
+            uv.data[li].uv = face_uv(me.vertices[me.loops[li].vertex_index].co, poly.normal, size)
+        poly.use_smooth = True
+    me.materials.append(material)
+    ob = bpy.data.objects.new(name, me)
+    cx, cy, cz = ((mn[i] + mx[i]) / 2 for i in range(3))
+    if pivot and rot_deg:
+        a = math.radians(rot_deg)
+        dx, dy = cx - pivot[0], cy - pivot[1]
+        cx = pivot[0] + dx * math.cos(a) - dy * math.sin(a)
+        cy = pivot[1] + dx * math.sin(a) + dy * math.cos(a)
+    ob.location = (cx, cy, cz)
+    ob.rotation_euler = (0, 0, math.radians(rot_deg))
+    coll.objects.link(ob)
+    if bevel > 0:
+        md = ob.modifiers.new("bevel", "BEVEL")
+        md.width = min(bevel, sx / 2.2, sy / 2.2, sz / 2.2)
+        md.segments = 4
+        md.limit_method = "NONE"
+    link_under(parent_name, ob)
+    return ob
+
+
+def build_furniture(f):
+    grp, lvl = f.get("group", "A"), f["level"]
+    par = node_name(grp, lvl, "soft")
+    z = LEVELS[lvl]["ffl"]
+    x, y = f["at"]  # centre of the footprint
+    w, dpt = f["size"]  # width (local x) and depth (local y) before rotation
+    rot = f.get("rot", 0)
+    kind = f["kind"]
+    fab = f.get("material", "fabric")
+    pv = (x, y)
+
+    def B(name, mn, mx, mat, bevel=0.03):
+        return soft_box(par, f"{par}__{f['id']}_{name}", (x + mn[0], y + mn[1], z + mn[2]), (x + mx[0], y + mx[1], z + mx[2]), mat, bevel, rot, pv)
+
+    hw, hd = w / 2, dpt / 2
+    if kind == "sofa":
+        # back along local +y
+        B("base", (-hw, -hd, 0.08), (hw, hd, 0.3), fab, 0.03)
+        B("back", (-hw, hd - 0.2, 0.3), (hw, hd, 0.82), fab, 0.06)
+        B("arm_l", (-hw, -hd, 0.3), (-hw + 0.18, hd - 0.2, 0.62), fab, 0.06)
+        B("arm_r", (hw - 0.18, -hd, 0.3), (hw, hd - 0.2, 0.62), fab, 0.06)
+        seats = max(2, round((w - 0.36) / 0.7))
+        sw = (w - 0.36) / seats
+        for i in range(seats):
+            x0 = -hw + 0.18 + i * sw
+            B(f"seat{i}", (x0 + 0.01, -hd + 0.02, 0.3), (x0 + sw - 0.01, hd - 0.2, 0.47), fab, 0.07)
+            B(f"cush{i}", (x0 + 0.03, hd - 0.36, 0.45), (x0 + sw - 0.03, hd - 0.18, 0.86), f.get("cushion", fab), 0.09)
+        for i, sx_ in enumerate((-hw + 0.03, hw - 0.09)):
+            for j, sy_ in enumerate((-hd + 0.03, hd - 0.09)):
+                B(f"leg{i}{j}", (sx_, sy_, 0.0), (sx_ + 0.06, sy_ + 0.06, 0.08), "steel", 0.0)
+    elif kind == "bed":
+        # headboard along local +y
+        B("base", (-hw, -hd, 0.1), (hw, hd - 0.06, 0.34), f.get("frame", "wood_furniture"), 0.02)
+        B("mattress", (-hw + 0.03, -hd + 0.03, 0.34), (hw - 0.03, hd - 0.08, 0.56), "linen", 0.07)
+        B("duvet", (-hw - 0.02, -hd - 0.01, 0.42), (hw + 0.02, hd - 0.75, 0.6), f.get("duvet", "linen"), 0.08)
+        B("head", (-hw - 0.05, hd - 0.07, 0.0), (hw + 0.05, hd, 1.15), f.get("headboard", fab), 0.04)
+        n = 2 if w >= 1.3 else 1
+        pw = (w - 0.16) / n
+        for i in range(n):
+            x0 = -hw + 0.08 + i * pw
+            B(f"pillow{i}", (x0 + 0.03, hd - 0.52, 0.56), (x0 + pw - 0.03, hd - 0.14, 0.7), "linen", 0.07)
+        B("throw", (-hw - 0.03, -hd + 0.25, 0.595), (hw + 0.03, -hd + 0.8, 0.615), f.get("throw", fab), 0.01)
+    elif kind == "tv":
+        # wall-mounted, screen facing local -y
+        z0 = f.get("z", 1.0)
+        B("panel", (-hw, -0.02, z0), (hw, 0.02, z0 + w * 0.5625), "tv_body", 0.006)
+        B("screen", (-hw + 0.012, -0.024, z0 + 0.012), (hw - 0.012, -0.018, z0 + w * 0.5625 - 0.012), "tv_screen", 0.0)
+    elif kind == "rug":
+        B("rug", (-hw, -hd, 0.0), (hw, hd, 0.014), fab, 0.006)
+    elif kind == "curtain":
+        # hangs along local x; folds made of rounded strips
+        h = f.get("height", 2.6)
+        folds = max(4, int(w / 0.11))
+        for i in range(folds):
+            x0 = -hw + i * w / folds
+            off = 0.025 if i % 2 else 0.0
+            B(f"fold{i}", (x0, -0.03 + off, 0.03), (x0 + w / folds + 0.01, 0.03 + off, h), fab, 0.028)
+    EVIDENCE.append((f["id"], "furniture", f.get("evidence", "inferred"), f.get("note", "")))
+
+
+for f in S.get("furniture", []):
+    build_furniture(f)
+
+
+MODEL_CACHE = {}
+
+
+def import_prop(pr):
+    """Place a downloaded glTF model. `at` is the plan position of the model origin."""
+    path = os.path.join(ASSETS, "models", pr["model"], pr["model"] + ".gltf")
+    if not os.path.exists(path):
+        print("MISSING PROP", pr["model"])
+        return
+    key = (pr["model"], pr.get("tint"))
+    cached = MODEL_CACHE.get(key)
+    if cached:
+        new = []
+        mapping = {}
+        for o in cached:
+            c2 = o.copy()  # shares mesh data
+            coll.objects.link(c2)
+            mapping[o] = c2
+            new.append(c2)
+        for o in cached:
+            mapping[o].parent = mapping.get(o.parent)
+    else:
+        before = set(bpy.data.objects)
+        bpy.ops.import_scene.gltf(filepath=path)
+        new = [o for o in bpy.data.objects if o not in before]
+        MODEL_CACHE[key] = list(new)
+    grp, lvl = pr.get("group", "A"), pr.get("level", "SITE")
+    par_name = "SITE__props" if grp == "SITE" else node_name(grp, lvl, "props")
+    holder = bpy.data.objects.new(f"{par_name}__{pr['id']}", None)
+    coll.objects.link(holder)
+    for o in new:
+        if o.parent is None:
+            o.parent = holder
+    z = pr.get("z", LEVELS[lvl]["ffl"] if (lvl in LEVELS and grp != "SITE") else 0.0)
+    holder.location = (pr["at"][0], pr["at"][1], z)
+    holder.rotation_euler = (0, 0, math.radians(pr.get("rot", 0)))
+    sc = pr.get("scale", 1.0)
+    holder.scale = (sc, sc, sc)
+    tint = pr.get("tint") if not cached else None
+    if tint:
+        # Recolour the model's base colour (e.g. dark leather to cream fabric).
+        for o in new:
+            for slot in getattr(o, "material_slots", []):
+                m = slot.material
+                if not m or not m.use_nodes or m.get("tinted"):
+                    continue
+                b = m.node_tree.nodes.get("Principled BSDF")
+                if not b or not b.inputs["Base Color"].is_linked:
+                    continue
+                src = b.inputs["Base Color"].links[0].from_socket
+                mix = m.node_tree.nodes.new("ShaderNodeMix")
+                mix.data_type = "RGBA"
+                mix.blend_type = "MIX"
+                mix.inputs[0].default_value = pr.get("tintAmount", 0.85)
+                m.node_tree.links.new(src, mix.inputs[6])
+                mix.inputs[7].default_value = (*to_linear(hex_rgb(tint)), 1)
+                m.node_tree.links.new(mix.outputs[2], b.inputs["Base Color"])
+                m["tinted"] = True
+    link_under(par_name, holder)
+    EVIDENCE.append((pr["id"], "prop", pr.get("evidence", "inferred"), pr.get("note", "")))
+
+
+for pr in S.get("props", []):
+    import_prop(pr)
+
+# Recessed downlights: a small glowing disc in the ceiling plus an area light for Cycles.
+LIGHTS = bpy.data.collections.new("lights")
+scene.collection.children.link(LIGHTS)
+dl = S.get("downlights")
+if dl:
+    for r in S.get("rooms", []):
+        if r.get("downlights") is False:
+            continue
+        lv = LEVELS[r["level"]]
+        x0, y0, x1, y1 = r["rect"]
+        sp = dl.get("spacing", 1.5)
+        nx = max(1, round((x1 - x0) / sp))
+        ny = max(1, round((y1 - y0) / sp))
+        skip = [e["rect"] for e in S.get("walk", {}).get("exclude", []) if e["level"] == r["level"]]
+        for i in range(nx):
+            for j in range(ny):
+                cx = x0 + (i + 0.5) * (x1 - x0) / nx
+                cy = y0 + (j + 0.5) * (y1 - y0) / ny
+                if any(e[0] <= cx <= e[2] and e[1] <= cy <= e[3] for e in skip):
+                    continue
+                bm = bmesh.new()
+                bmesh.ops.create_circle(bm, cap_ends=True, radius=0.045, segments=20)
+                me = bpy.data.meshes.new("downlight")
+                bm.to_mesh(me)
+                bm.free()
+                me.materials.append(get_mat(dl["material"]))
+                ob = bpy.data.objects.new(f"dl_{r['id']}_{i}_{j}", me)
+                ob.location = (cx, cy, lv["ceiling"] - 0.004)
+                ob.rotation_euler = (math.pi, 0, 0)
+                coll.objects.link(ob)
+                link_under(node_name("A", r["level"], "lights"), ob)
+        # One soft light per room stands in for all its downlights: dozens of small
+        # lights make Cycles several times slower for no visible gain.
+        ld = bpy.data.lights.new("room", "AREA")
+        ld.shape = "RECTANGLE"
+        ld.size = max(0.4, (x1 - x0) * 0.6)
+        ld.size_y = max(0.4, (y1 - y0) * 0.6)
+        ld.energy = dl.get("watts", 9) * nx * ny
+        ld.color = to_linear(hex_rgb(dl.get("color", "#fff1e0")))
+        lo = bpy.data.objects.new(f"roomlight_{r['id']}", ld)
+        lo.location = ((x0 + x1) / 2, (y0 + y1) / 2, lv["ceiling"] - 0.03)
+        LIGHTS.objects.link(lo)
+    dm = MATS.get(dl["material"])
+    if dm:
+        try:
+            dm.cycles.emission_sampling = "NONE"
+        except Exception:
+            pass
+
+# ------------------------------------------------------------------ draft GLB (before render-only material changes)
+glb = GLB_PATH or os.path.join(OUT_DIR, f"{SLUG}.glb")
+os.makedirs(os.path.dirname(glb), exist_ok=True)
+if "--web-tex" in argv:
+    # Web build: shrink every texture so the GLB loads quickly on phones.
+    # Use a separate output folder, because the saved .blend keeps these small textures.
+    cap = int(argv[argv.index("--web-tex") + 1])
+    for im in bpy.data.images:
+        if im.size[0] > cap or im.size[1] > cap:
+            w, h = im.size
+            k = cap / max(w, h)
+            im.scale(max(1, int(w * k)), max(1, int(h * k)))
+    # glTF can't carry the tint mix node, so bake tinted materials to a flat colour.
+    for m in bpy.data.materials:
+        if m.get("tinted") and m.use_nodes:
+            b = m.node_tree.nodes.get("Principled BSDF")
+            mix = next((n for n in m.node_tree.nodes if n.type == "MIX"), None)
+            if b and mix:
+                col = tuple(mix.inputs[7].default_value)
+                for l in list(b.inputs["Base Color"].links):
+                    m.node_tree.links.remove(l)
+                b.inputs["Base Color"].default_value = col
+    # Thin out dense imported meshes; shared meshes are decimated once.
+    budget = int(argv[argv.index("--web-faces") + 1]) if "--web-faces" in argv else 4000
+    done = set()
+    for o in bpy.data.objects:
+        if o.type != "MESH" or o.data.name in done:
+            continue
+        q, inside = o, False
+        while q:
+            if "__props" in q.name:
+                inside = True
+            q = q.parent
+        n = len(o.data.polygons)
+        if inside and n > budget:
+            # Decimate the mesh data in place with bmesh, so every object sharing it updates.
+            bm = bmesh.new()
+            bm.from_mesh(o.data)
+            bmesh.ops.triangulate(bm, faces=bm.faces)
+            ratio = budget / max(1, len(bm.faces))
+            bm.to_mesh(o.data)
+            bm.free()
+            tmp = bpy.data.objects.new("tmp_dec", o.data)
+            coll.objects.link(tmp)
+            md = tmp.modifiers.new("web_decimate", "DECIMATE")
+            md.ratio = max(0.05, ratio)
+            dg = bpy.context.evaluated_depsgraph_get()
+            ev = tmp.evaluated_get(dg)
+            newme = bpy.data.meshes.new_from_object(ev)
+            old = o.data
+            for u in [x for x in bpy.data.objects if x.data == old]:
+                u.data = newme
+            bpy.data.objects.remove(tmp)
+            done.add(newme.name)
+if "--no-glb" not in argv:
+    bpy.ops.object.select_all(action="DESELECT")
+    for o in scene.objects:
+        # Interior props go to the web model; site props (trees, big plants) are render-only.
+        heavy = False
+        q = o
+        while q:
+            if q.name.startswith("SITE__props"):
+                heavy = True
+            q = q.parent
+        o.select_set(not heavy and o.type in ("MESH", "EMPTY"))
+    bpy.ops.export_scene.gltf(
+        filepath=glb,
+        export_format="GLB",
+        export_image_format="JPEG",
+        export_jpeg_quality=78,
+        export_extras=True,
+        export_cameras=False,
+        export_lights=False,
+        export_apply=True,
+        export_yup=True,
+        use_selection=True,
+    )
+
+# ------------------------------------------------------------------ world and render-only materials
 world = bpy.data.worlds.new("world")
 world.use_nodes = True
-bg = world.node_tree.nodes.get("Background")
-bg.inputs["Color"].default_value = (*to_linear(hex_rgb("#a9c3dc")), 1)
-bg.inputs["Strength"].default_value = 0.9
 scene.world = world
+wn = world.node_tree
+bg = wn.nodes.get("Background")
+sky = S.get("sky", {})
+hdr = os.path.join(ASSETS, "hdris", sky.get("hdri", "") + ".hdr")
+if sky.get("hdri") and os.path.exists(hdr):
+    env = wn.nodes.new("ShaderNodeTexEnvironment")
+    env.image = bpy.data.images.load(hdr)
+    mp = wn.nodes.new("ShaderNodeMapping")
+    tc = wn.nodes.new("ShaderNodeTexCoord")
+    mp.inputs["Rotation"].default_value = (0, 0, math.radians(sky.get("rotation", 0)))
+    wn.links.new(tc.outputs["Generated"], mp.inputs["Vector"])
+    wn.links.new(mp.outputs["Vector"], env.inputs["Vector"])
+    wn.links.new(env.outputs["Color"], bg.inputs["Color"])
+    bg.inputs["Strength"].default_value = sky.get("strength", 1.0)
+else:
+    nish = wn.nodes.new("ShaderNodeTexSky")
+    nish.sun_elevation = math.radians(sky.get("sunElevation", 50))
+    nish.sun_rotation = math.radians(sky.get("sunRotation", 200))
+    wn.links.new(nish.outputs[0], bg.inputs["Color"])
+    bg.inputs["Strength"].default_value = sky.get("strength", 0.25)
+
+# Architectural glass for Cycles: light passes straight through, with a clear reflection.
+gm = MATS.get("glass")
+if gm:
+    nt = gm.node_tree
+    out = next(n for n in nt.nodes if n.type == "OUTPUT_MATERIAL")
+    tr = nt.nodes.new("ShaderNodeBsdfTransparent")
+    tr.inputs["Color"].default_value = (*to_linear(hex_rgb(S["materials"]["glass"].get("tint", "#c9d6d8"))), 1)
+    gl = nt.nodes.new("ShaderNodeBsdfGlossy")
+    gl.inputs["Roughness"].default_value = 0.02
+    fr = nt.nodes.new("ShaderNodeFresnel")
+    fr.inputs["IOR"].default_value = 1.5
+    mx = nt.nodes.new("ShaderNodeMixShader")
+    nt.links.new(fr.outputs[0], mx.inputs[0])
+    nt.links.new(tr.outputs[0], mx.inputs[1])
+    nt.links.new(gl.outputs[0], mx.inputs[2])
+    nt.links.new(mx.outputs[0], out.inputs["Surface"])
+
+# Rounded edges at render time: sharp CG corners are a giveaway.
+for m in bpy.data.materials:
+    if not m.use_nodes or m.name == "glass":
+        continue
+    b = m.node_tree.nodes.get("Principled BSDF")
+    if not b:
+        continue
+    bev = m.node_tree.nodes.new("ShaderNodeBevel")
+    bev.inputs["Radius"].default_value = 0.004
+    bev.samples = 4
+    if b.inputs["Normal"].is_linked:
+        m.node_tree.links.new(b.inputs["Normal"].links[0].from_socket, bev.inputs["Normal"])
+    m.node_tree.links.new(bev.outputs["Normal"], b.inputs["Normal"])
 
 blend_path = os.path.join(OUT_DIR, f"{SLUG}.blend")
 bpy.ops.wm.save_as_mainfile(filepath=blend_path)
-
-# ------------------------------------------------------------------ export
-glb = GLB_PATH or os.path.join(OUT_DIR, f"{SLUG}.glb")
-os.makedirs(os.path.dirname(glb), exist_ok=True)
-sun.hide_set(True)
-bpy.ops.export_scene.gltf(
-    filepath=glb,
-    export_format="GLB",
-    export_image_format="JPEG",
-    export_extras=True,
-    export_cameras=False,
-    export_lights=False,
-    export_apply=True,
-    export_yup=True,
-    use_selection=False,
-)
 
 
 def to_three(p):
@@ -804,6 +1264,18 @@ meta = {
         "inferred": sorted({e[0] for e in EVIDENCE if e[2] == "inferred"}),
     },
     "walk": walk_meta(),
+    "tour": [
+        {
+            "id": t["id"],
+            "name": t["name"],
+            "level": t["level"],
+            "pos": to_three((t["pos"][0], t["pos"][1], (LEVELS[t["level"]]["ffl"] if t["level"] in LEVELS else 0.0) + t.get("height", 1.6))),
+            "links": t.get("links", []),
+            "start": t.get("start", False),
+            "look": t.get("look", 0),
+        }
+        for t in S.get("tour", [])
+    ],
     "stairs": [
         {
             "from": st["level"],

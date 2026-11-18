@@ -1,0 +1,13 @@
+{
+  "hdris": { "kloofendal_48d_partly_cloudy_puresky": "4k" },
+  "textures": {
+    "painted_plaster_wall": "1k", "white_plaster_02": "1k", "marble_01": "1k", "laminate_floor_02": "1k",
+    "hexagonal_concrete_paving": "1k", "oak_wood_planks": "1k", "leafy_grass": "1k",
+    "red_laterite_soil_stones": "1k", "grey_tiles": "1k"
+  },
+  "models": {
+    "modern_arm_chair_01": "1k", "modern_coffee_table_01": "1k", "modern_wooden_cabinet": "1k",
+    "wooden_table_02": "1k", "dining_chair_02": "1k", "potted_plant_02": "1k", "potted_plant_04": "1k",
+    "side_table_01": "1k", "shrub_01": "1k", "shrub_04": "1k", "island_tree_02": "1k"
+  }
+}

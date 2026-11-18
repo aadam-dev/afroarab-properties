@@ -11,11 +11,8 @@ import { cn } from "@/lib/cn";
 
 const HouseScene = dynamic(() => import("./HouseScene"), {
   ssr: false,
-  loading: () => (
-    <div className="absolute inset-0 flex items-center justify-center">
-      <p className="glass-panel rounded-full px-4 py-2 text-sm font-semibold">Loading the house…</p>
-    </div>
-  ),
+  // The shell shows one "Loading the house…" label until the model reports it is ready.
+  loading: () => null,
 });
 
 let webglSupport: boolean | null = null;
@@ -32,7 +29,10 @@ function hasWebGL() {
 }
 const noopSubscribe = () => () => {};
 
+const HouseTour = dynamic(() => import("./HouseTour"), { ssr: false });
+
 const MODES: { id: HouseMode; label: string; icon: IconName; hint: string }[] = [
+  { id: "tour", label: "Tour", icon: "camera", hint: "" },
   { id: "outside", label: "Outside", icon: "house", hint: "Drag to turn · right-drag to pan · scroll to zoom" },
   { id: "inside", label: "Floors", icon: "layers", hint: "Pick a floor, then tap a room for its size" },
   { id: "walk", label: "Walk", icon: "walk", hint: "W A S D or arrows to walk · drag to look · tap the floor to move" },
@@ -122,10 +122,11 @@ export function HouseExplorer({ house, projectName }: { house: HouseModel; proje
   const root = useRef<HTMLDivElement>(null);
   const [fullscreen, setFullscreen] = useState(false);
 
+  const hasTour = Boolean(house.tour && meta.tour.length);
   useEffect(() => {
-    reset();
-    return reset;
-  }, [reset]);
+    reset(hasTour ? "tour" : "outside");
+    return () => reset();
+  }, [reset, hasTour]);
 
   useEffect(() => {
     const onChange = () => setFullscreen(document.fullscreenElement === root.current);
@@ -170,11 +171,13 @@ export function HouseExplorer({ house, projectName }: { house: HouseModel; proje
             3D isn&apos;t available on this device, so you&apos;re seeing the photographs.
           </p>
         </div>
+      ) : webgl && mode === "tour" && hasTour ? (
+        <HouseTour house={house} />
       ) : webgl ? (
         <HouseScene house={house} />
       ) : null}
 
-      {webgl && !ready ? (
+      {webgl && !ready && mode !== "tour" ? (
         <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
           <p className="glass-panel rounded-full px-4 py-2 text-sm font-semibold">Loading the house…</p>
         </div>
@@ -187,7 +190,7 @@ export function HouseExplorer({ house, projectName }: { house: HouseModel; proje
           <p className="text-[0.68rem] text-muted">3D model · indicative layout</p>
         </div>
         <nav aria-label="View" className="glass-panel pointer-events-auto ml-auto flex items-center gap-0.5 rounded-2xl p-1 max-sm:mx-auto">
-          {MODES.map((m) => (
+          {MODES.filter((m) => m.id !== "tour" || hasTour).map((m) => (
             <button
               key={m.id}
               type="button"
@@ -228,7 +231,7 @@ export function HouseExplorer({ house, projectName }: { house: HouseModel; proje
       ) : null}
 
       {/* Photos */}
-      {mode !== "walk" && !photo && !(room && mode === "inside") ? (
+      {mode !== "walk" && mode !== "tour" && !photo && !(room && mode === "inside") ? (
         <div className="pointer-events-none absolute bottom-3 right-3 z-20 max-w-[calc(100%-1.5rem)]">
           <div className="glass-panel pointer-events-auto rounded-2xl p-2">
             <p className="px-1 pb-1.5 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted">Real photos</p>
@@ -331,14 +334,14 @@ export function HouseExplorer({ house, projectName }: { house: HouseModel; proje
       ) : null}
 
       {/* Hint */}
-      {!photo && !(room && mode === "inside") ? (
+      {mode !== "tour" && !photo && !(room && mode === "inside") ? (
         <div className="pointer-events-none absolute bottom-3 left-3 z-10 max-md:hidden">
           <p className="glass-panel rounded-full px-3.5 py-1.5 text-xs text-muted">{hint}</p>
         </div>
       ) : null}
 
       {/* Enquire */}
-      {mode !== "walk" ? (
+      {mode !== "walk" && mode !== "tour" ? (
         <a
           href={whatsappHref(`Hello Afro Arab, I'm looking at the 3D model of ${projectName} and would like to know more.`)}
           target="_blank"

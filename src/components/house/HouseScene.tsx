@@ -155,7 +155,7 @@ function CameraRig({ house }: { house: HouseModel }) {
       c.setLookAt(-8, levelZ + 13, 9, 2.3, levelZ, -5.6, true);
     } else {
       setFov(DEFAULT_FOV);
-      c.setLookAt(-7.5, 8.5, 17, 3.8, 2.4, -3.5, true);
+      c.setLookAt(-5.5, 10.5, 10.5, 3.8, 2.2, -4, true);
     }
     invalidate();
   }, [request, mode, levelZ, house, camera, invalidate]);
@@ -207,7 +207,7 @@ function Ground() {
 function Lights() {
   return (
     <>
-      <hemisphereLight args={["#eef4ff", "#9c8a66", 1.35]} />
+      <hemisphereLight args={["#eef4ff", "#e4ddd0", 1.25]} />
       <directionalLight
         position={[-14, 22, 12]}
         intensity={2.6}
@@ -239,7 +239,7 @@ export default function HouseScene({ house }: { house: HouseModel }) {
       shadows={{ type: THREE.PCFShadowMap }}
       dpr={[1, 2]}
       frameloop={mode === "walk" ? "always" : "demand"}
-      camera={{ fov: DEFAULT_FOV, near: 0.05, far: 400, position: [-7.5, 8.5, 17] }}
+      camera={{ fov: DEFAULT_FOV, near: 0.05, far: 400, position: [-5.5, 10.5, 10.5] }}
       gl={{ antialias: true }}
       className="!absolute inset-0 touch-none"
       aria-label={`3D model of ${house.meta.name}`}

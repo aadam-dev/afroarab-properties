@@ -28,14 +28,27 @@ export type HousePhoto = {
   lensMm: number;
 };
 
+export type TourPoint = {
+  id: string;
+  name: string;
+  level: string;
+  /** Eye position in three.js space. */
+  pos: [number, number, number];
+  links: string[];
+  start: boolean;
+  /** Heading to face when arriving here directly, in degrees (0 = towards the back). */
+  look: number;
+};
+
 export type HouseMeta = {
   slug: string;
   name: string;
   summary: string;
   levels: { id: string; name: string; ffl: number; ceiling: number }[];
-  rooms: HouseRoom[];
+  rooms: (HouseRoom & { rect: [number, number, number, number] })[];
   photos: HousePhoto[];
   anchors: { what: string; value: string; usedFor: string }[];
+  tour: TourPoint[];
   evidence: { fromPhotos: string[]; inferred: string[] };
   walk: {
     levels: Record<string, Rect3[]>;
@@ -49,11 +62,13 @@ export type HouseMeta = {
 export type HouseModel = {
   /** GLB built by tools/house3d/build_house.py. */
   model: string;
+  /** Folder of path-traced 360° panoramas (<tour id>.jpg), from render_panos.py. */
+  tour?: string;
   meta: HouseMeta;
 };
 
 const houses: Record<string, HouseModel> = {
-  "lamins-court": { model: "/models/houses/lamins-court.glb", meta: laminsCourt as unknown as HouseMeta },
+  "lamins-court": { model: "/models/houses/lamins-court.glb", tour: "/models/houses/lamins-court", meta: laminsCourt as unknown as HouseMeta },
 };
 
 export function getHouse(slug: string): HouseModel | undefined {

@@ -74,8 +74,13 @@ test.describe("Afro Arab smoke", () => {
     await page.goto("/projects/lamins-court/walkthrough");
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Lamin");
     await expect(page.locator("canvas").first()).toBeVisible({ timeout: 30_000 });
-    await expect(page.getByText("Loading the house")).toBeHidden({ timeout: 30_000 });
+    // The 360° tour opens first, in the front yard; arrows move between rendered views.
+    await expect(page.getByText("Front yard · Ground floor")).toBeVisible({ timeout: 30_000 });
+    await page.getByRole("button", { name: "Go to Living room" }).click();
+    await expect(page.getByText("Living room · Ground floor")).toBeVisible({ timeout: 30_000 });
     const view = page.getByRole("navigation", { name: "View" });
+    await view.getByRole("button", { name: "Outside" }).click();
+    await expect(page.getByText("Loading the house")).toBeHidden({ timeout: 30_000 });
     await view.getByRole("button", { name: "Floors" }).click();
     await page.getByRole("button", { name: "First floor" }).click();
     await expect(page.getByRole("button", { name: "First floor" })).toHaveAttribute("aria-pressed", "true");
