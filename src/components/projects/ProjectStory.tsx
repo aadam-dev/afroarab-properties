@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { Project } from "@/data/projects";
 import { LocationMap } from "@/components/site/LocationMap";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
+import { Icon } from "@/components/ui/Icon";
 
 export function ProjectStory({ project }: { project: Project }) {
   return (
@@ -58,8 +59,8 @@ export function ProjectStory({ project }: { project: Project }) {
               </Link>
             ) : null}
             {project.hasWalkthrough ? (
-              <Link href={`/projects/${project.slug}/walkthrough`} className="btn-outline-gold">
-                Floor plan preview
+              <Link href={`/projects/${project.slug}/walkthrough`} className="btn-gold">
+                <Icon name="cube" size={16} /> Explore in 3D
               </Link>
             ) : null}
             <Link href="/payment-plans" className="btn-outline-gold">

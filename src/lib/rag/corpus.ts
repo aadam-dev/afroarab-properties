@@ -33,7 +33,7 @@ function projectDoc(project: Project): CorpusDoc {
     project.highlights.length ? `Highlights: ${project.highlights.join("; ")}` : null,
     project.features?.length ? `Features: ${project.features.join("; ")}` : null,
     project.hasPlotExplorer ? "Interactive plot explorer available on this site." : null,
-    project.hasWalkthrough ? "Floor-plan walkthrough demo available on this site." : null,
+    project.hasWalkthrough ? `A 3D model of the house is on this site at /projects/${project.slug}/walkthrough: walk around it, lift off each floor and step inside the rooms. The layout is indicative, built from photographs.` : null,
     project.agent
       ? `Project contact: ${project.agent.name} (${project.agent.role}), ${project.agent.phoneDisplay}, ${project.agent.email}`
       : null,
@@ -184,7 +184,7 @@ export function buildCorpus(): CorpusDoc[] {
         "This rebuild of afroarabproperties.com includes:",
         "Canonical estate pages with verified marketing facts and galleries.",
         "A 3D plot explorer for Green Valley Estate at /lands/titled-lands-green-valley/explorer, with numbered plots, filters, sun path, plan view and walk mode.",
-        "Floor-plan walkthrough demos for selected estates.",
+        "A 3D house model you can walk through, starting with Lamin's Court.",
         "Payment plan calculator and enquiry forms attributed to project or plot.",
         "Legal pages: privacy, terms, cookies, and payment terms.",
         "FAQ answers common buyer questions.",

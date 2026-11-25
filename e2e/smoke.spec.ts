@@ -69,6 +69,35 @@ test.describe("Afro Arab smoke", () => {
     await expect(dialog).not.toContainText("58 of 58");
   });
 
+  test("house explorer: Lamin's Court loads, switches floors and walks", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/projects/lamins-court/walkthrough");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Lamin");
+    await expect(page.locator("canvas").first()).toBeVisible({ timeout: 30_000 });
+    // The 360° tour opens first, in the front yard; arrows move between rendered views.
+    await expect(page.getByText("Front yard · Ground floor")).toBeVisible({ timeout: 30_000 });
+    await page.getByRole("button", { name: "Go to Living room" }).click();
+    await expect(page.getByText("Living room · Ground floor")).toBeVisible({ timeout: 30_000 });
+    const view = page.getByRole("navigation", { name: "View" });
+    await view.getByRole("button", { name: "Outside" }).click();
+    // The 5 MB model can take a while on a busy CI machine.
+    await expect(page.getByText("Loading the house")).toBeHidden({ timeout: 60_000 });
+    await view.getByRole("button", { name: "Floors" }).click();
+    await page.getByRole("button", { name: "First floor" }).click();
+    await expect(page.getByRole("button", { name: "First floor" })).toHaveAttribute("aria-pressed", "true");
+    await view.getByRole("button", { name: "Walk" }).click();
+    await page.getByRole("button", { name: "Go upstairs" }).click();
+    await expect(page.getByText(/· First floor/)).toBeVisible();
+    await expect(page.getByRole("cell", { name: /m² ·/ }).first()).toBeVisible();
+  });
+
+  test("projects without a real model have no 3D walkthrough", async ({ page }) => {
+    const res = await page.goto("/projects/bella-vista/walkthrough");
+    expect(res?.status()).toBe(404);
+    await page.goto("/projects/bella-vista");
+    await expect(page.getByRole("link", { name: /Explore in 3D/ }).and(page.locator('[href$="/walkthrough"]'))).toHaveCount(0);
+  });
+
   test("enquiry API accepts valid payload", async ({ request }) => {
     const res = await request.post("/api/enquiries", {
       data: {

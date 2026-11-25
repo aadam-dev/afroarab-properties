@@ -1,0 +1,2743 @@
+{
+  "slug": "lamins-court",
+  "name": "Lamin's Court townhouse",
+  "units": "metres",
+  "axes": "Plan x runs left to right along the front facade, plan y runs from the front to the back, z is height above finished ground. Origin is the front-left corner of the cladded upper floor.",
+  "summary": "Pair of two-storey townhouses under one cladded upper floor. Unit A (left) is modelled inside and out; unit B (right) is modelled as an exterior shell only.",
+  "photos": [
+    {
+      "id": "front",
+      "file": "public/images/projects/lamins-court.jpg",
+      "shows": "Front of the pair from unit A's compound: cladded upper floor, recessed ground floor, entrance, side yard, compound walls."
+    },
+    {
+      "id": "bedroom",
+      "file": "public/images/projects/lamins-court-3.jpg",
+      "shows": "Unit A front bedroom: full-height 5 x 2 glazing band to the front, sliding window in the side wall, split AC unit."
+    },
+    {
+      "id": "doors",
+      "file": "public/images/projects/lamins-court-2.jpg",
+      "shows": "First-floor room with an en-suite door (grey tiles, timber-look floor) and a door to the landing with a black bar balustrade."
+    },
+    {
+      "id": "stair",
+      "file": "public/images/projects/lamins-court-4.jpg",
+      "shows": "Floating timber stair on a central steel stringer with black bar balustrade, over the open kitchen, dining and living area."
+    }
+  ],
+  "anchors": [
+    {
+      "what": "Entrance double door",
+      "value": "1.2 m wide, 2.2 m high",
+      "usedFor": "Vertical scale of the ground floor (about 3 m clear)"
+    },
+    {
+      "what": "Upper glazing band",
+      "value": "5 columns by 2 rows, about 3.9 m by 2.35 m",
+      "usedFor": "Width of each unit's upper floor (about 4.5 m)"
+    },
+    {
+      "what": "Split AC indoor unit",
+      "value": "about 0.85 m wide",
+      "usedFor": "Bedroom wall and window proportions"
+    },
+    {
+      "what": "Storey height",
+      "value": "3.25 m ground, 3.05 m first, 0.6 m parapet",
+      "usedFor": "Overall height of the cladded box"
+    }
+  ],
+  "levels": [
+    {
+      "id": "L0",
+      "name": "Ground floor",
+      "ffl": 0.15,
+      "ceiling": 3.15
+    },
+    {
+      "id": "L1",
+      "name": "First floor",
+      "ffl": 3.5,
+      "ceiling": 6.45
+    }
+  ],
+  "materials": {
+    "render": {
+      "color": "#f1f0ec",
+      "roughness": 0.9,
+      "pbr": {
+        "id": "white_plaster_02",
+        "size": 2.0,
+        "contrast": 0.3,
+        "normal": 0.4
+      }
+    },
+    "render_in": {
+      "color": "#f6f5f2",
+      "roughness": 0.92,
+      "pbr": {
+        "id": "painted_plaster_wall",
+        "size": 2.0,
+        "contrast": 0.2,
+        "normal": 0.25
+      }
+    },
+    "plinth": {
+      "color": "#3a3d40",
+      "roughness": 0.85
+    },
+    "cladding": {
+      "color": "#9c7654",
+      "roughness": 0.5,
+      "texture": {
+        "kind": "planks",
+        "size": 2.4,
+        "plank": [
+          1.2,
+          0.15
+        ],
+        "amount": 0.2
+      }
+    },
+    "frame": {
+      "color": "#2b2f31",
+      "roughness": 0.45,
+      "metallic": 0.6
+    },
+    "glass": {
+      "color": "#26343d",
+      "roughness": 0.04,
+      "metallic": 0.3,
+      "alpha": 0.5,
+      "tint": "#b9c6c8"
+    },
+    "door": {
+      "color": "#232627",
+      "roughness": 0.5,
+      "metallic": 0.2
+    },
+    "soffit": {
+      "color": "#f8f8f6",
+      "roughness": 0.9
+    },
+    "concrete": {
+      "color": "#a9a7a1",
+      "roughness": 0.95,
+      "texture": {
+        "kind": "noise",
+        "size": 1.5,
+        "amount": 0.06
+      }
+    },
+    "pavers": {
+      "color": "#cdb99a",
+      "roughness": 0.9,
+      "pbr": {
+        "id": "hexagonal_concrete_paving",
+        "size": 1.6,
+        "keepColor": 0.25
+      }
+    },
+    "grass": {
+      "color": "#6f8f3a",
+      "roughness": 1.0,
+      "pbr": {
+        "id": "leafy_grass",
+        "size": 2.0,
+        "keepColor": 0.6
+      }
+    },
+    "soil": {
+      "color": "#8a6a4a",
+      "roughness": 1.0,
+      "pbr": {
+        "id": "red_laterite_soil_stones",
+        "size": 3.0,
+        "keepColor": 0.4
+      }
+    },
+    "laterite": {
+      "color": "#b98a62",
+      "roughness": 1.0,
+      "pbr": {
+        "id": "red_laterite_soil_stones",
+        "size": 3.0,
+        "keepColor": 0.4
+      }
+    },
+    "marble": {
+      "color": "#e6e5e1",
+      "roughness": 0.14,
+      "pbr": {
+        "id": "marble_01",
+        "size": 2.4,
+        "contrast": 0.45,
+        "useRough": false,
+        "normal": 0.3
+      }
+    },
+    "timber_floor": {
+      "color": "#a07650",
+      "roughness": 0.5,
+      "pbr": {
+        "id": "laminate_floor_02",
+        "size": 2.0,
+        "keepColor": 0.5
+      }
+    },
+    "wall_tile": {
+      "color": "#5f6366",
+      "roughness": 0.35,
+      "pbr": {
+        "id": "grey_tiles",
+        "size": 1.2,
+        "contrast": 0.8
+      }
+    },
+    "stair_timber": {
+      "color": "#5e3327",
+      "roughness": 0.45
+    },
+    "steel": {
+      "color": "#1e2022",
+      "roughness": 0.5,
+      "metallic": 0.7
+    },
+    "cabinet": {
+      "color": "#6e7377",
+      "roughness": 0.55
+    },
+    "worktop": {
+      "color": "#1c1c1e",
+      "roughness": 0.3
+    },
+    "splash": {
+      "color": "#202022",
+      "roughness": 0.25,
+      "texture": {
+        "kind": "marble",
+        "size": 1.2,
+        "cell": 1.2,
+        "amount": 0.35,
+        "dark": true
+      }
+    },
+    "fabric": {
+      "color": "#cfc7bd",
+      "roughness": 0.95
+    },
+    "wood_furniture": {
+      "color": "#8d6a45",
+      "roughness": 0.6
+    },
+    "screen": {
+      "color": "#0d0e10",
+      "roughness": 0.2,
+      "metallic": 0.2
+    },
+    "porcelain": {
+      "color": "#f7f7f5",
+      "roughness": 0.2
+    },
+    "ac": {
+      "color": "#f2f3f3",
+      "roughness": 0.5
+    },
+    "plant": {
+      "color": "#3f6b2e",
+      "roughness": 0.9
+    },
+    "roof_red": {
+      "color": "#9b3b2c",
+      "roughness": 0.7
+    },
+    "block": {
+      "color": "#b9b2a6",
+      "roughness": 0.95,
+      "texture": {
+        "kind": "noise",
+        "size": 2.0,
+        "amount": 0.08
+      }
+    },
+    "membrane": {
+      "color": "#8c8e8f",
+      "roughness": 0.95
+    },
+    "skirting_tile": {
+      "color": "#9a9d9e",
+      "roughness": 0.3
+    },
+    "downlight": {
+      "color": "#fff1dc",
+      "roughness": 0.4,
+      "emission": 8
+    },
+    "linen": {
+      "color": "#f1eee8",
+      "roughness": 0.95
+    },
+    "sofa_fabric": {
+      "color": "#b3aca1",
+      "roughness": 0.95
+    },
+    "cushion": {
+      "color": "#7d8a80",
+      "roughness": 0.95
+    },
+    "rug": {
+      "color": "#c9c2b6",
+      "roughness": 1.0
+    },
+    "tv_body": {
+      "color": "#121314",
+      "roughness": 0.4
+    },
+    "tv_screen": {
+      "color": "#050607",
+      "roughness": 0.06
+    },
+    "ctx_cream": {
+      "color": "#e3d6ba",
+      "roughness": 0.95
+    },
+    "ctx_white": {
+      "color": "#ecebe6",
+      "roughness": 0.95
+    },
+    "ctx_yellow": {
+      "color": "#d9bf7e",
+      "roughness": 0.95
+    },
+    "ctx_block": {
+      "color": "#aaa397",
+      "roughness": 1.0
+    },
+    "roof_grey": {
+      "color": "#7c8187",
+      "roughness": 0.6,
+      "metallic": 0.3
+    },
+    "roof_green": {
+      "color": "#3f6b57",
+      "roughness": 0.6,
+      "metallic": 0.2
+    },
+    "curtain": {
+      "color": "#e9e5dc",
+      "roughness": 1.0
+    }
+  },
+  "walls": [
+    {
+      "id": "A_L0_shell",
+      "group": "A",
+      "level": "L0",
+      "z0": 0,
+      "z1": 3.15,
+      "thickness": 0.2,
+      "path": [
+        [
+          0.1,
+          1.1
+        ],
+        [
+          4.55,
+          1.1
+        ],
+        [
+          4.55,
+          10.9
+        ],
+        [
+          0.1,
+          10.9
+        ]
+      ],
+      "closed": true,
+      "faces": {
+        "in": "render_in",
+        "out": "render",
+        "cap": "render"
+      },
+      "segFaces": {
+        "1": {
+          "out": "render_in"
+        }
+      },
+      "plinth": {
+        "height": 0.55,
+        "material": "plinth"
+      },
+      "evidence": "photo:front",
+      "note": "Front and left side seen in the front photo; back wall position inferred from the side yard length."
+    },
+    {
+      "id": "B_L0_shell",
+      "group": "B",
+      "level": "L0",
+      "z0": 0,
+      "z1": 3.15,
+      "thickness": 0.2,
+      "path": [
+        [
+          4.55,
+          1.1
+        ],
+        [
+          8.1,
+          1.1
+        ],
+        [
+          8.1,
+          10.9
+        ],
+        [
+          4.55,
+          10.9
+        ]
+      ],
+      "faces": {
+        "in": "render_in",
+        "out": "render",
+        "cap": "render"
+      },
+      "plinth": {
+        "height": 0.55,
+        "material": "plinth"
+      },
+      "evidence": "photo:front",
+      "note": "Front partly seen behind the divider wall; sides and back inferred as a near-mirror of unit A."
+    },
+    {
+      "id": "A_L1_shell",
+      "group": "A",
+      "level": "L1",
+      "z0": 3.15,
+      "z1": 7.05,
+      "thickness": 0.2,
+      "path": [
+        [
+          4.55,
+          10.9
+        ],
+        [
+          0.1,
+          10.9
+        ],
+        [
+          0.1,
+          0.1
+        ],
+        [
+          4.55,
+          0.1
+        ]
+      ],
+      "closed": false,
+      "faces": {
+        "in": "render_in",
+        "out": "render",
+        "cap": "soffit"
+      },
+      "segFaces": {
+        "2": {
+          "out": "cladding",
+          "top": "cladding"
+        }
+      },
+      "evidence": "photo:front",
+      "note": "Cladded front box overhangs the ground floor by 1 m; the white left side is visible in the front photo."
+    },
+    {
+      "id": "B_L1_shell",
+      "group": "B",
+      "level": "L1",
+      "z0": 3.15,
+      "z1": 7.05,
+      "thickness": 0.2,
+      "path": [
+        [
+          4.55,
+          0.1
+        ],
+        [
+          8.1,
+          0.1
+        ],
+        [
+          8.1,
+          10.9
+        ],
+        [
+          4.55,
+          10.9
+        ]
+      ],
+      "closed": false,
+      "faces": {
+        "in": "render_in",
+        "out": "render",
+        "cap": "soffit"
+      },
+      "segFaces": {
+        "0": {
+          "out": "cladding",
+          "top": "cladding"
+        }
+      },
+      "evidence": "photo:front",
+      "note": "Unit B's upper floor, seen from the front only."
+    },
+    {
+      "id": "A_L1_party",
+      "group": "A",
+      "level": "L1",
+      "z0": 3.5,
+      "z1": 6.45,
+      "thickness": 0.2,
+      "path": [
+        [
+          4.55,
+          0.2
+        ],
+        [
+          4.55,
+          10.8
+        ]
+      ],
+      "faces": {
+        "in": "render_in",
+        "out": "render_in",
+        "cap": "render_in"
+      },
+      "evidence": "inferred",
+      "note": "Party wall between the two units."
+    },
+    {
+      "id": "A_L0_wc",
+      "group": "A",
+      "level": "L0",
+      "z0": 0.15,
+      "z1": 3.15,
+      "thickness": 0.12,
+      "path": [
+        [
+          3.2,
+          10.8
+        ],
+        [
+          3.2,
+          9.1
+        ],
+        [
+          4.45,
+          9.1
+        ]
+      ],
+      "faces": {
+        "in": "render_in",
+        "out": "render_in",
+        "cap": "render_in"
+      },
+      "evidence": "inferred",
+      "note": "Guest WC at the back, beyond the stair (a dark door frame shows there in the stair photo)."
+    },
+    {
+      "id": "A_L1_bed1",
+      "group": "A",
+      "level": "L1",
+      "z0": 3.5,
+      "z1": 6.45,
+      "thickness": 0.12,
+      "path": [
+        [
+          0.2,
+          3.9
+        ],
+        [
+          4.45,
+          3.9
+        ]
+      ],
+      "faces": {
+        "in": "render_in",
+        "out": "render_in",
+        "cap": "render_in"
+      },
+      "evidence": "photo:doors",
+      "note": "Bedroom wall with the en-suite door and landing door side by side, as in the doors photo."
+    },
+    {
+      "id": "A_L1_baths",
+      "group": "A",
+      "level": "L1",
+      "z0": 3.5,
+      "z1": 6.45,
+      "thickness": 0.12,
+      "path": [
+        [
+          2.15,
+          3.96
+        ],
+        [
+          2.15,
+          7.6
+        ]
+      ],
+      "faces": {
+        "in": "render_in",
+        "out": "render_in",
+        "cap": "render_in"
+      },
+      "evidence": "inferred"
+    },
+    {
+      "id": "A_L1_bathsplit",
+      "group": "A",
+      "level": "L1",
+      "z0": 3.5,
+      "z1": 6.45,
+      "thickness": 0.12,
+      "path": [
+        [
+          0.2,
+          6.0
+        ],
+        [
+          2.09,
+          6.0
+        ]
+      ],
+      "faces": {
+        "in": "render_in",
+        "out": "render_in",
+        "cap": "render_in"
+      },
+      "evidence": "inferred"
+    },
+    {
+      "id": "A_L1_bed2",
+      "group": "A",
+      "level": "L1",
+      "z0": 3.5,
+      "z1": 6.45,
+      "thickness": 0.12,
+      "path": [
+        [
+          0.2,
+          7.6
+        ],
+        [
+          4.45,
+          7.6
+        ]
+      ],
+      "faces": {
+        "in": "render_in",
+        "out": "render_in",
+        "cap": "render_in"
+      },
+      "evidence": "inferred"
+    },
+    {
+      "id": "site_left",
+      "group": "SITE",
+      "level": "SITE",
+      "z0": 0,
+      "z1": 2.4,
+      "thickness": 0.2,
+      "path": [
+        [
+          -2.5,
+          -6.4
+        ],
+        [
+          -2.5,
+          13.5
+        ],
+        [
+          4.55,
+          13.5
+        ]
+      ],
+      "faces": {
+        "in": "render",
+        "out": "render",
+        "cap": "render"
+      },
+      "plinth": {
+        "height": 0.5,
+        "material": "plinth",
+        "side": "in"
+      },
+      "evidence": "photo:front",
+      "note": "Boundary wall with a dark plinth and electric fence posts along the side yard."
+    },
+    {
+      "id": "site_front",
+      "group": "SITE",
+      "level": "SITE",
+      "z0": 0,
+      "z1": 2.2,
+      "thickness": 0.2,
+      "path": [
+        [
+          -2.5,
+          -6.4
+        ],
+        [
+          8.1,
+          -6.4
+        ],
+        [
+          8.1,
+          1.0
+        ]
+      ],
+      "faces": {
+        "in": "render",
+        "out": "render",
+        "cap": "render"
+      },
+      "plinth": {
+        "height": 0.5,
+        "material": "plinth"
+      },
+      "evidence": "photo:bedroom",
+      "note": "Front wall and sliding gate seen from the bedroom glazing."
+    },
+    {
+      "id": "site_divider",
+      "group": "SITE",
+      "level": "SITE",
+      "z0": 0,
+      "z1": 2.0,
+      "thickness": 0.2,
+      "path": [
+        [
+          4.55,
+          -6.3
+        ],
+        [
+          4.55,
+          1.0
+        ]
+      ],
+      "faces": {
+        "in": "render",
+        "out": "render",
+        "cap": "render"
+      },
+      "plinth": {
+        "height": 0.5,
+        "material": "plinth",
+        "side": "both"
+      },
+      "evidence": "photo:front",
+      "note": "Divider between the two front yards, with a planting bed along its base."
+    },
+    {
+      "id": "site_back_b",
+      "group": "SITE",
+      "level": "SITE",
+      "z0": 0,
+      "z1": 2.4,
+      "thickness": 0.2,
+      "path": [
+        [
+          4.55,
+          13.5
+        ],
+        [
+          10.7,
+          13.5
+        ],
+        [
+          10.7,
+          -6.4
+        ],
+        [
+          8.1,
+          -6.4
+        ]
+      ],
+      "faces": {
+        "in": "render",
+        "out": "render",
+        "cap": "render"
+      },
+      "plinth": {
+        "height": 0.5,
+        "material": "plinth",
+        "side": "both"
+      },
+      "evidence": "inferred"
+    }
+  ],
+  "openings": [
+    {
+      "id": "A_entrance",
+      "wall": "A_L0_shell",
+      "center": [
+        0.88,
+        1.1
+      ],
+      "width": 1.32,
+      "sill": 0,
+      "height": 2.35,
+      "kind": "door",
+      "leaf": "double",
+      "evidence": "photo:front"
+    },
+    {
+      "id": "A_sidelight",
+      "wall": "A_L0_shell",
+      "center": [
+        1.99,
+        1.1
+      ],
+      "width": 0.5,
+      "sill": 0.1,
+      "height": 2.15,
+      "kind": "window",
+      "grid": [
+        1,
+        1
+      ],
+      "evidence": "photo:front"
+    },
+    {
+      "id": "A_living_front",
+      "wall": "A_L0_shell",
+      "center": [
+        3.67,
+        1.1
+      ],
+      "width": 0.8,
+      "sill": 0.95,
+      "height": 1.9,
+      "kind": "window",
+      "grid": [
+        1,
+        1
+      ],
+      "evidence": "photo:front"
+    },
+    {
+      "id": "A_side_tall",
+      "wall": "A_L0_shell",
+      "center": [
+        0.1,
+        1.75
+      ],
+      "width": 0.5,
+      "sill": 0.3,
+      "height": 1.7,
+      "kind": "window",
+      "grid": [
+        1,
+        1
+      ],
+      "evidence": "photo:front"
+    },
+    {
+      "id": "A_side_living",
+      "wall": "A_L0_shell",
+      "center": [
+        0.1,
+        4.6
+      ],
+      "width": 1.2,
+      "sill": 0.9,
+      "height": 1.35,
+      "kind": "window",
+      "grid": [
+        2,
+        1
+      ],
+      "evidence": "photo:front"
+    },
+    {
+      "id": "A_kitchen",
+      "wall": "A_L0_shell",
+      "center": [
+        0.1,
+        8.8
+      ],
+      "width": 1.2,
+      "sill": 1.05,
+      "height": 1.0,
+      "kind": "window",
+      "grid": [
+        2,
+        1
+      ],
+      "evidence": "inferred"
+    },
+    {
+      "id": "A_back_door",
+      "wall": "A_L0_shell",
+      "center": [
+        2.3,
+        10.9
+      ],
+      "width": 0.9,
+      "sill": 0,
+      "height": 2.2,
+      "kind": "door",
+      "leaf": "single",
+      "evidence": "inferred"
+    },
+    {
+      "id": "A_wc_door",
+      "wall": "A_L0_wc",
+      "center": [
+        3.8,
+        9.1
+      ],
+      "width": 0.75,
+      "sill": 0,
+      "height": 2.1,
+      "kind": "door",
+      "leaf": "single",
+      "evidence": "inferred"
+    },
+    {
+      "id": "B_living_front",
+      "wall": "B_L0_shell",
+      "center": [
+        5.05,
+        1.1
+      ],
+      "width": 0.7,
+      "sill": 0.95,
+      "height": 1.9,
+      "kind": "window",
+      "grid": [
+        1,
+        1
+      ],
+      "evidence": "photo:front"
+    },
+    {
+      "id": "B_entrance",
+      "wall": "B_L0_shell",
+      "center": [
+        7.05,
+        1.1
+      ],
+      "width": 1.0,
+      "sill": 0,
+      "height": 2.35,
+      "kind": "door",
+      "leaf": "closed",
+      "evidence": "inferred"
+    },
+    {
+      "id": "B_sidelight",
+      "wall": "B_L0_shell",
+      "center": [
+        7.75,
+        1.1
+      ],
+      "width": 0.3,
+      "sill": 0.2,
+      "height": 1.95,
+      "kind": "window",
+      "grid": [
+        1,
+        1
+      ],
+      "evidence": "inferred"
+    },
+    {
+      "id": "B_side_living",
+      "wall": "B_L0_shell",
+      "center": [
+        8.1,
+        4.6
+      ],
+      "width": 1.2,
+      "sill": 0.9,
+      "height": 1.35,
+      "kind": "window",
+      "grid": [
+        2,
+        1
+      ],
+      "evidence": "inferred"
+    },
+    {
+      "id": "A_band",
+      "wall": "A_L1_shell",
+      "center": [
+        2.45,
+        0.1
+      ],
+      "width": 3.9,
+      "sill": 0.05,
+      "height": 2.45,
+      "kind": "glazing",
+      "grid": [
+        5,
+        2
+      ],
+      "rowSplit": 0.42,
+      "sashes": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "evidence": "photo:front",
+      "note": "Two top sashes in columns 2 and 4, as photographed from outside and from the bedroom."
+    },
+    {
+      "id": "B_band",
+      "wall": "B_L1_shell",
+      "center": [
+        6.3,
+        0.1
+      ],
+      "width": 3.2,
+      "sill": 0.05,
+      "height": 2.45,
+      "kind": "glazing",
+      "grid": [
+        5,
+        2
+      ],
+      "rowSplit": 0.42,
+      "sashes": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "evidence": "photo:front"
+    },
+    {
+      "id": "A_bed1_side",
+      "wall": "A_L1_shell",
+      "center": [
+        0.1,
+        1.85
+      ],
+      "width": 2.4,
+      "sill": 0.85,
+      "height": 1.5,
+      "kind": "window",
+      "grid": [
+        4,
+        1
+      ],
+      "evidence": "photo:bedroom",
+      "note": "Four-panel sliding window seen inside the bedroom and from the side yard."
+    },
+    {
+      "id": "A_ensuite_side",
+      "wall": "A_L1_shell",
+      "center": [
+        0.1,
+        5.0
+      ],
+      "width": 0.6,
+      "sill": 1.55,
+      "height": 0.6,
+      "kind": "window",
+      "grid": [
+        1,
+        1
+      ],
+      "evidence": "photo:doors",
+      "note": "The en-suite mirror reflects a small window."
+    },
+    {
+      "id": "A_bath_side",
+      "wall": "A_L1_shell",
+      "center": [
+        0.1,
+        6.8
+      ],
+      "width": 0.6,
+      "sill": 1.55,
+      "height": 0.6,
+      "kind": "window",
+      "grid": [
+        1,
+        1
+      ],
+      "evidence": "inferred"
+    },
+    {
+      "id": "A_bed2_side",
+      "wall": "A_L1_shell",
+      "center": [
+        0.1,
+        9.2
+      ],
+      "width": 1.4,
+      "sill": 0.9,
+      "height": 1.4,
+      "kind": "window",
+      "grid": [
+        2,
+        1
+      ],
+      "evidence": "photo:front",
+      "note": "A window further back on the side wall shows in the front photo; size inferred."
+    },
+    {
+      "id": "A_bed2_back",
+      "wall": "A_L1_shell",
+      "center": [
+        2.3,
+        10.9
+      ],
+      "width": 1.8,
+      "sill": 0.9,
+      "height": 1.5,
+      "kind": "window",
+      "grid": [
+        3,
+        1
+      ],
+      "evidence": "inferred"
+    },
+    {
+      "id": "B_bed1_side",
+      "wall": "B_L1_shell",
+      "center": [
+        8.1,
+        1.85
+      ],
+      "width": 2.4,
+      "sill": 0.85,
+      "height": 1.5,
+      "kind": "window",
+      "grid": [
+        4,
+        1
+      ],
+      "evidence": "inferred"
+    },
+    {
+      "id": "B_bed2_back",
+      "wall": "B_L1_shell",
+      "center": [
+        6.3,
+        10.9
+      ],
+      "width": 1.8,
+      "sill": 0.9,
+      "height": 1.5,
+      "kind": "window",
+      "grid": [
+        3,
+        1
+      ],
+      "evidence": "inferred"
+    },
+    {
+      "id": "A_ensuite_door",
+      "wall": "A_L1_bed1",
+      "center": [
+        1.15,
+        3.9
+      ],
+      "width": 0.8,
+      "sill": 0,
+      "height": 2.15,
+      "kind": "door",
+      "leaf": "single",
+      "evidence": "photo:doors"
+    },
+    {
+      "id": "A_bed1_door",
+      "wall": "A_L1_bed1",
+      "center": [
+        2.8,
+        3.9
+      ],
+      "width": 0.85,
+      "sill": 0,
+      "height": 2.15,
+      "kind": "door",
+      "leaf": "single",
+      "evidence": "photo:doors"
+    },
+    {
+      "id": "A_bath_door",
+      "wall": "A_L1_baths",
+      "center": [
+        2.15,
+        6.8
+      ],
+      "width": 0.75,
+      "sill": 0,
+      "height": 2.1,
+      "kind": "door",
+      "leaf": "single",
+      "evidence": "inferred"
+    },
+    {
+      "id": "A_bed2_door",
+      "wall": "A_L1_bed2",
+      "center": [
+        2.8,
+        7.6
+      ],
+      "width": 0.85,
+      "sill": 0,
+      "height": 2.15,
+      "kind": "door",
+      "leaf": "single",
+      "evidence": "inferred"
+    },
+    {
+      "id": "gate",
+      "wall": "site_front",
+      "center": [
+        1.6,
+        -6.4
+      ],
+      "width": 3.6,
+      "sill": 0,
+      "height": 2.2,
+      "kind": "gate",
+      "evidence": "photo:bedroom",
+      "note": "Sliding gate with horizontal slats, seen from the bedroom."
+    }
+  ],
+  "slabs": [
+    {
+      "id": "A_L0_floor",
+      "group": "A",
+      "level": "L0",
+      "z0": 0,
+      "z1": 0.15,
+      "rects": [
+        [
+          0.0,
+          1.0,
+          4.55,
+          11.0
+        ]
+      ],
+      "material": "concrete",
+      "evidence": "photo:front"
+    },
+    {
+      "id": "B_L0_floor",
+      "group": "B",
+      "level": "L0",
+      "z0": 0,
+      "z1": 0.15,
+      "rects": [
+        [
+          4.55,
+          1.0,
+          8.2,
+          11.0
+        ]
+      ],
+      "material": "concrete",
+      "evidence": "inferred"
+    },
+    {
+      "id": "A_L1_floor",
+      "group": "A",
+      "level": "L1",
+      "z0": 3.15,
+      "z1": 3.5,
+      "rects": [
+        [
+          0.2,
+          0.2,
+          4.45,
+          3.9
+        ],
+        [
+          0.2,
+          3.9,
+          3.45,
+          6.55
+        ],
+        [
+          0.2,
+          6.55,
+          4.45,
+          10.8
+        ]
+      ],
+      "material": "soffit",
+      "evidence": "photo:stair",
+      "note": "Opening over the stair, edged by the black bar balustrade."
+    },
+    {
+      "id": "B_L1_floor",
+      "group": "B",
+      "level": "L1",
+      "z0": 3.15,
+      "z1": 3.5,
+      "rects": [
+        [
+          4.65,
+          0.2,
+          7.999999999999999,
+          10.8
+        ]
+      ],
+      "material": "soffit",
+      "evidence": "inferred"
+    },
+    {
+      "id": "A_roof",
+      "group": "A",
+      "level": "ROOF",
+      "z0": 6.45,
+      "z1": 6.7,
+      "rects": [
+        [
+          0.2,
+          0.2,
+          4.55,
+          10.8
+        ]
+      ],
+      "material": "membrane",
+      "evidence": "inferred"
+    },
+    {
+      "id": "B_roof",
+      "group": "B",
+      "level": "ROOF",
+      "z0": 6.45,
+      "z1": 6.7,
+      "rects": [
+        [
+          4.55,
+          0.2,
+          7.999999999999999,
+          10.8
+        ]
+      ],
+      "material": "membrane",
+      "evidence": "inferred"
+    },
+    {
+      "id": "entrance_step",
+      "group": "SITE",
+      "level": "SITE",
+      "z0": 0,
+      "z1": 0.15,
+      "rects": [
+        [
+          0.0,
+          0.55,
+          2.2,
+          1.0
+        ]
+      ],
+      "material": "concrete",
+      "evidence": "photo:front"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "living",
+      "name": "Living room",
+      "level": "L0",
+      "rect": [
+        0.2,
+        1.2,
+        3.45,
+        5.4
+      ],
+      "floor": "marble",
+      "evidence": "photo:stair",
+      "note": "Open plan with the TV wall; marble-look tile as in the stair photo."
+    },
+    {
+      "id": "dining",
+      "name": "Dining",
+      "level": "L0",
+      "rect": [
+        0.2,
+        5.4,
+        3.45,
+        7.2
+      ],
+      "floor": "marble",
+      "evidence": "photo:stair"
+    },
+    {
+      "id": "kitchen",
+      "name": "Kitchen",
+      "level": "L0",
+      "rect": [
+        0.2,
+        7.2,
+        3.2,
+        10.8
+      ],
+      "floor": "marble",
+      "evidence": "photo:stair",
+      "note": "Grey cabinets, black worktop and dark marble splashback."
+    },
+    {
+      "id": "stair_hall",
+      "name": "Stair and hallway",
+      "level": "L0",
+      "rect": [
+        3.45,
+        1.2,
+        4.45,
+        9.1
+      ],
+      "floor": "marble",
+      "evidence": "photo:stair"
+    },
+    {
+      "id": "guest_wc",
+      "name": "Guest WC",
+      "level": "L0",
+      "rect": [
+        3.26,
+        9.16,
+        4.45,
+        10.8
+      ],
+      "floor": "wall_tile",
+      "evidence": "inferred"
+    },
+    {
+      "id": "bed1",
+      "name": "Bedroom 1",
+      "level": "L1",
+      "rect": [
+        0.2,
+        0.2,
+        4.45,
+        3.84
+      ],
+      "floor": "marble",
+      "evidence": "photo:bedroom",
+      "note": "Front bedroom with the full-height glazing band and the side sliding window."
+    },
+    {
+      "id": "ensuite",
+      "name": "En-suite",
+      "level": "L1",
+      "rect": [
+        0.2,
+        3.96,
+        2.09,
+        5.94
+      ],
+      "floor": "timber_floor",
+      "evidence": "photo:doors"
+    },
+    {
+      "id": "bath2",
+      "name": "Bathroom",
+      "level": "L1",
+      "rect": [
+        0.2,
+        6.06,
+        2.09,
+        7.54
+      ],
+      "floor": "timber_floor",
+      "evidence": "inferred"
+    },
+    {
+      "id": "landing",
+      "name": "Landing",
+      "level": "L1",
+      "rect": [
+        2.21,
+        3.96,
+        4.45,
+        7.54
+      ],
+      "floor": "timber_floor",
+      "evidence": "photo:doors",
+      "note": "Timber-look floor seen through the landing door."
+    },
+    {
+      "id": "bed2",
+      "name": "Bedroom 2",
+      "level": "L1",
+      "rect": [
+        0.2,
+        7.66,
+        4.45,
+        10.8
+      ],
+      "floor": "marble",
+      "evidence": "inferred"
+    }
+  ],
+  "stairs": [
+    {
+      "id": "A_stair",
+      "group": "A",
+      "level": "L0",
+      "x0": 3.45,
+      "x1": 4.45,
+      "y0": 2.3,
+      "dir": "+y",
+      "risers": 18,
+      "going": 0.235,
+      "treadThickness": 0.05,
+      "tread": "stair_timber",
+      "stringer": "steel",
+      "rail": {
+        "side": "x0",
+        "height": 0.95,
+        "spacing": 0.12,
+        "material": "steel"
+      },
+      "evidence": "photo:stair"
+    }
+  ],
+  "balustrades": [
+    {
+      "id": "A_void_rail",
+      "group": "A",
+      "level": "L1",
+      "from": [
+        3.45,
+        3.96
+      ],
+      "to": [
+        3.45,
+        6.55
+      ],
+      "height": 0.95,
+      "spacing": 0.12,
+      "material": "steel",
+      "evidence": "photo:doors"
+    }
+  ],
+  "boxes": [
+    {
+      "id": "A_pier",
+      "group": "A",
+      "level": "L0",
+      "min": [
+        2.24,
+        0.92,
+        0
+      ],
+      "max": [
+        3.09,
+        1.0,
+        3.15
+      ],
+      "material": "cladding",
+      "role": "facade",
+      "evidence": "photo:front"
+    },
+    {
+      "id": "B_pier",
+      "group": "B",
+      "level": "L0",
+      "min": [
+        5.6,
+        0.92,
+        0
+      ],
+      "max": [
+        6.3,
+        1.0,
+        3.15
+      ],
+      "material": "cladding",
+      "role": "facade",
+      "evidence": "photo:front"
+    },
+    {
+      "id": "A_ac1",
+      "group": "A",
+      "level": "L0",
+      "min": [
+        -0.42,
+        2.9,
+        0.75
+      ],
+      "max": [
+        -0.0,
+        3.7,
+        1.35
+      ],
+      "material": "ac",
+      "role": "facade",
+      "evidence": "photo:front"
+    },
+    {
+      "id": "A_ac2",
+      "group": "A",
+      "level": "L0",
+      "min": [
+        -0.42,
+        6.0,
+        2.3
+      ],
+      "max": [
+        -0.0,
+        6.8,
+        2.9
+      ],
+      "material": "ac",
+      "role": "facade",
+      "evidence": "photo:front"
+    },
+    {
+      "id": "A_ac3",
+      "group": "A",
+      "level": "L1",
+      "min": [
+        -0.42,
+        6.0,
+        3.9
+      ],
+      "max": [
+        -0.0,
+        6.8,
+        4.5
+      ],
+      "material": "ac",
+      "role": "facade",
+      "evidence": "photo:front"
+    },
+    {
+      "id": "A_downpipe",
+      "group": "A",
+      "level": "L1",
+      "min": [
+        -0.1,
+        3.95,
+        0.15
+      ],
+      "max": [
+        0.0,
+        4.05,
+        6.9
+      ],
+      "material": "render_in",
+      "role": "facade",
+      "evidence": "photo:front"
+    },
+    {
+      "id": "A_kitchen_base",
+      "group": "A",
+      "level": "L0",
+      "min": [
+        0.2,
+        7.3,
+        0.15
+      ],
+      "max": [
+        0.8,
+        10.7,
+        0.99
+      ],
+      "material": "cabinet",
+      "role": "furniture",
+      "evidence": "photo:stair"
+    },
+    {
+      "id": "A_kitchen_top",
+      "group": "A",
+      "level": "L0",
+      "min": [
+        0.2,
+        7.3,
+        0.99
+      ],
+      "max": [
+        0.82,
+        10.7,
+        1.03
+      ],
+      "material": "worktop",
+      "role": "furniture",
+      "evidence": "photo:stair"
+    },
+    {
+      "id": "A_kitchen_splash",
+      "group": "A",
+      "level": "L0",
+      "min": [
+        0.2,
+        7.3,
+        1.03
+      ],
+      "max": [
+        0.22,
+        10.7,
+        1.55
+      ],
+      "material": "splash",
+      "role": "furniture",
+      "evidence": "photo:stair"
+    },
+    {
+      "id": "A_kitchen_upper1",
+      "group": "A",
+      "level": "L0",
+      "min": [
+        0.2,
+        7.3,
+        1.55
+      ],
+      "max": [
+        0.55,
+        8.15,
+        2.35
+      ],
+      "material": "cabinet",
+      "role": "furniture",
+      "evidence": "photo:stair"
+    },
+    {
+      "id": "A_kitchen_upper2",
+      "group": "A",
+      "level": "L0",
+      "min": [
+        0.2,
+        9.45,
+        1.55
+      ],
+      "max": [
+        0.55,
+        10.7,
+        2.35
+      ],
+      "material": "cabinet",
+      "role": "furniture",
+      "evidence": "photo:stair"
+    },
+    {
+      "id": "A_kitchen_tall",
+      "group": "A",
+      "level": "L0",
+      "min": [
+        0.85,
+        10.1,
+        0.15
+      ],
+      "max": [
+        1.55,
+        10.75,
+        2.35
+      ],
+      "material": "cabinet",
+      "role": "furniture",
+      "evidence": "photo:stair"
+    },
+    {
+      "id": "A_oven",
+      "group": "A",
+      "level": "L0",
+      "min": [
+        0.8,
+        8.5,
+        0.3
+      ],
+      "max": [
+        0.81,
+        9.1,
+        0.88
+      ],
+      "material": "screen",
+      "role": "furniture",
+      "evidence": "photo:stair"
+    },
+    {
+      "id": "A_wc_pan",
+      "group": "A",
+      "level": "L0",
+      "min": [
+        4.0,
+        10.1,
+        0.15
+      ],
+      "max": [
+        4.4,
+        10.75,
+        0.55
+      ],
+      "material": "porcelain",
+      "role": "furniture",
+      "evidence": "inferred"
+    },
+    {
+      "id": "A_wc_basin",
+      "group": "A",
+      "level": "L0",
+      "min": [
+        3.3,
+        10.3,
+        0.8
+      ],
+      "max": [
+        3.75,
+        10.75,
+        0.95
+      ],
+      "material": "porcelain",
+      "role": "furniture",
+      "evidence": "inferred"
+    },
+    {
+      "id": "A_bed1_ac",
+      "group": "A",
+      "level": "L1",
+      "min": [
+        0.2,
+        2.6,
+        6.0
+      ],
+      "max": [
+        0.42,
+        3.5,
+        6.3
+      ],
+      "material": "ac",
+      "role": "furniture",
+      "evidence": "photo:bedroom"
+    },
+    {
+      "id": "A_ensuite_tile",
+      "group": "A",
+      "level": "L1",
+      "min": [
+        0.2,
+        3.96,
+        3.5
+      ],
+      "max": [
+        0.23,
+        5.94,
+        5.8
+      ],
+      "material": "wall_tile",
+      "role": "finish",
+      "evidence": "photo:doors"
+    },
+    {
+      "id": "A_ensuite_basin",
+      "group": "A",
+      "level": "L1",
+      "min": [
+        0.23,
+        4.4,
+        4.3
+      ],
+      "max": [
+        0.7,
+        4.95,
+        4.45
+      ],
+      "material": "porcelain",
+      "role": "furniture",
+      "evidence": "photo:doors"
+    },
+    {
+      "id": "A_ensuite_mirror",
+      "group": "A",
+      "level": "L1",
+      "min": [
+        0.23,
+        4.4,
+        4.7
+      ],
+      "max": [
+        0.25,
+        4.95,
+        5.4
+      ],
+      "material": "glass",
+      "role": "furniture",
+      "evidence": "photo:doors"
+    },
+    {
+      "id": "A_ensuite_wc",
+      "group": "A",
+      "level": "L1",
+      "min": [
+        0.23,
+        5.35,
+        3.5
+      ],
+      "max": [
+        0.85,
+        5.8,
+        3.9
+      ],
+      "material": "porcelain",
+      "role": "furniture",
+      "evidence": "inferred"
+    },
+    {
+      "id": "A_bath2_tile",
+      "group": "A",
+      "level": "L1",
+      "min": [
+        0.2,
+        6.06,
+        3.5
+      ],
+      "max": [
+        0.23,
+        7.54,
+        5.8
+      ],
+      "material": "wall_tile",
+      "role": "finish",
+      "evidence": "inferred"
+    },
+    {
+      "id": "A_bath2_basin",
+      "group": "A",
+      "level": "L1",
+      "min": [
+        0.23,
+        6.3,
+        4.3
+      ],
+      "max": [
+        0.7,
+        6.85,
+        4.45
+      ],
+      "material": "porcelain",
+      "role": "furniture",
+      "evidence": "inferred"
+    },
+    {
+      "id": "bed_front",
+      "group": "SITE",
+      "level": "SITE",
+      "min": [
+        3.8,
+        -2.6,
+        0
+      ],
+      "max": [
+        4.45,
+        0.95,
+        0.12
+      ],
+      "material": "soil",
+      "role": "planting",
+      "evidence": "photo:front"
+    },
+    {
+      "id": "curb_side",
+      "group": "SITE",
+      "level": "SITE",
+      "min": [
+        -0.75,
+        2.4,
+        0
+      ],
+      "max": [
+        -0.65,
+        10.9,
+        0.12
+      ],
+      "material": "concrete",
+      "role": "site",
+      "evidence": "photo:front"
+    },
+    {
+      "id": "grass_bed_side",
+      "group": "SITE",
+      "level": "SITE",
+      "min": [
+        -0.65,
+        2.4,
+        0
+      ],
+      "max": [
+        0.0,
+        10.9,
+        0.08
+      ],
+      "material": "grass",
+      "role": "planting",
+      "evidence": "photo:front"
+    },
+    {
+      "id": "grass_bound_side",
+      "group": "SITE",
+      "level": "SITE",
+      "min": [
+        -2.4,
+        2.4,
+        0
+      ],
+      "max": [
+        -1.75,
+        13.4,
+        0.08
+      ],
+      "material": "grass",
+      "role": "planting",
+      "evidence": "photo:front"
+    },
+    {
+      "id": "curb_bound",
+      "group": "SITE",
+      "level": "SITE",
+      "min": [
+        -1.75,
+        2.4,
+        0
+      ],
+      "max": [
+        -1.65,
+        13.4,
+        0.12
+      ],
+      "material": "concrete",
+      "role": "site",
+      "evidence": "photo:front"
+    }
+  ],
+  "plants": [],
+  "fence": {
+    "wall": "site_left",
+    "posts": 0.6,
+    "height": 0.6,
+    "spacing": 2.5,
+    "evidence": "photo:front"
+  },
+  "site": {
+    "ground": [
+      -30,
+      -30,
+      30,
+      35
+    ],
+    "groundMaterial": "laterite",
+    "paving": [
+      [
+        -2.4,
+        -6.3,
+        4.45,
+        1.0
+      ],
+      [
+        -1.65,
+        1.0,
+        -0.75,
+        13.4
+      ],
+      [
+        -2.4,
+        1.0,
+        0.0,
+        2.4
+      ],
+      [
+        -1.65,
+        10.9,
+        4.45,
+        13.4
+      ],
+      [
+        4.65,
+        -6.3,
+        10.6,
+        1.0
+      ]
+    ],
+    "pavingMaterial": "pavers",
+    "evidence": "photo:front"
+  },
+  "context": [
+    {
+      "id": "neighbour_red",
+      "min": [
+        -11,
+        15.5,
+        0
+      ],
+      "max": [
+        -3.5,
+        22,
+        3.0
+      ],
+      "roof": {
+        "height": 1.6,
+        "material": "roof_red",
+        "ridge": "x"
+      },
+      "material": "render",
+      "evidence": "photo:front"
+    },
+    {
+      "id": "neighbour_block",
+      "min": [
+        11.5,
+        2,
+        0
+      ],
+      "max": [
+        18,
+        11,
+        5.6
+      ],
+      "material": "block",
+      "evidence": "photo:front"
+    }
+  ],
+  "cameras": [
+    {
+      "id": "front",
+      "photo": "front",
+      "pos": [
+        -1.7,
+        -6.0,
+        1.55
+      ],
+      "target": [
+        3.6,
+        1.9,
+        2.75
+      ],
+      "lensMm": 20,
+      "evidence": "photo:front"
+    },
+    {
+      "id": "bedroom",
+      "photo": "bedroom",
+      "pos": [
+        2.7,
+        3.55,
+        4.9
+      ],
+      "target": [
+        0.5,
+        0.4,
+        4.6
+      ],
+      "lensMm": 16,
+      "evidence": "photo:bedroom"
+    },
+    {
+      "id": "doors",
+      "photo": "doors",
+      "pos": [
+        1.9,
+        0.6,
+        4.75
+      ],
+      "target": [
+        1.9,
+        3.9,
+        4.5
+      ],
+      "lensMm": 18,
+      "evidence": "photo:doors"
+    },
+    {
+      "id": "stair",
+      "photo": "stair",
+      "pos": [
+        3.75,
+        2.7,
+        2.2
+      ],
+      "target": [
+        3.95,
+        6.6,
+        3.3
+      ],
+      "lensMm": 16,
+      "evidence": "photo:stair"
+    }
+  ],
+  "walk": {
+    "start": {
+      "pos": [
+        1.0,
+        -4.5
+      ],
+      "facing": [
+        0,
+        1
+      ]
+    },
+    "exclude": [
+      {
+        "level": "L1",
+        "rect": [
+          3.4,
+          3.9,
+          4.5,
+          6.55
+        ],
+        "why": "Stair opening"
+      }
+    ],
+    "outdoor": [
+      [
+        -2.4,
+        -6.3,
+        4.45,
+        1.0
+      ],
+      [
+        -1.65,
+        1.0,
+        -0.75,
+        13.4
+      ],
+      [
+        -2.4,
+        1.0,
+        0.0,
+        2.4
+      ],
+      [
+        -1.65,
+        10.9,
+        4.45,
+        13.4
+      ]
+    ],
+    "stair": {
+      "bottomZone": [
+        3.5,
+        1.6,
+        4.4,
+        2.35
+      ],
+      "topZone": [
+        3.5,
+        6.55,
+        4.4,
+        6.95
+      ],
+      "bottomPose": {
+        "pos": [
+          3.95,
+          1.7
+        ],
+        "facing": [
+          0,
+          -1
+        ]
+      },
+      "topPose": {
+        "pos": [
+          2.8,
+          7.15
+        ],
+        "facing": [
+          0,
+          -1
+        ]
+      }
+    }
+  },
+  "skirting": {
+    "material": "skirting_tile",
+    "height": 0.08
+  },
+  "downlights": {
+    "material": "downlight",
+    "spacing": 1.7,
+    "watts": 5,
+    "color": "#fff4e6"
+  },
+  "sky": {
+    "hdri": "kloofendal_48d_partly_cloudy_puresky",
+    "rotation": 0,
+    "strength": 1.0,
+    "exposure": 0.6
+  },
+  "furniture": [
+    {
+      "id": "sofa",
+      "kind": "sofa",
+      "level": "L0",
+      "at": [
+        2.85,
+        3.1
+      ],
+      "size": [
+        2.1,
+        0.9
+      ],
+      "rot": -90,
+      "material": "sofa_fabric",
+      "cushion": "cushion",
+      "evidence": "inferred"
+    },
+    {
+      "id": "tv",
+      "kind": "tv",
+      "level": "L0",
+      "at": [
+        0.235,
+        3.1
+      ],
+      "size": [
+        1.4,
+        0.04
+      ],
+      "rot": 90,
+      "z": 1.05,
+      "evidence": "photo:stair"
+    },
+    {
+      "id": "rug",
+      "kind": "rug",
+      "level": "L0",
+      "at": [
+        1.6,
+        3.1
+      ],
+      "size": [
+        1.5,
+        2.2
+      ],
+      "material": "rug",
+      "evidence": "inferred"
+    },
+    {
+      "id": "bed1",
+      "kind": "bed",
+      "level": "L1",
+      "at": [
+        3.4,
+        1.9
+      ],
+      "size": [
+        1.6,
+        2.0
+      ],
+      "rot": -90,
+      "headboard": "sofa_fabric",
+      "throw": "cushion",
+      "evidence": "inferred"
+    },
+    {
+      "id": "bed2",
+      "kind": "bed",
+      "level": "L1",
+      "at": [
+        3.4,
+        9.3
+      ],
+      "size": [
+        1.5,
+        2.0
+      ],
+      "rot": -90,
+      "headboard": "sofa_fabric",
+      "throw": "cushion",
+      "evidence": "inferred"
+    },
+    {
+      "id": "rug_bed1",
+      "kind": "rug",
+      "level": "L1",
+      "at": [
+        2.2,
+        1.9
+      ],
+      "size": [
+        1.4,
+        2.2
+      ],
+      "material": "rug",
+      "evidence": "inferred"
+    },
+    {
+      "id": "rug_bed2",
+      "kind": "rug",
+      "level": "L1",
+      "at": [
+        2.2,
+        9.3
+      ],
+      "size": [
+        1.4,
+        2.2
+      ],
+      "material": "rug",
+      "evidence": "inferred"
+    },
+    {
+      "id": "curtain_bed1",
+      "kind": "curtain",
+      "level": "L1",
+      "at": [
+        0.36,
+        3.45
+      ],
+      "size": [
+        0.6,
+        0.06
+      ],
+      "rot": 90,
+      "height": 2.7,
+      "material": "curtain",
+      "evidence": "inferred"
+    },
+    {
+      "id": "curtain_bed2",
+      "kind": "curtain",
+      "level": "L1",
+      "at": [
+        3.6,
+        10.72
+      ],
+      "size": [
+        0.6,
+        0.06
+      ],
+      "height": 2.7,
+      "material": "curtain",
+      "evidence": "inferred"
+    }
+  ],
+  "props": [
+    {
+      "id": "console",
+      "model": "modern_wooden_cabinet",
+      "group": "A",
+      "level": "L0",
+      "at": [
+        0.48,
+        3.1
+      ],
+      "rot": 90,
+      "evidence": "photo:stair"
+    },
+    {
+      "id": "coffee",
+      "model": "modern_coffee_table_01",
+      "group": "A",
+      "level": "L0",
+      "at": [
+        1.6,
+        3.1
+      ],
+      "rot": 90,
+      "evidence": "inferred",
+      "scale": 0.55
+    },
+    {
+      "id": "dining",
+      "model": "wooden_table_02",
+      "group": "A",
+      "level": "L0",
+      "at": [
+        1.8,
+        6.3
+      ],
+      "rot": 90,
+      "evidence": "photo:stair"
+    },
+    {
+      "id": "chair1",
+      "model": "dining_chair_02",
+      "group": "A",
+      "level": "L0",
+      "at": [
+        1.15,
+        5.95
+      ],
+      "rot": -90,
+      "tint": "#d8d0c2",
+      "evidence": "photo:stair"
+    },
+    {
+      "id": "chair2",
+      "model": "dining_chair_02",
+      "group": "A",
+      "level": "L0",
+      "at": [
+        1.15,
+        6.65
+      ],
+      "rot": -90,
+      "tint": "#d8d0c2",
+      "evidence": "photo:stair"
+    },
+    {
+      "id": "chair3",
+      "model": "dining_chair_02",
+      "group": "A",
+      "level": "L0",
+      "at": [
+        2.45,
+        5.95
+      ],
+      "rot": 90,
+      "tint": "#d8d0c2",
+      "evidence": "photo:stair"
+    },
+    {
+      "id": "chair4",
+      "model": "dining_chair_02",
+      "group": "A",
+      "level": "L0",
+      "at": [
+        2.45,
+        6.65
+      ],
+      "rot": 90,
+      "tint": "#d8d0c2",
+      "evidence": "photo:stair"
+    },
+    {
+      "id": "plant_living",
+      "model": "potted_plant_02",
+      "group": "A",
+      "level": "L0",
+      "at": [
+        0.55,
+        1.6
+      ],
+      "evidence": "inferred"
+    },
+    {
+      "id": "armchair",
+      "model": "modern_arm_chair_01",
+      "group": "A",
+      "level": "L1",
+      "at": [
+        0.9,
+        3.2
+      ],
+      "rot": 150,
+      "evidence": "inferred"
+    },
+    {
+      "id": "night1",
+      "model": "side_table_01",
+      "group": "A",
+      "level": "L1",
+      "at": [
+        4.1,
+        0.75
+      ],
+      "evidence": "inferred"
+    },
+    {
+      "id": "plant_bed",
+      "model": "potted_plant_04",
+      "group": "A",
+      "level": "L1",
+      "at": [
+        4.1,
+        0.75
+      ],
+      "z": 4.05,
+      "evidence": "inferred"
+    },
+    {
+      "id": "yardplant1",
+      "model": "potted_plant_02",
+      "group": "SITE",
+      "at": [
+        4.1,
+        -2.1
+      ],
+      "z": 0.1,
+      "scale": 1.3,
+      "evidence": "photo:front"
+    },
+    {
+      "id": "yardplant2",
+      "model": "potted_plant_04",
+      "group": "SITE",
+      "at": [
+        4.1,
+        -0.9
+      ],
+      "z": 0.1,
+      "scale": 2.0,
+      "evidence": "photo:front"
+    },
+    {
+      "id": "yardplant3",
+      "model": "potted_plant_02",
+      "group": "SITE",
+      "at": [
+        4.1,
+        0.3
+      ],
+      "z": 0.1,
+      "scale": 1.1,
+      "rot": 120,
+      "evidence": "photo:front"
+    },
+    {
+      "id": "night2",
+      "model": "side_table_01",
+      "group": "A",
+      "level": "L1",
+      "at": [
+        4.1,
+        3.05
+      ],
+      "evidence": "inferred"
+    },
+    {
+      "id": "plant_land",
+      "model": "potted_plant_02",
+      "group": "A",
+      "level": "L1",
+      "at": [
+        4.1,
+        7.2
+      ],
+      "evidence": "inferred"
+    },
+    {
+      "id": "night3",
+      "model": "side_table_01",
+      "group": "A",
+      "level": "L1",
+      "at": [
+        4.1,
+        8.15
+      ],
+      "evidence": "inferred"
+    }
+  ],
+  "tour": [
+    {
+      "id": "yard",
+      "name": "Front yard",
+      "level": "L0",
+      "pos": [
+        1.0,
+        -3.2
+      ],
+      "links": [
+        "living"
+      ],
+      "start": true
+    },
+    {
+      "id": "living",
+      "name": "Living room",
+      "level": "L0",
+      "pos": [
+        1.7,
+        2.3
+      ],
+      "links": [
+        "yard",
+        "dining",
+        "landing"
+      ],
+      "look": 0
+    },
+    {
+      "id": "dining",
+      "name": "Dining",
+      "level": "L0",
+      "pos": [
+        3.0,
+        7.9
+      ],
+      "links": [
+        "living",
+        "kitchen"
+      ]
+    },
+    {
+      "id": "kitchen",
+      "name": "Kitchen",
+      "level": "L0",
+      "pos": [
+        1.9,
+        9.0
+      ],
+      "links": [
+        "dining"
+      ]
+    },
+    {
+      "id": "landing",
+      "name": "Landing",
+      "level": "L1",
+      "pos": [
+        2.9,
+        7.0
+      ],
+      "links": [
+        "living",
+        "bed1",
+        "bed2"
+      ],
+      "look": 180
+    },
+    {
+      "id": "bed1",
+      "name": "Bedroom 1",
+      "level": "L1",
+      "pos": [
+        1.6,
+        2.3
+      ],
+      "links": [
+        "landing"
+      ]
+    },
+    {
+      "id": "bed2",
+      "name": "Bedroom 2",
+      "level": "L1",
+      "pos": [
+        1.6,
+        9.2
+      ],
+      "links": [
+        "landing"
+      ]
+    }
+  ],
+  "neighbourhood": {
+    "seed": 5,
+    "lot": 17,
+    "rings": 4,
+    "trees": 12,
+    "wallMaterials": [
+      "ctx_cream",
+      "ctx_white",
+      "ctx_yellow",
+      "ctx_block",
+      "ctx_white"
+    ],
+    "roofMaterials": [
+      "roof_red",
+      "roof_grey",
+      "roof_green",
+      "roof_red"
+    ]
+  }
+}
