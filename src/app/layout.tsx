@@ -80,13 +80,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en-GH"
       data-theme="light"
-      className={`${manrope.variable} ${fraunces.variable} ${cormorant.variable} ${plex.variable} h-full antialiased`}
+      className={`${manrope.variable} ${fraunces.variable} ${cormorant.variable} ${plex.variable} antialiased`}
       suppressHydrationWarning
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className="flex min-h-full flex-col bg-background text-foreground">
+      <body className="flex min-h-dvh flex-col bg-background text-foreground">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd).replace(/</g, "\\u003c") }}
