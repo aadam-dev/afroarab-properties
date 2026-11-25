@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { HouseModel } from "@/data/houses";
 import { whatsappHref } from "@/data/site";
 import { houseWalkInput, useHouseStore, type HouseMode } from "@/store/useHouseStore";
@@ -123,7 +123,9 @@ export function HouseExplorer({ house, projectName }: { house: HouseModel; proje
   const [fullscreen, setFullscreen] = useState(false);
 
   const hasTour = Boolean(house.tour && meta.tour.length);
-  useEffect(() => {
+  // Layout effect: runs before the model's own effect marks it ready, so a cached
+  // model on a return visit doesn't leave the loading label stuck on screen.
+  useLayoutEffect(() => {
     reset(hasTour ? "tour" : "outside");
     return () => reset();
   }, [reset, hasTour]);

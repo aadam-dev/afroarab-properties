@@ -45,7 +45,8 @@ export const useHouseStore = create<State>((set, get) => ({
     if (get().mode === mode) return;
     set({ mode, photoId: null, roomId: mode === "walk" ? null : get().roomId, cameraRequest: { kind: "home", nonce: ++nonce } });
   },
-  setLevel: (level) => set({ level, roomId: null }),
+  // A new floor also replaces any pending room fly-to, so the camera shows the whole floor.
+  setLevel: (level) => set({ level, roomId: null, cameraRequest: { kind: "home", nonce: ++nonce } }),
   selectRoom: (roomId, level) =>
     set({
       roomId,

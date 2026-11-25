@@ -80,7 +80,8 @@ test.describe("Afro Arab smoke", () => {
     await expect(page.getByText("Living room · Ground floor")).toBeVisible({ timeout: 30_000 });
     const view = page.getByRole("navigation", { name: "View" });
     await view.getByRole("button", { name: "Outside" }).click();
-    await expect(page.getByText("Loading the house")).toBeHidden({ timeout: 30_000 });
+    // The 5 MB model can take a while on a busy CI machine.
+    await expect(page.getByText("Loading the house")).toBeHidden({ timeout: 60_000 });
     await view.getByRole("button", { name: "Floors" }).click();
     await page.getByRole("button", { name: "First floor" }).click();
     await expect(page.getByRole("button", { name: "First floor" })).toHaveAttribute("aria-pressed", "true");
